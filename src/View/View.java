@@ -17,11 +17,19 @@ public class View extends JFrame {
             /**création de la partie terrain et de la partie control*/
             JPanel terrain = new JPanel();
             JPanel control = new JPanel();
-            JButton pd = new JButton("brice est con");
+            JPanel boutons = new JPanel();
+            JButton b1 = new JButton("1");
+            JButton b2 = new JButton("2");
+            JButton b3 = new JButton("3");
+            JButton b4 = new JButton("4");
+            JButton b5 = new JButton("5");
+            JButton b6 = new JButton("6");
+            b2.setPreferredSize(new Dimension(50,50));
 
             /**changement de la couleur des différentes zones*/
             terrain.setBackground(Color.RED);
             control.setBackground(Color.BLUE);
+            boutons.setOpaque(false);
 
             /**permet de mettre les 2 JPanel côte à côte et de leur attribuer un pourcentage de l'écran*/
             GridBagConstraints c = new GridBagConstraints();
@@ -33,7 +41,14 @@ public class View extends JFrame {
             c.weightx = 0.25;
             c.weighty = 1;
             this.add(control,c);
-            control.add(pd);
+            control.add(boutons);
+            boutons.setLayout(new GridLayout(0,3,5,5));
+            boutons.add(b1);
+            boutons.add(b2);
+            boutons.add(b3);
+            boutons.add(b4);
+            boutons.add(b5);
+            boutons.add(b6);
 
 
             this.pack();
