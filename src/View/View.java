@@ -33,8 +33,9 @@ public class View extends JFrame {
         /**ajout image*/
         BufferedImage meduse = null;
         try {/**Le chemin d'acces est spécifique à mon ordinateur et doit être changer si utiliser sur un autre pc*/
-            meduse = ImageIO.read(new File("Image/potipoulp.png"));
+            meduse = ImageIO.read(new File("src/View/Image/potipoulp.png"));
         } catch (IOException e) {
+            System.out.println("Fichier manquant");
         }
 
         JLabel cubomeduse = new JLabel(new ImageIcon(meduse));
