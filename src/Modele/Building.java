@@ -56,7 +56,7 @@ class BatPrincipal extends Building{
      */
     public void acheteGrain(Paysan p, Fleur f){
         if (f.prix <= tirelire) {
-            p.inventaire.add(f);
+            p.inventaire[0]++;
             tirelire -= f.prix;
         }
         //on peut ajouter un message "pas assez d'argent"
@@ -67,14 +67,14 @@ class BatPrincipal extends Building{
      * Automatique, instantané
      * @param p un paysan
      */
-    public void collecteFleur(Paysan p){
+    /*public void collecteFleur(Paysan p){
         //copie toutes les ressources du paysan dans le bâtiment
         for (int i = 0; i < p.getInventaire(); i++){
             ressources.add(p.getInventaire().get(i));
         }
         //vide l'inventaire du paysan
         p.videInventaire();
-    }
+    }*/
 
     /**
      * Vend les bouquets composés par un jardinier

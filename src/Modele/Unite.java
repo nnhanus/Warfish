@@ -69,7 +69,7 @@ public class Paysan extends Unite{
      * @param amount la quantité à vendre
      */
     public void vendre(Ressource r, int amount) { //augmenter
-        BatPrincipal.tirelire += amount*Fleur.prix;
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire()+amount*Fleur.prix);
         this.inventaire[r.id] -= amount;
     }
 
