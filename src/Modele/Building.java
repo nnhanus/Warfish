@@ -28,7 +28,7 @@ class BatPrincipal extends Building{
     /**
      * @return la tirelire
      */
-    public int getTirelire(){
+    public static int getTirelire(){
         return tirelire;
     }
 
@@ -36,7 +36,7 @@ class BatPrincipal extends Building{
      * Modifie tirelire
      * @param x la nouvelle balance
      */
-    public void setTirelire(int x){
+    public static void setTirelire(int x){
         tirelire = x;
     }
 
