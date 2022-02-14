@@ -56,7 +56,7 @@ class BatPrincipal extends Building{
      */
     /*public void acheteGrain(Paysan p, Fleur f){
         if (f.prix <= tirelire) {
-            p.inventaire.add(f);
+            p.inventaire[0]++;
             tirelire -= f.prix;
         }
         //on peut ajouter un message "pas assez d'argent"
