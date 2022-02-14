@@ -1,6 +1,5 @@
 package Modele;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Building {
@@ -19,7 +18,7 @@ public class Building {
 class BatPrincipal extends Building{
     private static int tirelire = 200;
     public static final int PRIX_JARD = 50;
-    private ArrayList<Ressource> ressources = new ArrayList<>();
+    private int[] ressources = new int[1]; //pour l'instant
 
     public BatPrincipal(int x, int y){
         super(x,y);
@@ -54,27 +53,27 @@ class BatPrincipal extends Building{
      * Achete une graine contre de l'argent.
      * Instantanée.
      */
-    /*public void acheteGrain(Paysan p, Fleur f){
+    public void acheteGrain(Jardinier p, Fleur f){
         if (f.prix <= tirelire) {
-            p.inventaire[0]++;
+            p.getInventaire()[0]++;
             tirelire -= f.prix;
         }
         //on peut ajouter un message "pas assez d'argent"
     }
-    */
+
     /**
      * Vide l'inventaire d'un paysan et le transfert dans l'inventaire du bâtiment
      * Automatique, instantané
      * @param p un paysan
      */
-    /*public void collecteFleur(Paysan p){
+    public void collecteFleur(Jardinier p){
         //copie toutes les ressources du paysan dans le bâtiment
-        for (int i = 0; i < p.getInventaire(); i++){
-            ressources.add(p.getInventaire().get(i));
+        for (int i = 0; i < p.getInventaire().length; i++){
+            ressources[i] = p.getInventaire()[i];
         }
         //vide l'inventaire du paysan
         p.videInventaire();
-    }*/
+    }
 
     /**
      * Vend les bouquets composés par un jardinier
@@ -86,7 +85,6 @@ class BatPrincipal extends Building{
         */
         //TODO
     }
-
 }
 
 /**

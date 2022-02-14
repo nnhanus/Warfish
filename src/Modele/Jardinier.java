@@ -2,10 +2,10 @@ package Modele;
 
 import java.util.Arrays;
 
-public class Paysan extends Unite{
-    public int[] inventaire = new int[1]; //pour l'instant
+public class Jardinier extends Unite{
+    private int[] inventaire = new int[1]; //pour l'instant
 
-    public Paysan(int x, int y){
+    public Jardinier(int x, int y){
         super(x, y);
         vitesse = 100;
         Arrays.fill(inventaire, 0);
@@ -49,6 +49,22 @@ public class Paysan extends Unite{
         this.inventaire[r.id] -= amount;
     }
 
+    /**
+     * getInventaire
+     * renvoie l'inventaire du jardinier
+     * @return l'inventaire du jardinier
+     */
+    public int[] getInventaire(){
+        return this.inventaire;
+    }
+
+    /**
+     * videInventaire
+     * vide l'inventaire
+     */
+    public void videInventaire(){
+        Arrays.fill(inventaire, 0);
+    }
     /*public void effrayer(){
 
     }*/
