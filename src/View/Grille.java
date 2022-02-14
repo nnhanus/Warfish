@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
+/**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
 
     public Grille () {
@@ -22,7 +22,7 @@ public class Grille extends JPanel {
         g.setColor(Color.BLACK);
 
         while ( x < 800 ){
-            g.drawLine(x, 0, x, 800);
+            g.drawLine(x, 0, x, 750);
             x += 50;
         }
 
@@ -32,6 +32,9 @@ public class Grille extends JPanel {
         }
 
     }
+
+
+
 
 
 }
