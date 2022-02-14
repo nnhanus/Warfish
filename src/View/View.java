@@ -43,7 +43,7 @@ public class View extends JFrame {
         /**ajout image*/
         BufferedImage meduse = null;
         try {/**Le chemin d'acces est spécifique à mon ordinateur et doit être changer si utiliser sur un autre pc*/
-            meduse = ImageIO.read(new File("src/View/Image/potipoulp.png"));
+            meduse = ImageIO.read(new File("src/View/Image/jelly.png"));
         } catch (IOException e) {
         }
 
@@ -51,8 +51,8 @@ public class View extends JFrame {
 
 
         /**changement de la couleur des différentes zones*/
-        terrain.setBackground(Color.GREEN);
-        control.setBackground(Color.BLUE);
+        terrain.setBackground(Color.BLUE);
+        control.setBackground(Color.PINK);
         boutons.setOpaque(false);
 
         /**permet de mettre les 2 JPanel côte à côte et de leur attribuer un pourcentage de l'écran*/
@@ -73,8 +73,8 @@ public class View extends JFrame {
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
 
-        boutons.setBounds(50,300,300,100);
-        cubomeduse.setBounds(0,0,400,300);
+        boutons.setBounds(50,450,300,100);
+        cubomeduse.setBounds(0,150,400,300);
 
         control.add(cubomeduse);
         control.add(boutons);
