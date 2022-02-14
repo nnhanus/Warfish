@@ -1,8 +1,5 @@
 package Modele;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -21,8 +18,8 @@ public class Unite {
      * @param dir la direction à suivre
      */
     public void avance(double dir){
-        this.x += cos(dir)*Paysan.vitesse;
-        this.y += sin(dir)*Paysan.vitesse;
+        this.x += cos(dir)* Jardinier.vitesse;
+        this.y += sin(dir)* Jardinier.vitesse;
     }
 
 }
