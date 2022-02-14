@@ -26,7 +26,7 @@ public class Jardinier extends Unite{
      * @param amount la quantité à mettre dans l'inventaire du paysan
      */
     public void recolterRessource(Ressource r, int amount) {
-        this.inventaire[r.id] += amount;
+            this.inventaire[r.id] += amount;
     }
 
     /**
@@ -34,19 +34,19 @@ public class Jardinier extends Unite{
      * Achete une(des) graines
      * @param amount la quantité acheter
      */
-    public void acheterGraine(int amount) {
-        BatPrincipal.setTirelire(BatPrincipal.getTirelire()-amount*Fleur.prix);
+    public void acheterGraine(int amount, Fleur f) {
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire()-amount*f.getPrix());
     }
 
     /**
      * vendre
      * Vend une certaine quantité d'une ressource
-     * @param r la ressource à vendre
+     * @param f la ressource à vendre
      * @param amount la quantité à vendre
      */
-    public void vendre(Ressource r, int amount) { //augmenter
-        BatPrincipal.setTirelire(BatPrincipal.getTirelire()+amount*Fleur.prix);
-        this.inventaire[r.id] -= amount;
+    public void vendre(int amount, Fleur f) { //augmenter
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire()+amount*f.getPrix());
+        this.inventaire[f.id] -= amount;
     }
 
     /**
@@ -65,6 +65,7 @@ public class Jardinier extends Unite{
     public void videInventaire(){
         Arrays.fill(inventaire, 0);
     }
+
     /*public void effrayer(){
 
     }*/
