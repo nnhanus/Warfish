@@ -63,8 +63,8 @@ public class View extends JFrame {
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
 
-        boutons.setBounds(50,300,300,100);
-        cubomeduse.setBounds(0,0,400,300);
+        boutons.setBounds(50,450,300,100);
+        cubomeduse.setBounds(0,150,400,300);
 
         control.add(cubomeduse);
         control.add(boutons);

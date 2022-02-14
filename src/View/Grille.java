@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
+/**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
 
     public Grille () {
