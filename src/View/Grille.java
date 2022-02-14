@@ -17,12 +17,12 @@ public class Grille extends JPanel {
     public void paint(Graphics g) {
         super.paintComponent(g);
         int x = 0;
-        int y = -5;
+        int y = 0;
 
         g.setColor(Color.BLACK);
 
         while ( x < 800 ){
-            g.drawLine(x, 0, x, 800);
+            g.drawLine(x, 0, x, 750);
             x += 50;
         }
 
