@@ -27,6 +27,10 @@ public class Controller implements ActionListener, MouseListener {
         view.b5.addActionListener(this);
         view.b6.addActionListener(this);
 
+        view.bfleur1.addActionListener(this);
+        view.bfleur2.addActionListener(this);
+        view.bfleur3.addActionListener(this);
+
     }
 
     @Override
@@ -50,10 +54,28 @@ public class Controller implements ActionListener, MouseListener {
             System.out.println("ui");
         }
 
+        /**boutons de la boutique **/
+        if(e.getSource() == view.bfleur1){
+            if(view.solde>=10) {
+                view.updateSolde(10);
+            }
+        }
+        if(e.getSource() == view.bfleur2){
+            if(view.solde>=100) {
+                view.updateSolde(100);
+            }
+        }
+        if(e.getSource() == view.bfleur3){
+            if(view.solde>=800) {
+                view.updateSolde(800);
+            }
+        }
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
     }
 
     @Override

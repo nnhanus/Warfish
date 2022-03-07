@@ -8,25 +8,30 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+
 public class View extends JFrame {
 
     /**dimensions de la fenêtre d'affichage*/
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 840;
+    public static int solde = 1000;
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;
+    public static JPanel argent ;
     public static JPanel boutique;
+    public static JLabel soldeL = new JLabel();
     public static JButton b1 = new JButton("Boutique");
     public static JButton b2 = new JButton("2");
     public static JButton b3 = new JButton("3");
     public static JButton b4 = new JButton("4");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
+
     /**boutique de fleurs **/
-    public static Icon fleur1 = new ImageIcon("src/View/Image/jelly.png");
-    public static Icon fleur2 = new ImageIcon("src/View/Image/jelly.png");
-    public static Icon fleur3 = new ImageIcon("src/View/Image/jelly.png");
+    public static Icon fleur1 = new ImageIcon("src/View/Image/boutons_achat_fleur.png");
+    public static Icon fleur2 = new ImageIcon("src/View/Image/boutons_achat_meduse.png");
+    public static Icon fleur3 = new ImageIcon("src/View/Image/boutons_achat_bat.png");
     public static JButton bfleur1 = new JButton(fleur1);
     public static JButton bfleur2 = new JButton(fleur2);
     public static JButton bfleur3 = new JButton(fleur3);
@@ -41,6 +46,7 @@ public class View extends JFrame {
         terrain = new JPanel();
         control = new JPanel();
         boutons = new JPanel();
+        argent = new JPanel();
         boutique = new JPanel();
 
         /**dimension des panels principaux*/
@@ -96,17 +102,29 @@ public class View extends JFrame {
         boutique.setOpaque(false);
         boutique.setVisible(false);
 
+        /**gestion de l'affichage de l'argent**/
+
+        argent.setFont(new Font("Serif", Font.PLAIN, 37));
+        soldeL.setText("solde : " + String.valueOf(solde));
+        argent.add(soldeL);
+        argent.setBackground(Color.PINK);
+
+
+
+
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
 
         boutons.setBounds(50,300,300,100);
         cubomeduse.setBounds(0,0,400,300);
-        boutique.setBounds(50,450,300,225);
+        boutique.setBounds(50,530,300,225);
+        argent.setBounds(50,450,300,30);
 
 
         control.add(cubomeduse);
         control.add(boutons);
         control.add(boutique);
+        control.add(argent);
 
         /**Partie sur la création des boutons et leur ajout dans le JPanel
          *
@@ -137,9 +155,9 @@ public class View extends JFrame {
 
 
     }
-    /**
-     @Override
-     public void paint(Graphics g) {
-     g.drawImage(meduse, 0, 0, null);
-     }*/
+
+    public static void updateSolde(int val){
+        solde = solde - val;
+        soldeL.setText("solde : " + String.valueOf(solde));
+    }
 }
