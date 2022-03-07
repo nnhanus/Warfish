@@ -12,6 +12,7 @@ public class Nuisible extends Thread{
     private boolean enfuite = false;
     private Case target = null;
 
+
     public Nuisible(int x, int y, int dir) {
         this.x = x;
         this.y = y;
@@ -89,6 +90,7 @@ public class Nuisible extends Thread{
         Case currentCase = this.getRelevantCase();
         double minDistance = GrilleMod.LARGEUR_GRILLE*GrilleMod.LARGEUR_GRILLE + GrilleMod.HAUTEUR_GRILLE*GrilleMod.HAUTEUR_GRILLE;
         Case closestFlower = null;
+        //plutôt parcourir la liste GrilleMod.fleurs (en utilisant un getter ofc), nécessite des modif dans les autres classes
         for(int i = 0; i < GrilleMod.LARGEUR_GRILLE; i++){
             for(int j = 0; j < GrilleMod.HAUTEUR_GRILLE; j++){
                 if(GrilleMod.getCase(i,j).contientFleur()){
@@ -108,7 +110,7 @@ public class Nuisible extends Thread{
      * thread décrivant le comportement du lapin : il tourne jusqu'à être aligné avec une fleur, après quoi il court en ligne droite
      */
     @Override
-    public void run(){
+    public void run(){ //update pour être similaire au run de Unite, en divisant le sleep time par la vitesse + gérer le cas null comme il faut
        while(!enfuite){
            if(this.getRelevantCase().contientFleur()){ //si le lapin est sur une fleur il la mange
                mangeFleur();

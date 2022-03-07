@@ -1,5 +1,6 @@
 package Modele;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GrilleMod { //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
     public static final int LARGEUR_GRILLE = 16; //la largeur en nombre de case de la grille
@@ -7,8 +8,7 @@ public class GrilleMod { //potentiellement mettre toutes les générations aléa
     public static final int TAILLE_CASE = 3; //la taille des cases
 
     public static ArrayList<ArrayList<Case>> plateau = new ArrayList<> ();
-    public ArrayList<Fleur> fleurs = new ArrayList<>();
-
+    public ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap
 
     /**
      * Constructeur de Grille
@@ -16,6 +16,14 @@ public class GrilleMod { //potentiellement mettre toutes les générations aléa
      */
     public GrilleMod() {
 
+    }
+
+    /**
+     *getFleurs
+     * @return la liste de fleurs du plateau
+     */
+    public ArrayList<Fleur> getFleurs(){ //passer en static asap
+        return fleurs;
     }
 
     /**
@@ -63,9 +71,5 @@ public class GrilleMod { //potentiellement mettre toutes les générations aléa
      * @param r une ressource
      */
     public void putRessource(Case c, Ressource r){c.add(r);}
-    
-    public ArrayList<Fleur> getFleurs(){
-        return fleurs;
-    }
 }
 
