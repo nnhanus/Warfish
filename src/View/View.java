@@ -41,6 +41,7 @@ public class View extends JFrame {
         try {
             meduse = ImageIO.read(new File("src/View/Image/jelly.png"));
         } catch (IOException e) {
+            System.out.println("Fichier manquant");
         }
 
         JLabel cubomeduse = new JLabel(new ImageIcon(meduse));

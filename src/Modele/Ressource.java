@@ -1,17 +1,11 @@
 package Modele;
-abstract class Ressource { //à terme plusieurs types de ressources
-    static public int prix;
+abstract class Ressource extends Thread{ //à terme plusieurs types de ressources
+    protected int prix;
     public int id;
+
+    public abstract boolean isPickable();
 }
 
 
-class Fleur extends Ressource{ //à terme plusieurs types de fleurs, avec chacun différentes spécificités
 
-    public int lifespan = 1000;
-
-    public Fleur() {
-        prix = 100;
-        this.id = 0;
-    }
-}
 
