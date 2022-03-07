@@ -7,9 +7,9 @@ import java.awt.*;
 public class BuildingView extends JPanel{
     private Building building;
 
-    /*public BuildingView (Building b){
+    public BuildingView (Building b){
         this.building = b;
-    }*/
+    }
 
     @Override
     public void paint(Graphics g){

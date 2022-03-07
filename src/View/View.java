@@ -14,7 +14,7 @@ public class View extends JFrame {
     public static final int HEIGHT_WIN = 800;
 
     public View() {
-        this.setTitle("les fleurs des méduses");
+        this.setTitle("Project : Warfish");
         this.setPreferredSize(new Dimension(WIDTH_WIN,HEIGHT_WIN));
         this.setLayout(new BorderLayout());
 
@@ -30,9 +30,6 @@ public class View extends JFrame {
         /**affichage**/
         Grille grille = new Grille();
         terrain.add(grille);
-        BuildingView bat1 = new BuildingView();
-        terrain.add(bat1);
-
 
 
 
