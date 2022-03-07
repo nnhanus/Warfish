@@ -23,6 +23,7 @@ public class View extends JFrame {
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
 
+
     public View() {
         this.setTitle("les fleurs des méduses");
         this.setPreferredSize(new Dimension(WIDTH_WIN,HEIGHT_WIN));
@@ -36,13 +37,13 @@ public class View extends JFrame {
         /**dimension des panels principaux*/
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
-        Grille grille = new Grille();
+        Grille grille = new Grille(new JardinierView());
         terrain.add(grille);
 
 
         /**ajout image*/
         BufferedImage meduse = null;
-        try {/**Le chemin d'acces est spécifique à mon ordinateur et doit être changer si utiliser sur un autre pc*/
+        try {
             meduse = ImageIO.read(new File("src/View/Image/jelly.png"));
         } catch (IOException e) {
         }

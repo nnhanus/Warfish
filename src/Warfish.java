@@ -1,4 +1,5 @@
 import Control.Controller;
+import Modele.Jardinier;
 import View.View;
 import View.Grille;
 
@@ -9,5 +10,6 @@ public class Warfish {
 
         View view = new View();
         Controller controller = new Controller(view);
+        Jardinier jardinier = new Jardinier(0,0);
     }
 }
