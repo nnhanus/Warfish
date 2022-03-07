@@ -26,22 +26,30 @@ public class View extends JFrame {
         /**dimension des panels principaux*/
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
+
+        /**affichage**/
         Grille grille = new Grille();
         terrain.add(grille);
+        BuildingView bat1 = new BuildingView();
+        terrain.add(bat1);
+
+
 
 
         /**ajout image*/
         BufferedImage meduse = null;
-        try {/**Le chemin d'acces est spécifique à mon ordinateur et doit être changer si utiliser sur un autre pc*/
+        try {
             meduse = ImageIO.read(new File("src/View/Image/jelly.png"));
         } catch (IOException e) {
+            System.out.println("Fichier manquant");
         }
 
         JLabel cubomeduse = new JLabel(new ImageIcon(meduse));
 
 
+
         /**changement de la couleur des différentes zones*/
-        terrain.setBackground(Color.BLUE);
+        terrain.setBackground(Color.decode("#0090FC"));
         control.setBackground(Color.PINK);
         boutons.setOpaque(false);
 
@@ -97,6 +105,7 @@ public class View extends JFrame {
         this.pack();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
     }
     /**
