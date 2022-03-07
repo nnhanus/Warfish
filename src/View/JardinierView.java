@@ -1,5 +1,6 @@
 package View;
 
+
 import Modele.Jardinier;
 
 import java.util.ArrayList;
@@ -14,4 +15,3 @@ public class JardinierView {
         listjardinier.add(new Jardinier(0,0));
     }
 }
-
