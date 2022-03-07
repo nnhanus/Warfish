@@ -1,6 +1,6 @@
 package View;
 
-import Modele.Fleur;
+import Modele.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class VueFleur {
     private ArrayList<Fleur> fleurs = new ArrayList<Fleur>();
-    private Grille gr;
+    private Modele.Grille gr;
 
-    public VueFleur(Grille grille){
+    public VueFleur(Modele.Grille grille){
         gr = grille;
-        fleurs = g.getFleurs;
+        fleurs = gr.getFleurs();
     }
 
     public void afficheFleur(Graphics g){
