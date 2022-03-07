@@ -7,6 +7,7 @@ public class Grille { //potentiellement mettre toutes les générations aléatoi
     public static final int TAILLE_CASE = 3; //la taille des cases
 
     public static ArrayList<ArrayList<Case>> plateau = new ArrayList<> ();
+    public ArrayList<Fleur> fleurs = new ArrayList<>();
 
     /**
      * Constructeur de Grille
@@ -36,8 +37,11 @@ public class Grille { //potentiellement mettre toutes les générations aléatoi
         int randy = (int) (Math.random()*LARGEUR_GRILLE);
         Case c = getCase(randx, randy);
         if(!c.contientFleur()){
-            putRessource(c, new Fleur()); //ou bien un .add() tout simplement ?
+            Fleur f = new Fleur(randx, randy);
+            putRessource(c, f); //ou bien un .add() tout simplement ?
+            fleurs.add(f);
         }
+
     }
 
     /**
@@ -58,5 +62,9 @@ public class Grille { //potentiellement mettre toutes les générations aléatoi
      * @param r une ressource
      */
     public void putRessource(Case c, Ressource r){c.add(r);}
+    
+    public ArrayList<Fleur> getFleurs(){
+        return fleurs;
+    }
 }
 
