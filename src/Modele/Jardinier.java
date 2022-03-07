@@ -69,4 +69,12 @@ public class Jardinier extends Unite{
     /*public void effrayer(){
 
     }*/
+
+    /**
+     * getRelevantCase
+     * @return la case sur laquelle le lapin se trouve
+     */
+    public Case getRelevantCase(){
+        return GrilleMod.plateau.get(this.x%GrilleMod.TAILLE_CASE).get(this.y%GrilleMod.TAILLE_CASE);
+    }
 }

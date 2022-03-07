@@ -27,7 +27,7 @@ public class Controller implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == view.b1){
-            System.out.println("360 no scope");
+           View.boutique.setVisible(true);
         }
         if(e.getSource() == view.b2){
             System.out.println("headshot");

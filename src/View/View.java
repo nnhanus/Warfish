@@ -16,12 +16,20 @@ public class View extends JFrame {
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;
-    public static JButton b1 = new JButton("1");
+    public static JPanel boutique;
+    public static JButton b1 = new JButton("Boutique");
     public static JButton b2 = new JButton("2");
     public static JButton b3 = new JButton("3");
     public static JButton b4 = new JButton("4");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
+    /**boutique de fleurs **/
+    public static Icon fleur1 = new ImageIcon("src/View/Image/jelly.png");
+    public static Icon fleur2 = new ImageIcon("src/View/Image/jelly.png");
+    public static Icon fleur3 = new ImageIcon("src/View/Image/jelly.png");
+    public static JButton bfleur1 = new JButton(fleur1);
+    public static JButton bfleur2 = new JButton(fleur2);
+    public static JButton bfleur3 = new JButton(fleur3);
 
 
     public View() {
@@ -33,6 +41,7 @@ public class View extends JFrame {
         terrain = new JPanel();
         control = new JPanel();
         boutons = new JPanel();
+        boutique = new JPanel();
 
         /**dimension des panels principaux*/
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
@@ -76,15 +85,28 @@ public class View extends JFrame {
         this.add(terrain,BorderLayout.WEST);
         this.add(control);
 
+        /**boutique**/
+
+        bfleur1.setPreferredSize(new Dimension(30,30));
+        boutique.setLayout(new GridLayout(0,1,10,10));
+        boutique.add(cubomeduse);
+        boutique.add(bfleur1);
+        boutique.add(bfleur2);
+        boutique.add(bfleur3);
+        boutique.setOpaque(false);
+        boutique.setVisible(false);
 
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
 
-        boutons.setBounds(50,450,300,100);
-        cubomeduse.setBounds(0,150,400,300);
+        boutons.setBounds(50,300,300,100);
+        cubomeduse.setBounds(0,0,400,300);
+        boutique.setBounds(50,450,300,225);
+
 
         control.add(cubomeduse);
         control.add(boutons);
+        control.add(boutique);
 
         /**Partie sur la création des boutons et leur ajout dans le JPanel
          *
