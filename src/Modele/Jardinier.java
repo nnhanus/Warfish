@@ -32,10 +32,11 @@ public class Jardinier extends Unite{
     /**
      * acheterGraine
      * Achete une(des) graines
-     * @param amount la quantité acheter
+     * @param amount la quantité achetée
      */
     public void acheterGraine(int amount, Fleur f) {
         BatPrincipal.setTirelire(BatPrincipal.getTirelire()-amount*f.getPrix());
+        this.inventaire[f.id] += amount;
     }
 
     /**
