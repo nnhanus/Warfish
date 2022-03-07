@@ -1,7 +1,5 @@
 package View;
 
-import Modele.GrilleMod;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +39,7 @@ public class View extends JFrame {
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
         Grille grille = new Grille(new JardinierView());
         /**affichage**/
-        GrilleMod grilleMod = new GrilleMod();
+        //Grille grille = new Grille();
 
         terrain.add(grille);
 

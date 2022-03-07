@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class VueFleur {
     private ArrayList<Fleur> fleurs = new ArrayList<Fleur>();
-    private GrilleMod gr;
+    private Modele.GrilleMod gr;
 
-    public VueFleur(GrilleMod grille){
+    public VueFleur(Modele.GrilleMod grille){
         gr = grille;
         fleurs = gr.getFleurs();
     }
