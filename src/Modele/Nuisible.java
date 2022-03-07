@@ -60,7 +60,7 @@ public class Nuisible extends Thread{
      * @return la case sur laquelle le lapin se trouve
      */
     public Case getRelevantCase(){
-        return Grille.plateau.get(this.x%Grille.TAILLE_CASE).get(this.y%Grille.TAILLE_CASE);
+        return GrilleMod.plateau.get(this.x%GrilleMod.TAILLE_CASE).get(this.y%GrilleMod.TAILLE_CASE);
     }
 
     /**
@@ -87,15 +87,15 @@ public class Nuisible extends Thread{
      */
     public void getTarget(){
         Case currentCase = this.getRelevantCase();
-        double minDistance = Grille.LARGEUR_GRILLE*Grille.LARGEUR_GRILLE + Grille.HAUTEUR_GRILLE*Grille.HAUTEUR_GRILLE;
+        double minDistance = GrilleMod.LARGEUR_GRILLE*GrilleMod.LARGEUR_GRILLE + GrilleMod.HAUTEUR_GRILLE*GrilleMod.HAUTEUR_GRILLE;
         Case closestFlower = null;
-        for(int i = 0; i < Grille.LARGEUR_GRILLE; i++){
-            for(int j = 0; j < Grille.HAUTEUR_GRILLE; j++){
-                if(Grille.getCase(i,j).contientFleur()){
+        for(int i = 0; i < GrilleMod.LARGEUR_GRILLE; i++){
+            for(int j = 0; j < GrilleMod.HAUTEUR_GRILLE; j++){
+                if(GrilleMod.getCase(i,j).contientFleur()){
                     double currentDistance = (currentCase.x - i)*(currentCase.x - i)+(currentCase.y - j)*(currentCase.y - j);
                     if(currentDistance < minDistance){
                         minDistance = currentDistance;
-                        closestFlower = Grille.plateau.get(i).get(j);
+                        closestFlower = GrilleMod.plateau.get(i).get(j);
                     }
                 }
             }
