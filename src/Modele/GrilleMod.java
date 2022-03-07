@@ -2,9 +2,9 @@ package Modele;
 import java.util.ArrayList;
 
 public class GrilleMod { //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
-    public static final int LARGEUR_GRILLE = 16; //la largeur en nombre de case de la grille
-    public static final int HAUTEUR_GRILLE = 15; //la hauteur en nombre de case de la grille
-    public static final int TAILLE_CASE = 3; //la taille des cases
+    public static final int LARGEUR_GRILLE = 10; //la largeur en nombre de case de la grille
+    public static final int HAUTEUR_GRILLE = 10; //la hauteur en nombre de case de la grille
+    public static final int TAILLE_CASE = 80; //la taille des cases
 
     public static ArrayList<ArrayList<Case>> plateau = new ArrayList<> ();
     public ArrayList<Fleur> fleurs = new ArrayList<>();

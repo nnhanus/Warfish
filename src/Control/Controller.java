@@ -1,5 +1,7 @@
 package Control;
 
+import Modele.BatPrincipal;
+import Modele.Building;
 import View.View;
 
 import javax.swing.*;
@@ -12,6 +14,9 @@ import java.awt.event.MouseListener;
 public class Controller implements ActionListener, MouseListener {
 
     public static View view;
+    private static int x = (int) (Math.random() * ( 10 - 0 ));
+    private static int y = (int) (Math.random() * ( 10 - 0 ));
+    public static BatPrincipal batPrincipal = new BatPrincipal(x,y);
 
     public Controller(View view) {
         this.view = view;
