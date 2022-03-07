@@ -12,7 +12,7 @@ public class View extends JFrame {
 
     /**dimensions de la fenêtre d'affichage*/
     public static final int WIDTH_WIN = 1200;
-    public static final int HEIGHT_WIN = 800;
+    public static final int HEIGHT_WIN = 840;
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;

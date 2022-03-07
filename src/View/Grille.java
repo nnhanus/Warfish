@@ -1,7 +1,11 @@
 package View;
 
+
+import Modele.Fleur;
+import Modele.Jardinier;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -9,12 +13,12 @@ import java.io.IOException;
 /**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
 
-    public JardinierView jardinier;
+    public static JardinierView jardvue;
 
-    public Grille (JardinierView j) {
-        this.jardinier = j;
+    public Grille (JardinierView jardvue) {
         this.setPreferredSize(new Dimension(800,View.HEIGHT_WIN));
         this.setOpaque(false);
+        this.jardvue = jardvue;
     }
 
     @Override
@@ -29,7 +33,6 @@ public class Grille extends JPanel {
         }
 
         /**Grille**/
-        System.out.println("no");
         super.paintComponent(g);
         int x = 0;
         int y = 0;
@@ -37,13 +40,18 @@ public class Grille extends JPanel {
         g.setColor(Color.BLACK);
 
         while ( x < 800 ){
-            g.drawLine(x, 0, x, 750);
-            x += 50;
+            g.drawLine(x, 0, x, 800);
+            x += 80;
         }
 
         while ( y < 800 ){
             g.drawLine(0, y, 800, y);
-            y += 50;
+            y += 80;
+        }
+
+
+        for (Jardinier jardinier : jardvue.listjardinier) {
+            g.fillRect(jardinier.x,jardinier.y,50,50);
         }
 
 
