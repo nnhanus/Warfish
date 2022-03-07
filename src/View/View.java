@@ -3,6 +3,7 @@ package View;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,16 @@ public class View extends JFrame {
     /**dimensions de la fenêtre d'affichage*/
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 800;
+    public static JPanel terrain ;
+    public static JPanel control ;
+    public static JPanel boutons ;
+    public static JButton b1 = new JButton("1");
+    public static JButton b2 = new JButton("2");
+    public static JButton b3 = new JButton("3");
+    public static JButton b4 = new JButton("4");
+    public static JButton b5 = new JButton("5");
+    public static JButton b6 = new JButton("6");
+
 
     public View() {
         this.setTitle("Project : Warfish");
@@ -19,16 +30,17 @@ public class View extends JFrame {
         this.setLayout(new BorderLayout());
 
         /**création de la partie terrain et de la partie control*/
-        JPanel terrain = new JPanel();
-        JPanel control = new JPanel();
-        JPanel boutons = new JPanel();
+        terrain = new JPanel();
+        control = new JPanel();
+        boutons = new JPanel();
 
         /**dimension des panels principaux*/
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
-
+        Grille grille = new Grille(new JardinierView());
         /**affichage**/
         Grille grille = new Grille();
+
         terrain.add(grille);
 
 
@@ -78,12 +90,10 @@ public class View extends JFrame {
          *
          *
          *  création des boutons*/
-        JButton b1 = new JButton("1");
-        JButton b2 = new JButton("2");
-        JButton b3 = new JButton("3");
-        JButton b4 = new JButton("4");
-        JButton b5 = new JButton("5");
-        JButton b6 = new JButton("6");
+
+
+
+
         /**taille des boutons*/
         b1.setPreferredSize(new Dimension(30,30));
 
