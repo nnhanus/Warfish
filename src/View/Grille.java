@@ -1,6 +1,7 @@
 package View;
 
 
+import Modele.Case;
 import Modele.Jardinier;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -8,16 +9,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
 
-    public static JardinierView jardvue;
+    public Movable move;
 
-    public Grille (JardinierView jardvue) {
+    public Grille () {
         this.setPreferredSize(new Dimension(800,View.HEIGHT_WIN));
         this.setOpaque(false);
-        this.jardvue = jardvue;
+        this.move = new Movable(new JardinierView(),new VueFleur());
     }
 
     @Override
@@ -32,8 +34,9 @@ public class Grille extends JPanel {
         }
 
         /**Grille**/
-        System.out.println("no");
         super.paintComponent(g);
+
+
         int x = 0;
         int y = 0;
 
@@ -50,6 +53,8 @@ public class Grille extends JPanel {
             y += 80;
         }
 
+
+        move.paint(g);
 
     }
 
