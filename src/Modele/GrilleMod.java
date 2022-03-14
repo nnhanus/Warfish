@@ -1,11 +1,13 @@
 package Modele;
+import View.Grille;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
-    public static final int LARGEUR_GRILLE = 200; //la largeur en nombre de case de la grille
-    public static final int HAUTEUR_GRILLE = 200; //la hauteur en nombre de case de la grille
+    public static final int LARGEUR_GRILLE = 800; //la largeur en nombre de case de la grille
+    public static final int HAUTEUR_GRILLE = 800; //la hauteur en nombre de case de la grille
 
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
     private static ArrayList<Ressource> ressources = new ArrayList<>(); //plusieurs tableaux de ressources pour aller un poil plus vite I guess, c'est aussi pour pas avoir d'emmerde avec les types
@@ -58,6 +60,26 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
 
     public static ArrayList<Unite> getUnites(){
         return GrilleMod.unites;
+    }
+
+    //TODO
+
+    /**
+     * getSelectedUnite
+     * Renvoie l'unite selectionnée
+     * @return
+     */
+    public static Unite getSelectedUnite(){
+        return selectedUnite;
+    }
+
+    /**
+     * setSelectedUnite
+     * Défini selectedUnite
+     * @param u une unité
+     */
+    public static void setSelectedUnite(Unite u){
+        selectedUnite = u;
     }
 
     public static BatPrincipal getBatPrincipal(){
