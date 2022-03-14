@@ -59,7 +59,7 @@ public class View extends JFrame {
 
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
-        Grille grille = new Grille(new JardinierView());
+        //Grille grille = new Grille(new JardinierView());
         terrain.add(grille);
         //BuildingView bat1 = new BuildingView();
         //terrain.add(bat1);

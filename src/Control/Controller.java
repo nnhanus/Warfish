@@ -1,10 +1,7 @@
 package Control;
 
 
-import Modele.Building;
-import Modele.GrilleMod;
-import Modele.Jardinier;
-import Modele.Ressource;
+import Modele.*;
 import View.View;
 
 import javax.swing.*;
@@ -35,7 +32,7 @@ public class Controller implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view.b1){
+        if (e.getSource() == view.b1) {
             View.boutique.setVisible(true);
         }
         Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
@@ -43,14 +40,14 @@ public class Controller implements ActionListener, MouseListener {
             System.out.println("360 no scope");
             yolo
         }*/
-        if(e.getSource() == view.b2){ //récolter
+        if (e.getSource() == view.b2) { //récolter
             Ressource r = j.plusProcheRessource();
             int dist = j.getSQDistFrom(r.getX(), r.getY());
-            if ( r.isPickable() && dist < 400){
+            if (r.isPickable() && dist < 400) {
                 j.recolterRessource(r);
             }
         }
-        if(e.getSource() == view.b3) { //effrayer
+        if (e.getSource() == view.b3) { //effrayer
             j.effrayer();
         }
 
@@ -65,67 +62,70 @@ public class Controller implements ActionListener, MouseListener {
         }*/
 
         /**boutons de la boutique **/
-        if(e.getSource() == view.bfleur1){
-            if(view.solde>=10) {
+        if (e.getSource() == view.bfleur1) {
+            if (view.solde >= 10) {
                 view.updateSolde(10);
             }
         }
-        if(e.getSource() == view.bfleur2){
-            if(view.solde>=100) {
+        if (e.getSource() == view.bfleur2) {
+            if (view.solde >= 100) {
                 view.updateSolde(100);
             }
         }
-        if(e.getSource() == view.bfleur3){
-            if(view.solde>=800) {
+        if (e.getSource() == view.bfleur3) {
+            if (view.solde >= 800) {
                 view.updateSolde(800);
             }
         }
 
         /**boutons de la boutique **/
-        if(e.getSource() == view.bfleur1){
-            if(view.solde>=10) {
+        if (e.getSource() == view.bfleur1) {
+            if (view.solde >= 10) {
                 view.updateSolde(10);
             }
         }
-        if(e.getSource() == view.bfleur2){
-            if(view.solde>=100) {
+        if (e.getSource() == view.bfleur2) {
+            if (view.solde >= 100) {
                 view.updateSolde(100);
             }
         }
-        if(e.getSource() == view.bfleur3){
-            if(view.solde>=800) {
+        if (e.getSource() == view.bfleur3) {
+            if (view.solde >= 800) {
                 view.updateSolde(800);
             }
         }
+    }
 
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        double mouseX = e.getPoint().getX();
-        double mouseY = e.getPoint().getY();
-        if(SwingUtilities.isLeftMouseButton(e)) {
-            for (Unite u : GrilleMod.getUnites()) {
-                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
-                    GrilleMod.setSelectedUnite(u);
+        @Override
+        public void mouseClicked (MouseEvent e) {
+            double mouseX = e.getPoint().getX();
+            double mouseY = e.getPoint().getY();
+            if (SwingUtilities.isLeftMouseButton(e)) {
+                for (Unite u : GrilleMod.getUnites()) {
+                    if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
+                        GrilleMod.setSelectedUnite(u);
+                    }
                 }
+            } else {
+                GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
             }
-        }else{
-            GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
         }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {}
+        @Override
+        public void mousePressed (MouseEvent e){
+        }
 
-    @Override
-    public void mousePressed(MouseEvent e) {}
+        @Override
+        public void mouseReleased (MouseEvent e){
+        }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {}
+        @Override
+        public void mouseEntered (MouseEvent e){
+        }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {}
+        @Override
+        public void mouseExited (MouseEvent e){
+        }
 
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-}
+    }
