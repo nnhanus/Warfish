@@ -109,6 +109,7 @@ public class Nuisible extends Thread{
                 }
             }
         }
+        //TODO corriger les équations
         if(target != null) {
             if(y == target.getY()) { //pour éviter un division par 0
                 if(target.getX() - x > 0){
@@ -180,6 +181,5 @@ public class Nuisible extends Thread{
             }
         }
         GrilleMod.removeNuisible(this);
-        currentThread().interrupt();
     }
 }
