@@ -85,3 +85,4 @@ class BatPrincipal extends Building {
         }
     }
 }
+

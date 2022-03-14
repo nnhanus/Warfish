@@ -1,33 +1,44 @@
-package View;
 
-import Modele.GrilleMod;
+package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 
 public class View extends JFrame {
 
     /**dimensions de la fenêtre d'affichage*/
     public static final int WIDTH_WIN = 1200;
-    public static final int HEIGHT_WIN = 800;
+    public static final int HEIGHT_WIN = 840;
+    public static int solde = 1000;
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;
-    public static JButton b1 = new JButton("1");
+    public static JPanel argent ;
+    public static JPanel boutique;
+    public static JLabel soldeL = new JLabel();
+    public static JButton b1 = new JButton("Boutique");
     public static JButton b2 = new JButton("2");
     public static JButton b3 = new JButton("3");
     public static JButton b4 = new JButton("4");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
 
+    /**boutique de fleurs **/
+    public static Icon fleur1 = new ImageIcon("src/View/Image/boutons_achat_fleur.png");
+    public static Icon fleur2 = new ImageIcon("src/View/Image/boutons_achat_meduse.png");
+    public static Icon fleur3 = new ImageIcon("src/View/Image/boutons_achat_bat.png");
+    public static JButton bfleur1 = new JButton(fleur1);
+    public static JButton bfleur2 = new JButton(fleur2);
+    public static JButton bfleur3 = new JButton(fleur3);
+
 
     public View() {
-        this.setTitle("les fleurs des méduses");
+        this.setTitle("Project : Warfish");
         this.setPreferredSize(new Dimension(WIDTH_WIN,HEIGHT_WIN));
         this.setLayout(new BorderLayout());
 
@@ -35,18 +46,17 @@ public class View extends JFrame {
         terrain = new JPanel();
         control = new JPanel();
         boutons = new JPanel();
+        argent = new JPanel();
+        boutique = new JPanel();
 
         /**dimension des panels principaux*/
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
         Grille grille = new Grille(new JardinierView());
         /**affichage**/
-        GrilleMod grilleMod = new GrilleMod();
+        //Grille grille = new Grille();
 
         terrain.add(grille);
-        BuildingView bat1 = new BuildingView();
-        terrain.add(bat1);
-
 
 
 
@@ -81,15 +91,40 @@ public class View extends JFrame {
         this.add(terrain,BorderLayout.WEST);
         this.add(control);
 
+        /**boutique**/
+
+        bfleur1.setPreferredSize(new Dimension(30,30));
+        boutique.setLayout(new GridLayout(0,1,10,10));
+        boutique.add(cubomeduse);
+        boutique.add(bfleur1);
+        boutique.add(bfleur2);
+        boutique.add(bfleur3);
+        boutique.setOpaque(false);
+        boutique.setVisible(false);
+
+        /**gestion de l'affichage de l'argent**/
+
+        soldeL.setFont(new Font("Serif", Font.PLAIN, 25));
+        soldeL.setText("solde : " + String.valueOf(solde));
+        argent.add(soldeL);
+        argent.setBackground(Color.PINK);
+
+
+
 
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
 
-        boutons.setBounds(50,450,300,100);
-        cubomeduse.setBounds(0,150,400,300);
+        boutons.setBounds(50,300,300,100);
+        cubomeduse.setBounds(0,0,400,300);
+        boutique.setBounds(50,530,300,225);
+        argent.setBounds(50,450,300,50);
+
 
         control.add(cubomeduse);
         control.add(boutons);
+        control.add(boutique);
+        control.add(argent);
 
         /**Partie sur la création des boutons et leur ajout dans le JPanel
          *
@@ -120,9 +155,9 @@ public class View extends JFrame {
 
 
     }
-    /**
-     @Override
-     public void paint(Graphics g) {
-     g.drawImage(meduse, 0, 0, null);
-     }*/
+
+    public static void updateSolde(int val){
+        solde = solde - val;
+        soldeL.setText("solde : " + String.valueOf(solde));
+    }
 }
