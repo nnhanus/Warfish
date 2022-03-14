@@ -15,7 +15,7 @@ public class JardinierView {
 
     public JardinierView(){
         for(Unite u:GrilleMod.getUnites()){
-            listjardinier.add(new Jardinier(u.getX(),u.getY()));
+            listjardinier.add((Jardinier) u);
         }
     }
 }
