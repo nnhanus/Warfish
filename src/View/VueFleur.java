@@ -11,7 +11,7 @@ public class VueFleur {
   
     public VueFleur(){
         for(Fleur f:GrilleMod.getFleurs()){
-            fleurs.add(new Fleur(f.getX(),f.getY()));
+            fleurs.add(f);
         }
     }
 }
