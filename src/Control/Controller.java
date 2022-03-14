@@ -40,6 +40,7 @@ public class Controller implements ActionListener, MouseListener {
         Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
         /*if(e.getSource() == view.b1){
             System.out.println("360 no scope");
+            yolo
         }*/
         if(e.getSource() == view.b2){ //récolter
             Ressource r = j.plusProcheRessource();
