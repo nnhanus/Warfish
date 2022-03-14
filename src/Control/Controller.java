@@ -43,7 +43,8 @@ public class Controller implements ActionListener, MouseListener {
         if (e.getSource() == view.b2) { //récolter
             Ressource r = j.plusProcheRessource();
             int dist = j.getSQDistFrom(r.getX(), r.getY());
-            if (r.isPickable() && dist < 400) {
+            if (r.isPickable() && dist < 1000) {
+                System.out.println("on récolte");
                 j.recolterRessource(r);
             }
         }
