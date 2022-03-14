@@ -1,7 +1,9 @@
 package View;
 
 
+import Modele.GrilleMod;
 import Modele.Jardinier;
+import Modele.Unite;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,8 @@ public class JardinierView {
 
 
     public JardinierView(){
-        listjardinier.add(new Jardinier(0,0));
+        for(Unite u:GrilleMod.getUnites()){
+            listjardinier.add(new Jardinier(u.getX(),u.getY()));
+        }
     }
 }

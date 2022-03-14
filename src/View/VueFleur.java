@@ -7,19 +7,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class VueFleur {
-    private ArrayList<Fleur> fleurs = new ArrayList<Fleur>();
-    private GrilleMod gr;
-
-    public VueFleur(GrilleMod grille){
-        gr = grille;
-        fleurs = gr.getFleurs();
-    }
-
-    public void afficheFleur(Graphics g){
-        g.setColor(Color.PINK);
-        for (Fleur f : fleurs) {
-            g.drawOval(f.getX(), f.getY(), 30, 30);
+    public ArrayList<Fleur> fleurs = new ArrayList<Fleur>();
+  
+    public VueFleur(){
+        for(Fleur f:GrilleMod.getFleurs()){
+            fleurs.add(new Fleur(f.getX(),f.getY()));
         }
     }
-
 }

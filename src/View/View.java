@@ -3,15 +3,19 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class View extends JFrame {
 
-    /**dimensions de la fenêtre d'affichage*/
+    /**
+     * dimensions de la fenêtre d'affichage
+     */
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 840;
     public static int solde = 1000;
@@ -22,11 +26,13 @@ public class View extends JFrame {
     public static JPanel boutique;
     public static JLabel soldeL = new JLabel();
     public static JButton b1 = new JButton("Boutique");
-    public static JButton b2 = new JButton("2");
-    public static JButton b3 = new JButton("3");
+    public static JButton b2 = new JButton("Ramasser");
+    public static JButton b3 = new JButton("Effrayer");
     public static JButton b4 = new JButton("4");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
+
+    public Grille grille = new Grille();
 
     /**boutique de fleurs **/
     public static Icon fleur1 = new ImageIcon("src/View/Image/boutons_achat_fleur.png");
@@ -39,7 +45,7 @@ public class View extends JFrame {
 
     public View() {
         this.setTitle("Project : Warfish");
-        this.setPreferredSize(new Dimension(WIDTH_WIN,HEIGHT_WIN));
+        this.setPreferredSize(new Dimension(WIDTH_WIN, HEIGHT_WIN));
         this.setLayout(new BorderLayout());
 
         /**création de la partie terrain et de la partie control*/
@@ -50,15 +56,14 @@ public class View extends JFrame {
         boutique = new JPanel();
 
         /**dimension des panels principaux*/
+
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
-        Grille grille = new Grille(new JardinierView());
-        /**affichage**/
-        //Grille grille = new Grille();
-
+        //Grille grille = new Grille(new JardinierView());
         terrain.add(grille);
-
-
+        //BuildingView bat1 = new BuildingView();
+        //terrain.add(bat1);
+      
 
         /**ajout image*/
         BufferedImage meduse = null;
@@ -71,11 +76,25 @@ public class View extends JFrame {
         JLabel cubomeduse = new JLabel(new ImageIcon(meduse));
 
 
-
         /**changement de la couleur des différentes zones*/
         terrain.setBackground(Color.decode("#0090FC"));
         control.setBackground(Color.PINK);
         boutons.setOpaque(false);
+
+
+        /**
+        terrain.setLayout(new GridLayout(10,10));
+        Border ligne = BorderFactory.createLineBorder(Color.BLACK,1);
+        for(int i = 0;i<100;i++){
+            JPanel cube = new JPanel();
+            listCube.add(cube);
+            cube.setPreferredSize(new Dimension(80,80));
+            cube.setBorder(ligne);
+            cube.setOpaque(false);
+            terrain.add(cube);
+        }
+
+        terrain.setBorder(ligne);*/
 
         /**permet de mettre les 2 JPanel côte à côte et de leur attribuer un pourcentage de l'écran*/
         /**GridBagConstraints c = new GridBagConstraints();
@@ -88,7 +107,7 @@ public class View extends JFrame {
          c.weighty = 1;
          this.getContentPane().add(control,c);*/
 
-        this.add(terrain,BorderLayout.WEST);
+        this.add(terrain, BorderLayout.WEST);
         this.add(control);
 
         /**boutique**/
@@ -109,12 +128,9 @@ public class View extends JFrame {
         argent.add(soldeL);
         argent.setBackground(Color.PINK);
 
-
-
-
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
-
+      
         boutons.setBounds(50,300,300,100);
         cubomeduse.setBounds(0,0,400,300);
         boutique.setBounds(50,530,300,225);
@@ -132,13 +148,11 @@ public class View extends JFrame {
          *  création des boutons*/
 
 
-
-
         /**taille des boutons*/
-        b1.setPreferredSize(new Dimension(30,30));
+        b1.setPreferredSize(new Dimension(30, 30));
 
         /**permet de mettre les boutons en grille*/
-        boutons.setLayout(new GridLayout(0,3,10,10));
+        boutons.setLayout(new GridLayout(0, 3, 10, 10));
 
         /**ajout des boutons au panel des boutons*/
         boutons.add(b1);
@@ -156,8 +170,11 @@ public class View extends JFrame {
 
     }
 
-    public static void updateSolde(int val){
+
+    public static void updateSolde(int val) {
         solde = solde - val;
         soldeL.setText("solde : " + String.valueOf(solde));
     }
 }
+
+
