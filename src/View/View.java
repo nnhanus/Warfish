@@ -1,20 +1,20 @@
 package View;
 
-import Modele.GrilleMod;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class View extends JFrame {
 
     /**dimensions de la fenêtre d'affichage*/
     public static final int WIDTH_WIN = 1200;
-    public static final int HEIGHT_WIN = 800;
+    public static final int HEIGHT_WIN = 840;
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;
@@ -24,6 +24,9 @@ public class View extends JFrame {
     public static JButton b4 = new JButton("4");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
+
+    public Grille grille = new Grille();
+
 
 
     public View() {
@@ -39,13 +42,9 @@ public class View extends JFrame {
         /**dimension des panels principaux*/
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
-        Grille grille = new Grille(new JardinierView());
-        /**affichage**/
-        GrilleMod grilleMod = new GrilleMod();
-
         terrain.add(grille);
-        BuildingView bat1 = new BuildingView();
-        terrain.add(bat1);
+        //BuildingView bat1 = new BuildingView();
+        //terrain.add(bat1);
 
 
 
@@ -66,6 +65,21 @@ public class View extends JFrame {
         terrain.setBackground(Color.decode("#0090FC"));
         control.setBackground(Color.PINK);
         boutons.setOpaque(false);
+
+
+        /**
+        terrain.setLayout(new GridLayout(10,10));
+        Border ligne = BorderFactory.createLineBorder(Color.BLACK,1);
+        for(int i = 0;i<100;i++){
+            JPanel cube = new JPanel();
+            listCube.add(cube);
+            cube.setPreferredSize(new Dimension(80,80));
+            cube.setBorder(ligne);
+            cube.setOpaque(false);
+            terrain.add(cube);
+        }
+
+        terrain.setBorder(ligne);*/
 
         /**permet de mettre les 2 JPanel côte à côte et de leur attribuer un pourcentage de l'écran*/
         /**GridBagConstraints c = new GridBagConstraints();

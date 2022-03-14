@@ -1,8 +1,12 @@
 package Control;
 
+import Modele.GrilleMod;
+import Modele.Jardinier;
+import Modele.Unite;
 import View.View;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +25,7 @@ public class Controller implements ActionListener, MouseListener {
         view.b4.addActionListener(this);
         view.b5.addActionListener(this);
         view.b6.addActionListener(this);
-
+        view.terrain.addMouseListener(this);
     }
 
     @Override
@@ -49,11 +53,20 @@ public class Controller implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        double mouseX = e.getPoint().getX();
+        double mouseY = e.getPoint().getY();
+        if(SwingUtilities.isLeftMouseButton(e)) {
+            for (Unite u : GrilleMod.getUnites()) {
+                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
+                    GrilleMod.setSelectedUnite(u);
+                }
+            }
+        }else{
+            GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
+        }
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
