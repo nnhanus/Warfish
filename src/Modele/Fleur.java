@@ -76,14 +76,22 @@ public class Fleur extends Ressource{ //à terme plusieurs types de fleurs, avec
 
     public static int getidStatic(){return 0;}
 
+    public void isPicked(){
+        estLa = false;
+    }
+
+    public boolean getEstLa(){
+        return estLa;
+    }
+
     @Override
     public void run(){
         while(lifespan > 0 && estLa){
+
             lifespan -= 50;
             try {
-                Thread.sleep(50);
+                Thread.sleep(1000);
             } catch (InterruptedException e){
-                estLa = false;
             }
         }
     }

@@ -100,6 +100,8 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      * C'est typiquement le cas où on aurait besoin d'une section critique je pense, mais je sais pas si c'est possible/comment ça marche ici
      */
     public static void removeFleur(Fleur f){
+        f.interrupt();
+        f.isPicked();
         ressources.remove(f);
         fleurs.remove(f);
         for(Nuisible n : nuisibles){
