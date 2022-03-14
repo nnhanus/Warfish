@@ -21,6 +21,7 @@ public class Unite extends Thread{
         this.y = y;
         this.targX = x;
         this.targY = y;
+        this.start();
     }
     /*getters*/
     /**
@@ -92,6 +93,18 @@ public class Unite extends Thread{
     }
 
     /**
+     * setCorrectDir
+     * tkt
+     */
+    public void setCorrectDir(){
+        //TODO
+        int posX = targX - x;
+        int posY = targY - y;
+        double dir;
+
+    }
+
+    /**
      * avance
      * fait avancer l'unité vers sa cible
      */
@@ -107,47 +120,33 @@ public class Unite extends Thread{
      * @param y l'ordonnée de la cible
      */
     public void setMoving(int x, int y) {
-        if(!immobile){
-            currentThread().interrupt();
-            this.immobile = true;
-        }
         if (x != this.x || y != this.y) { // on s'embête pas à le déplacer si il est déjà là
             this.targX = x;
             this.targY = y;
             this.setDir();
-            this.immobile = false;
-            this.start();
         }
     }
 
     @Override
-    public void run(){
-        int posX = targX - x;
-        int posY = targY - y;
-        while(posX*posX /*posY*posY*/> 4){
+    public void run() {
+        while (true) {
+            int posX = targX - x;
+            int posY = targY - y;
+            if (posX * posX /*posY*posY*/ > 4) {
             /*
             avance();*/
-            if(posX > 0){
-                this.x++;
-            }else{
-                this.x--;
+                if (posX > 0) {
+                    this.x++;
+                } else {
+                    this.x--;
+                }
+            } else if (posY * posY > 4) {
+                if (posY > 0) {
+                    this.y++;
+                } else {
+                    this.y--;
+                }
             }
-            posX = targX - x;
-
-            try {
-                sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        //TODO, à enlever quand on aura corriger les équations
-        while(posY*posY > 4){
-            if(posY > 0){
-                this.y++;
-            }else{
-                this.y--;
-            }
-            posY = targY - y;
             try {
                 sleep(5);
             } catch (InterruptedException e) {
@@ -155,6 +154,5 @@ public class Unite extends Thread{
             }
         }
     }
-
 }
 
