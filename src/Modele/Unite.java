@@ -48,7 +48,7 @@ public class Unite extends Thread{
     }
 
     /**
-     *getTargX
+     * getTargX
      * @return la cible (x) de l'unité
      */
     public int getTargX(){
@@ -74,7 +74,12 @@ public class Unite extends Thread{
         return (this.x - x)*(this.x - x) + (this.y - y)*(this.y-y);
     }
 
+    /**
+     * setDir
+     * Défini automatiquement la direction à suivre en radian
+     */
     public void setDir(){
+        //TODO corriger les équations
         if(y == targY) { //pour éviter un division par 0
             if(targX - x > 0){
                 dir = 0;
@@ -106,7 +111,7 @@ public class Unite extends Thread{
             currentThread().interrupt();
             this.immobile = true;
         }
-        if (x != this.x || y != this.y) {
+        if (x != this.x || y != this.y) { // on s'embête pas à le déplacer si il est déjà là
             this.targX = x;
             this.targY = y;
             this.setDir();
@@ -119,9 +124,29 @@ public class Unite extends Thread{
     public void run(){
         int posX = targX - x;
         int posY = targY - y;
-        while(posX*posX + posY*posY > 9){
-            avance();
+        while(posX*posX /*posY*posY*/> 4){
+            /*
+            avance();*/
+            if(posX > 0){
+                this.x++;
+            }else{
+                this.x--;
+            }
             posX = targX - x;
+
+            try {
+                sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        //TODO, à enlever quand on aura corriger les équations
+        while(posY*posY > 4){
+            if(posY > 0){
+                this.y++;
+            }else{
+                this.y--;
+            }
             posY = targY - y;
             try {
                 sleep(5);
@@ -129,7 +154,6 @@ public class Unite extends Thread{
                 e.printStackTrace();
             }
         }
-        currentThread().interrupt();
     }
 
 }
