@@ -62,12 +62,10 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
         return GrilleMod.unites;
     }
 
-    //TODO
-
     /**
      * getSelectedUnite
      * Renvoie l'unite selectionnée
-     * @return
+     * @return la selectedUnite
      */
     public static Unite getSelectedUnite(){
         return selectedUnite;
