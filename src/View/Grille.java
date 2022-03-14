@@ -40,25 +40,17 @@ public class Grille extends JPanel {
         g.setColor(Color.BLACK);
 
         while ( x < 800 ){
-            g.drawLine(x, 0, x, 750);
-            x += 50;
+            g.drawLine(x, 0, x, 800);
+            x += 80;
         }
 
         while ( y < 800 ){
             g.drawLine(0, y, 800, y);
-            y += 50;
-        }
 
-
-        for (Jardinier jardinier : jardvue.listjardinier) {
-            g.fillRect(jardinier.getX(),jardinier.getY(),50,50);
+            y += 80;
         }
 
 
     }
-
-
-
-
 
 }

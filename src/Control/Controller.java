@@ -80,6 +80,23 @@ public class Controller implements ActionListener, MouseListener {
             }
         }
 
+        /**boutons de la boutique **/
+        if(e.getSource() == view.bfleur1){
+            if(view.solde>=10) {
+                view.updateSolde(10);
+            }
+        }
+        if(e.getSource() == view.bfleur2){
+            if(view.solde>=100) {
+                view.updateSolde(100);
+            }
+        }
+        if(e.getSource() == view.bfleur3){
+            if(view.solde>=800) {
+                view.updateSolde(800);
+            }
+        }
+
     }
 
     @Override
@@ -96,4 +113,5 @@ public class Controller implements ActionListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
 }
