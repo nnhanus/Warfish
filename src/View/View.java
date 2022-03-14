@@ -38,18 +38,6 @@ public class View extends JFrame {
     public static JButton bfleur2 = new JButton(fleur2);
     public static JButton bfleur3 = new JButton(fleur3);
 
-
-    /**
-     * boutique de fleurs
-     **/
-    public static Icon fleur1 = new ImageIcon("src/View/Image/boutons_achat_fleur.png");
-    public static Icon fleur2 = new ImageIcon("src/View/Image/boutons_achat_meduse.png");
-    public static Icon fleur3 = new ImageIcon("src/View/Image/boutons_achat_bat.png");
-    public static JButton bfleur1 = new JButton(fleur1);
-    public static JButton bfleur2 = new JButton(fleur2);
-    public static JButton bfleur3 = new JButton(fleur3);
-
-
     public View() {
         this.setTitle("Project : Warfish");
         this.setPreferredSize(new Dimension(WIDTH_WIN, HEIGHT_WIN));
