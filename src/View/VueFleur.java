@@ -18,7 +18,7 @@ public class VueFleur {
     public void afficheFleur(Graphics g){
         g.setColor(Color.PINK);
         for (Fleur f : fleurs) {
-            g.drawOval(f.x, f.y, 30, 30);
+            g.drawOval(f.getX(), f.getY(), 30, 30);
         }
     }
 

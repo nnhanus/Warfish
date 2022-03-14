@@ -1,5 +1,7 @@
 package Control;
 
+import Modele.Building;
+import Modele.GrilleMod;
 import View.View;
 
 import javax.swing.*;
@@ -22,12 +24,16 @@ public class Controller implements ActionListener, MouseListener {
         view.b5.addActionListener(this);
         view.b6.addActionListener(this);
 
+        view.bfleur1.addActionListener(this);
+        view.bfleur2.addActionListener(this);
+        view.bfleur3.addActionListener(this);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == view.b1){
-            System.out.println("360 no scope");
+            View.boutique.setVisible(true);
         }
         if(e.getSource() == view.b2){
             System.out.println("headshot");
@@ -45,10 +51,28 @@ public class Controller implements ActionListener, MouseListener {
             System.out.println("ui");
         }
 
+        /**boutons de la boutique **/
+        if(e.getSource() == view.bfleur1){
+            if(view.solde>=10) {
+                view.updateSolde(10);
+            }
+        }
+        if(e.getSource() == view.bfleur2){
+            if(view.solde>=100) {
+                view.updateSolde(100);
+            }
+        }
+        if(e.getSource() == view.bfleur3){
+            if(view.solde>=800) {
+                view.updateSolde(800);
+            }
+        }
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
     }
 
     @Override
