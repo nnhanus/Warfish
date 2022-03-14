@@ -1,5 +1,8 @@
 package Control;
 
+import Modele.GrilleMod;
+import Modele.Jardinier;
+import Modele.Ressource;
 import View.View;
 
 import javax.swing.*;
@@ -26,25 +29,21 @@ public class Controller implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view.b1){
+        Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
+        /*if(e.getSource() == view.b1){
             System.out.println("360 no scope");
+        }*/
+        if(e.getSource() == view.b2){ //récolter
+            Ressource r = j.plusProcheRessource();
+            int dist = j.getSQDistFrom(r.getX(), r.getY());
+            if ( r.isPickable() && dist < 400){
+                j.recolterRessource(r);
+            }
         }
-        if(e.getSource() == view.b2){
-            System.out.println("headshot");
+        if(e.getSource() == view.b3) { //effrayer
+            j.effrayer();
         }
-        if(e.getSource() == view.b3){
-            System.out.println("oh my god");
-        }
-        if(e.getSource() == view.b4){
-            System.out.println("medused");
-        }
-        if(e.getSource() == view.b5){
-            System.out.println("what a move faker");
-        }
-        if(e.getSource() == view.b6){
-            System.out.println("ui");
-        }
-
+         view.repaint();
     }
 
     @Override

@@ -51,7 +51,7 @@ public class Grille extends JPanel {
 
 
         for (Jardinier jardinier : jardvue.listjardinier) {
-            g.fillRect(jardinier.x,jardinier.y,50,50);
+            g.fillRect(jardinier.getX(),jardinier.getY(),50,50);
         }
 
 
