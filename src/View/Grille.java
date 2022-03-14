@@ -46,14 +46,11 @@ public class Grille extends JPanel {
 
         while ( y < 800 ){
             g.drawLine(0, y, 800, y);
+
             y += 80;
         }
 
 
     }
-
-
-
-
 
 }

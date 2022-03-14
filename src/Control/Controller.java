@@ -2,6 +2,8 @@ package Control;
 
 import Modele.Building;
 import Modele.GrilleMod;
+import Modele.Jardinier;
+import Modele.Ressource;
 import View.View;
 
 import javax.swing.*;
@@ -35,13 +37,23 @@ public class Controller implements ActionListener, MouseListener {
         if(e.getSource() == view.b1){
             View.boutique.setVisible(true);
         }
-        if(e.getSource() == view.b2){
-            System.out.println("headshot");
+        Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
+        /*if(e.getSource() == view.b1){
+            System.out.println("360 no scope");
+            yolo
+        }*/
+        if(e.getSource() == view.b2){ //récolter
+            Ressource r = j.plusProcheRessource();
+            int dist = j.getSQDistFrom(r.getX(), r.getY());
+            if ( r.isPickable() && dist < 400){
+                j.recolterRessource(r);
+            }
         }
-        if(e.getSource() == view.b3){
-            System.out.println("oh my god");
+        if(e.getSource() == view.b3) { //effrayer
+            j.effrayer();
         }
-        if(e.getSource() == view.b4){
+
+        /*if(e.getSource() == view.b4){
             System.out.println("medused");
         }
         if(e.getSource() == view.b5){
@@ -49,6 +61,23 @@ public class Controller implements ActionListener, MouseListener {
         }
         if(e.getSource() == view.b6){
             System.out.println("ui");
+        }*/
+
+        /**boutons de la boutique **/
+        if(e.getSource() == view.bfleur1){
+            if(view.solde>=10) {
+                view.updateSolde(10);
+            }
+        }
+        if(e.getSource() == view.bfleur2){
+            if(view.solde>=100) {
+                view.updateSolde(100);
+            }
+        }
+        if(e.getSource() == view.bfleur3){
+            if(view.solde>=800) {
+                view.updateSolde(800);
+            }
         }
 
         /**boutons de la boutique **/
@@ -71,27 +100,18 @@ public class Controller implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e) {}
 
-    }
 }
