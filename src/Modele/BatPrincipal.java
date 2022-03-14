@@ -72,6 +72,7 @@ class BatPrincipal extends Building {
     /**
      * Vend les bouquets composés par un jardinier
      * Automatique, instanté
+     *
      */
     public void vendRessource(int amount, int id) {
         switch (id) {
