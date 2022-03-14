@@ -3,14 +3,13 @@ public class Fleur extends Ressource{ //à terme plusieurs types de fleurs, avec
 
     public int lifespan = 1000;
     boolean estLa = true;
-    public int x;
-    public int y;
+    private boolean boosted = false;
+    private int x;
+    private int y;
 
     public Fleur(int x, int y) {
-        this.prix = 100;
-        this.id = 0;
-        this.x = x;
-        this.y = y;
+        super(x, y);
+        this.boosted = mustBeBoosted();
     }
 
     /**
@@ -28,16 +27,53 @@ public class Fleur extends Ressource{ //à terme plusieurs types de fleurs, avec
      * Renvoie le prix de la fleur en fonction de son état
      * @return le prix
      */
-    public int getPrix(){
+    public int getAmount(){
         //Stade 3: fleur peut être cueillie mais rapporte moins
+        int amount;
         if (lifespan <= 450 && lifespan > 150){
-            return 60;
+            amount = 1;
         } else if (lifespan <= 150){ // Stade 4: fleur ceuillie au meilleur moment, prix le plus élévé
-            return 100;
+            amount = 3;
         } else { //sinon elle est pas récoltable ou elle est pourrie du coup 0
-            return 0;
+            amount = 0;
         }
+        if(boosted){
+            amount += 2;
+        }
+        return amount;
     }
+
+    /**
+     * boost
+     * set le statut boosted de la fleur à true
+     */
+    public void boost(){
+        this.boosted = true;
+    }
+
+    /**
+     * mustBeBoosted
+     * Détermine si un bâtiment de production est à proximité de la fleur
+     * @return true si un bâtiment de production est à proximité, false sinon
+     */
+    public boolean mustBeBoosted(){
+        for(Building b : GrilleMod.getBuildings()){
+            if(b.getClass() == BatProduction.class){
+                int posX = b.getX() - this.x;
+                int posY = b.getY() - this.y;
+                if(posX*posX + posY*posY <= b.getRange()*b.getRange()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int getid(){
+        return 0;
+    }
+
+    public static int getidStatic(){return 0;}
 
     @Override
     public void run(){
@@ -50,5 +86,4 @@ public class Fleur extends Ressource{ //à terme plusieurs types de fleurs, avec
             }
         }
     }
-
 }

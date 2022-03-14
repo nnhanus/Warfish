@@ -1,16 +1,20 @@
 package Modele;
 
+import View.Grille;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
+import static java.lang.Math.abs;
 
 public class Unite extends Thread{
-    public int x, y; //les coordonnées de l'unité
-    public int vitesse; //la vitesse de l'unité, définir une valeur globale en fonction de l'unité en question
-    public int targX; //Les coordonnées (x) ciblées par l'unité
-    public int targY; //Les coordonnées (y) ciblées par l'unité
+    protected int x, y; //les coordonnées de l'unité
+    protected int vitesse; //la vitesse de l'unité, définir une valeur globale en fonction de l'unité en question
+    protected boolean immobile = true;
+    protected int targX; //Les coordonnées (x) ciblées par l'unité
+    protected int targY; //Les coordonnées (y) ciblées par l'unité
+    protected double dir; //La direction à suivre pour atteindre la cible
 
     public Unite(int x, int y){
         this.x = x;
@@ -60,37 +64,67 @@ public class Unite extends Thread{
     }
 
     /**
-     * getRelevantCase
-     * @return la case sur laquelle l'unité se trouve
+     * getSQDistFrom
+     * Retourne le carré de la distance entre l'unite et un point
+     * @param x
+     * @param y
+     * @return un entier
      */
-    public Case getRelevantCase(){
-        return GrilleMod.plateau.get(this.x%GrilleMod.TAILLE_CASE).get(this.y%GrilleMod.TAILLE_CASE);
+    public int getSQDistFrom(int x, int y){
+        return (this.x - x)*(this.x - x) + (this.y - y)*(this.y-y);
+    }
+
+    public void setDir(){
+        if(y == targY) { //pour éviter un division par 0
+            if(targX - x > 0){
+                dir = 0;
+            }else{
+                dir = PI;
+            }
+        }else{
+            this.dir = atan(abs(targX - x)/ (double) abs(targY - y));
+        }
     }
 
     /**
      * avance
-     * fait avancer l'unité dans une direction (peut être appelé de manière séquentielle pour faire suivre un parcours)
-     * @param dir la direction à suivre
+     * fait avancer l'unité vers sa cible
      */
-    public void avance(double dir){
+    public void avance(){
         this.x += cos(dir);
         this.y += sin(dir);
     }
 
+    /**
+     * setMoving
+     * Met l'Unité en mouvement
+     * @param x l'abscisse de la cible
+     * @param y l'ordonnée de la cible
+     */
+    public void setMoving(int x, int y) {
+        if(!immobile){
+            currentThread().interrupt();
+            this.immobile = true;
+        }
+        if (x != this.x || y != this.y) {
+            this.targX = x;
+            this.targY = y;
+            this.setDir();
+            this.immobile = false;
+            this.start();
+        }
+    }
+
+    @Override
     public void run(){
-        int diffX = this.x - this.targX;
-        int diffY = this.y - this.targY;
-        while(diffX*diffX + diffY*diffY < 9){
-            float tandir = (this.targY-this.y)/ (float) (this.targX - this.x);
-            double dir = Math.toDegrees(Math.atan(tandir));
-            //récupérer la direction de l'objectif
-            //avancer dans la direction
-            this.avance(dir);
-            diffX = this.x - this.targX;
-            diffY = this.y - this.targY;
-            //moduler le temps de dormance en fonction de vitesse
+        int posX = targX - x;
+        int posY = targY - y;
+        while(posX*posX + posY*posY > 9){
+            avance();
+            posX = targX - x;
+            posY = targY - y;
             try {
-                sleep(5000/vitesse);
+                sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
