@@ -2,7 +2,7 @@ package Control;
 
 
 import Modele.*;
-import View.View;
+import View.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -44,7 +44,7 @@ public class Controller implements ActionListener, MouseListener {
             Ressource r = j.plusProcheRessource();
             int dist = j.getSQDistFrom(r.getX(), r.getY());
             if (r.isPickable() && dist < 1000) {
-                System.out.println("on récolte");
+                //System.out.println("on récolte");
                 j.recolterRessource(r);
                 view.updateInv();
             }
@@ -58,9 +58,14 @@ public class Controller implements ActionListener, MouseListener {
                 j.planteFleur();
             }
         }
-        /*if(e.getSource() == view.b5){
-            System.out.println("what a move faker");
-        }
+        /*if(e.getSource() == view.b5){ //désherber
+            Ressource r = j.plusProcheRessource();
+            int dist = j.getSQDistFrom(r.getX(), r.getY());
+            if (r.isPickable() && dist < 1000 && ((Fleur) r).getIsDead()) {
+                j.desherber(r);
+            }
+        }*/
+        /*
         if(e.getSource() == view.b6){
             System.out.println("ui");
         }*/

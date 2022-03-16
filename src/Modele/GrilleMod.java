@@ -101,13 +101,26 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      */
     public static void removeFleur(Fleur f){
         f.interrupt();
-        f.isPickedOrDies();
+        f.isPicked();
         ressources.remove(f);
         fleurs.remove(f);
         for(Nuisible n : nuisibles){
             if(n.getTarget() == f){
                 n.acquireTarget(); //ou mise à null, c'est équivalent
             }
+        }
+    }
+
+    public static void desherbeFleur(Fleur f){
+        f.isPicked();
+        //if (f.getIsDead()) {
+            ressources.remove(f);
+            fleurs.remove(f);
+            for (Nuisible n : nuisibles) {
+                if (n.getTarget() == f) {
+                    n.acquireTarget(); //ou mise à null, c'est équivalent
+                }
+            //}
         }
     }
 

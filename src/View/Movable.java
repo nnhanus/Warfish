@@ -17,6 +17,7 @@ public class Movable{
     private BufferedImage meduse = null;
     private BufferedImage f1 = null;
     private BufferedImage B1 = null;
+    private BufferedImage fan1 = null;
 
     public Movable(JardinierView jardvue, VueFleur vuefleur) {
         this.vuefleur = vuefleur;
@@ -36,18 +37,25 @@ public class Movable{
         } catch (IOException ex) {
             System.out.println("Fichier manquant"); //absence de l'image
         }
+        try {
+            fan1 = ImageIO.read(new File("src/View/Image/fleur_rouge_fan.png")); //image de méduse
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant"); //absence de l'image
+        }
     }
 
 
     public void paint(Graphics g) {
         for (Fleur f : vuefleur.fleurs) {
-            if (f.getEstLa()) {
+            if (!(f.getIsPicked())) {
                 //g.setColor(Color.yellow);
                 //g.fillRect(f.getX(), f.getY(), 40, 40);
-                if (f.lifespan >= 450){
+                if (f.lifespan >= 450) {
                     g.drawImage(B1, f.getX(), f.getY(), 40, 40, null);
-                } else {
+                } else if (!(f.getIsDead())) {
                     g.drawImage(f1, f.getX(), f.getY(), 40, 40, null);
+                } else if (f.getIsDead()) {
+                    g.drawImage(fan1, f.getX(), f.getY(), 40, 40, null);
                 }
             }
         }
