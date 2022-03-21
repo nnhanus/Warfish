@@ -50,8 +50,11 @@ public class Nuisible extends Thread{
      * Fait avancer le lapin de distance dans la direction dir
      */
     public void avanceNuisible(){
-        this.x += (int) cos(dir)*3;
-        this.y += (int) sin(dir)*3;
+        this.x += cos(dir)*1.6;
+        this.y -= sin(dir)*1.6;
+        int posX = target.getX() - this.x;
+        int posY = target.getY() - this.y;
+        this.dir = atan2(posX, posY) - PI/2.0;
     }
 
     /**
@@ -109,28 +112,14 @@ public class Nuisible extends Thread{
                 }
             }
         }
-        //TODO corriger les équations
         if(target != null) {
-            if(y == target.getY()) { //pour éviter un division par 0
-                if(target.getX() - x > 0){
-                    this.dir = 0;
-                }else{
-                    this.dir = PI;
-                }
-            }else{
-                //arctan(|opposé|/|adjacent|)
-                this.dir = atan(abs((target.getX() - x)) / (double) abs(target.getY() - y));
-            }
-        }else{
-            if(y == GrilleMod.HAUTEUR_GRILLE/2.0) { //pour éviter une division par 0
-                if(GrilleMod.LARGEUR_GRILLE/2.0 - x > 0){
-                    this.dir = 0;
-                }else{
-                    this.dir = PI;
-                }
-            }else{
-                this.dir = atan(abs(GrilleMod.LARGEUR_GRILLE / 2.0 - x) / abs(GrilleMod.HAUTEUR_GRILLE / 2.0 - y));
-            }
+            int posX = target.getX() - x;
+            int posY = target.getY() - y;
+            this.dir = atan2(posX, posY) - PI/2.0;
+        }else{ //en vrai ce cas est pas mal osef, juste pour le flex
+            int posX = GrilleMod.LARGEUR_GRILLE/2 - x;
+            int posY = GrilleMod.HAUTEUR_GRILLE/2 - y;
+            this.dir = atan2(posX, posY) - PI/2.0;
         }
     }
 
@@ -166,7 +155,7 @@ public class Nuisible extends Thread{
                     this.avanceNuisible();
                     enfuite = isNotValidPosition(this.x, this.y); //renverra true si à proximité d'un bâtiment de défense
                     try {
-                        sleep(5);
+                        sleep(15);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
