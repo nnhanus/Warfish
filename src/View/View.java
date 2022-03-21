@@ -2,7 +2,7 @@
 package View;
 
 import Modele.GrilleMod;
-import Modele.Jardinier;
+import Modele.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static Modele.GrilleMod.getBatPrincipal;
+
 
 public class View extends JFrame {
 
@@ -22,8 +24,9 @@ public class View extends JFrame {
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 700;
     public static final int WIDTH_CTRL = 400;
-    public static int solde = 1000;
     public static int nbfleur1 = ((Jardinier) Modele.GrilleMod.getUnites().get(0)).getInventaire()[0];
+    public static int nbgraines = ((Jardinier) Modele.GrilleMod.getUnites().get(0)).getInventaire()[1];
+    public static int nbBouquet = ((Jardinier) Modele.GrilleMod.getUnites().get(0)).getInventaire()[2];
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;
@@ -137,7 +140,7 @@ public class View extends JFrame {
         /**gestion de l'affichage de l'argent**/
 
         soldeL.setFont(new Font("Serif", Font.PLAIN, 25));
-        soldeL.setText("solde : " + String.valueOf(solde));
+        soldeL.setText("solde : " + String.valueOf(getBatPrincipal().getTirelire()));
         argent.add(soldeL);
         argent.setBackground(Color.PINK);
 
@@ -148,7 +151,7 @@ public class View extends JFrame {
         titre.setText("Inventaire");
         titre.setFont(new Font("Serif", Font.PLAIN, 20));
         inv.setFont(new Font("Serif", Font.PLAIN, 20));
-        inv.setText("nb fleur1 : " + String.valueOf(nbfleur1));
+        inv.setText("<html>nb fleur1 : " + String.valueOf(nbfleur1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb graines : " + String.valueOf(nbgraines)+"<br/>nb Bouquets :" + String.valueOf(nbBouquet)+"</html>");
         inventaire.add(titre);
         inventaire.add(inv);
 
@@ -199,13 +202,19 @@ public class View extends JFrame {
 
 
     public static void updateSolde(int val) {
-        solde = solde - val;
-        soldeL.setText("solde : " + String.valueOf(solde));
+        getBatPrincipal().setTirelire(getBatPrincipal().getTirelire()-val);
+        soldeL.setText("solde : " + String.valueOf(getBatPrincipal().getTirelire()));
     }
 
     public static void updateInv(){
         nbfleur1 = nbfleur1 + 1;
-        inv.setText("nb fleur1 : " + String.valueOf(nbfleur1));
+        inv.setText("<html>nb fleur1 : " + String.valueOf(nbfleur1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb graines : " + String.valueOf(nbgraines)+"<br/>nb Bouquets :" + String.valueOf(nbBouquet)+"</html>");
+
+
+    }
+    public static void updateGraines(){
+        nbgraines = nbgraines + 1;
+        inv.setText("<html>nb fleur1 : " + String.valueOf(nbfleur1) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb graines : " + String.valueOf(nbgraines)+"<br/>nb Bouquets :" + String.valueOf(nbBouquet)+"</html>");
 
 
     }

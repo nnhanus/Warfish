@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Bâtiment Principal
  * Gère les ressources générales, et notamment l'argent/score
  */
-class BatPrincipal extends Building {
+public class BatPrincipal extends Building {
     private static int tirelire = 200;
     public static final int PRIX_JARD = 100;
     public static final int PRIX_GRAINE = 10;
