@@ -22,8 +22,10 @@ public class Movable{
             g.fillRect(jardinier.getX(), jardinier.getY(), 80, 80);
         }
         for (Fleur f : vuefleur.fleurs) {
-            g.setColor(Color.yellow);
-            g.fillRect(f.getX(), f.getY(), 40, 40);
+            if (f.getEstLa()) {
+                g.setColor(Color.yellow);
+                g.fillRect(f.getX(), f.getY(), 40, 40);
+            }
         }
     }
 }
