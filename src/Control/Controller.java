@@ -46,6 +46,7 @@ public class Controller implements ActionListener, MouseListener {
             if (r.isPickable() && dist < 1000) {
                 System.out.println("on récolte");
                 j.recolterRessource(r);
+                view.updateInv();
             }
         }
         if (e.getSource() == view.b3) { //effrayer

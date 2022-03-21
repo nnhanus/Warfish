@@ -1,6 +1,9 @@
 
 package View;
 
+import Modele.GrilleMod;
+import Modele.Jardinier;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,11 +22,13 @@ public class View extends JFrame {
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 700;
     public static int solde = 1000;
+    public static int nbfleur1 = ((Jardinier) Modele.GrilleMod.getUnites().get(0)).getInventaire()[0];
     public static JPanel terrain ;
     public static JPanel control ;
     public static JPanel boutons ;
     public static JPanel argent ;
     public static JPanel boutique;
+    public static JPanel inventaire;
     public static JLabel soldeL = new JLabel();
     public static JButton b1 = new JButton("Boutique");
     public static JButton b2 = new JButton("Ramasser");
@@ -31,6 +36,7 @@ public class View extends JFrame {
     public static JButton b4 = new JButton("Planter");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
+    public static JLabel inv = new JLabel();
 
     public Grille grille = new Grille();
 
@@ -54,6 +60,7 @@ public class View extends JFrame {
         boutons = new JPanel();
         argent = new JPanel();
         boutique = new JPanel();
+        inventaire = new JPanel();
 
         /**dimension des panels principaux*/
 
@@ -107,8 +114,13 @@ public class View extends JFrame {
          c.weighty = 1;
          this.getContentPane().add(control,c);*/
 
+
+        //inventaire.setPreferredSize(new Dimension(300, 100));
+
         this.add(terrain, BorderLayout.WEST);
         this.add(control);
+        //this.add(inventaire);
+
 
         /**boutique**/
 
@@ -128,15 +140,31 @@ public class View extends JFrame {
         argent.add(soldeL);
         argent.setBackground(Color.PINK);
 
+
+        inventaire.setLayout(new BoxLayout(inventaire, BoxLayout.PAGE_AXIS));
+        inventaire.setBackground(Color.PINK);
+        JLabel titre = new JLabel();
+        titre.setText("Inventaire");
+        titre.setFont(new Font("Serif", Font.PLAIN, 20));
+        inv.setFont(new Font("Serif", Font.PLAIN, 20));
+        inv.setText("nb fleur1 : " + String.valueOf(nbfleur1));
+        inventaire.add(titre);
+        inventaire.add(inv);
+
+
         /** permet de placer les jpanels dans celui de droite*/
         control.setLayout(null);
-      
-        boutons.setBounds(50,300,300,100);
-        cubomeduse.setBounds(0,0,400,300);
-        boutique.setBounds(50,530,300,225);
-        argent.setBounds(50,450,300,50);
 
 
+        boutons.setBounds(50,400,300,100);
+        cubomeduse.setBounds(0,100,400,300);
+        boutique.setBounds(50,630,300,225);
+        argent.setBounds(50,550,300,50);
+        inventaire.setBounds(50, 0, 300, 100);
+
+
+
+        control.add(inventaire);
         control.add(cubomeduse);
         control.add(boutons);
         control.add(boutique);
@@ -174,6 +202,13 @@ public class View extends JFrame {
     public static void updateSolde(int val) {
         solde = solde - val;
         soldeL.setText("solde : " + String.valueOf(solde));
+    }
+
+    public static void updateInv(){
+        nbfleur1 = nbfleur1 + 1;
+        inv.setText("nb fleur1 : " + String.valueOf(nbfleur1));
+
+
     }
 }
 
