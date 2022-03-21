@@ -20,7 +20,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
     private static final int nbFleur = 8;
 
     //TODO, le b√¢timent principal est √† placer au hasard
-    private static BatPrincipal BAT_PRINCIPAL = new BatPrincipal(LARGEUR_GRILLE/2, HAUTEUR_GRILLE/2);
+    private static BatPrincipal BAT_PRINCIPAL = new BatPrincipal((int) (Math.random() * LARGEUR_GRILLE), (int) (Math.random() * HAUTEUR_GRILLE));
     private static Unite selectedUnite = null;
 
     /**
@@ -248,11 +248,12 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         for(int i = 0; i < nbFleur; i++) {
             int randx = (int) (Math.random() * HAUTEUR_GRILLE);
             int randy = (int) (Math.random() * LARGEUR_GRILLE);
+            int randtype = (int) (Math.random() * 3);
             while (isNotValidPosition(randx, randy)){
                 randx = (int) (Math.random() * HAUTEUR_GRILLE);
                 randy = (int) (Math.random() * LARGEUR_GRILLE);
             }
-            addFleur(new Fleur(randx, randy));
+            addFleur(new Fleur(randx, randy, randtype));
         }
     }
 
@@ -311,7 +312,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
     @Override
     public void run(){
         while(true){
-            addNuisible();
+            //addNuisible();
             try {
                 sleep(12000);
             } catch (InterruptedException e) {

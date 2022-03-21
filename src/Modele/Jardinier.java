@@ -19,7 +19,7 @@ public class Jardinier extends Unite{
      */
     public void planteFleur() {
         this.inventaire[0]--;
-        GrilleMod.addFleur(new Fleur(this.x, this.y));
+        GrilleMod.addFleur(new Fleur(this.x, this.y, 1));
     }
 
     /**
@@ -31,7 +31,7 @@ public class Jardinier extends Unite{
             if(r.getClass() == Fleur.class){
                 GrilleMod.removeFleur((Fleur) r);
             }
-            this.inventaire[r.getid()] += r.getAmount();
+            this.inventaire[r.getType()] += r.getAmount();
     }
 
     /**

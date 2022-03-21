@@ -18,6 +18,8 @@ public class Movable{
     private BufferedImage f1 = null;
     private BufferedImage B1 = null;
     private BufferedImage fan1 = null;
+    private BufferedImage fjaune = null;
+    private BufferedImage lilas = null;
 
     public Movable(JardinierView jardvue, VueFleur vuefleur) {
         this.vuefleur = vuefleur;
@@ -42,6 +44,16 @@ public class Movable{
         } catch (IOException ex) {
             System.out.println("Fichier manquant"); //absence de l'image
         }
+        try {
+            fjaune = ImageIO.read(new File("src/View/Image/th-Photoroom.png")); //image de méduse
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant"); //absence de l'image
+        }
+        try {
+            lilas = ImageIO.read(new File("src/View/Image/fleur_verte.png")); //image de méduse
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant"); //absence de l'image
+        }
     }
 
 
@@ -50,12 +62,18 @@ public class Movable{
             if (!(f.getIsPicked())) {
                 //g.setColor(Color.yellow);
                 //g.fillRect(f.getX(), f.getY(), 40, 40);
-                if (f.lifespan >= 450) {
-                    g.drawImage(B1, f.getX(), f.getY(), 40, 40, null);
-                } else if (!(f.getIsDead())) {
-                    g.drawImage(f1, f.getX(), f.getY(), 40, 40, null);
-                } else if (f.getIsDead()) {
-                    g.drawImage(fan1, f.getX(), f.getY(), 40, 40, null);
+                if (f.getType() == 1) {
+                    if (f.lifespan >= 450) {
+                        g.drawImage(B1, f.getX(), f.getY(), 40, 40, null);
+                    } else if (!(f.getIsDead())) {
+                        g.drawImage(f1, f.getX(), f.getY(), 40, 40, null);
+                    } else if (f.getIsDead()) {
+                        g.drawImage(fan1, f.getX(), f.getY(), 40, 40, null);
+                    }
+                } else if (f.getType() == 0){
+                    g.drawImage(fjaune, f.getX(), f.getY(), 40, 40, null);
+                } else if (f.getType() == 2){
+                    g.drawImage(lilas, f.getX(), f.getY(), 40, 40, null);
                 }
             }
         }

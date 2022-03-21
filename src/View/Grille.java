@@ -1,12 +1,12 @@
 package View;
 
 
-import Modele.Case;
-import Modele.Jardinier;
+import Modele.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Grille extends JPanel {
 
     public Movable move;
+    private BufferedImage batPrinc = null;
 
     public Grille () {
         this.setPreferredSize(new Dimension(800,View.HEIGHT_WIN));
@@ -31,6 +32,11 @@ public class Grille extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Erreur image de fond: " +e.getMessage());
+        }
+        try {
+            batPrinc = ImageIO.read(new File("src/View/Image/jelly.png")); //image de méduse
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant"); //absence de l'image
         }
 
         /**Grille**/
@@ -52,6 +58,8 @@ public class Grille extends JPanel {
 
             y += 80;
         }
+
+        //g.drawImage(batPrinc, GrilleMod.getBatPrincipal().getX(), GrilleMod.getBatPrincipal().getY(), 80, 80, null);
 
 
         move.paint(g);
