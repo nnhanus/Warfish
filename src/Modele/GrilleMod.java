@@ -16,6 +16,8 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
     private static ArrayList<Unite> unites = new ArrayList<>();
 
+    public static final int ID_FLEUR = 1;
+
     private static final int nbForet = 4;
     private static final int nbRocher = 4;
     private static final int nbFleur = 8;

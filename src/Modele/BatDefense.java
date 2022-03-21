@@ -6,10 +6,9 @@ package Modele;
  */
 class BatDefense extends Building {
     public BatDefense(int x, int y) {
-        super(x, y, 7);
+        super(x, y, 1000);
         effrayer();
     }
-    //TODO
 
     public void effrayer(){
         for(Nuisible n : GrilleMod.getNuisibles()){

@@ -14,7 +14,7 @@ import java.awt.event.MouseListener;
 
 public class Controller implements ActionListener, MouseListener {
 
-    public static View view;
+    public View view;
 
     public Controller(View view) {
         this.view = view;
@@ -58,34 +58,17 @@ public class Controller implements ActionListener, MouseListener {
                 j.planteFleur();
             }
         }
-        /*if(e.getSource() == view.b5){ //désherber
+        if(e.getSource() == view.b5){ //désherber
             Ressource r = j.plusProcheRessource();
             int dist = j.getSQDistFrom(r.getX(), r.getY());
-            if (r.isPickable() && dist < 1000 && ((Fleur) r).getIsDead()) {
-                j.desherber(r);
+            if (dist < 1000 && ((Fleur) r).getIsDead()) {
+                j.desherber((Fleur) r);
             }
-        }*/
+        }
         /*
         if(e.getSource() == view.b6){
             System.out.println("ui");
         }*/
-
-        /**boutons de la boutique **/
-        if (e.getSource() == view.bfleur1) {
-            if (view.solde >= 10) {
-                view.updateSolde(10);
-            }
-        }
-        if (e.getSource() == view.bfleur2) {
-            if (view.solde >= 100) {
-                view.updateSolde(100);
-            }
-        }
-        if (e.getSource() == view.bfleur3) {
-            if (view.solde >= 800) {
-                view.updateSolde(800);
-            }
-        }
 
         /**boutons de la boutique **/
         if (e.getSource() == view.bfleur1) {
