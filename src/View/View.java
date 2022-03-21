@@ -34,7 +34,7 @@ public class View extends JFrame {
     public static JButton b2 = new JButton("Ramasser");
     public static JButton b3 = new JButton("Effrayer");
     public static JButton b4 = new JButton("Planter");
-    public static JButton b5 = new JButton("5");
+    public static JButton b5 = new JButton("Désherber");
     public static JButton b6 = new JButton("6");
     public static JLabel inv = new JLabel();
 
