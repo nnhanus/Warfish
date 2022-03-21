@@ -10,6 +10,7 @@ public class Fleur extends Ressource{ //à terme plusieurs types de fleurs, avec
     public Fleur(int x, int y) {
         super(x, y);
         this.boosted = mustBeBoosted();
+        this.start();
     }
 
     /**

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import static java.lang.Math.*;
 import static java.lang.Math.abs;
 
-public class Unite extends Thread{
+public class Unite extends Thread {
     protected int x, y; //les coordonnées de l'unité
     protected int vitesse; //la vitesse de l'unité, définir une valeur globale en fonction de l'unité en question
     protected boolean immobile = true;
@@ -16,7 +16,7 @@ public class Unite extends Thread{
     protected int targY; //Les coordonnées (y) ciblées par l'unité
     protected double dir; //La direction à suivre pour atteindre la cible
 
-    public Unite(int x, int y){
+    public Unite(int x, int y) {
         this.x = x;
         this.y = y;
         this.targX = x;
@@ -24,27 +24,28 @@ public class Unite extends Thread{
         this.start();
     }
     /*getters*/
+
     /**
-     *getX
+     * getX
      * @return l'abscisse x de l'unité
      */
-    public int getX(){
+    public int getX() {
         return this.x;
     }
 
     /**
-     *getY
+     * getY
      * @return l'ordonnée y de l'unité
      */
-    public int getY(){
+    public int getY() {
         return this.y;
     }
 
     /**
-     *getVitesse
+     * getVitesse
      * @return la vitesse de l'unité
      */
-    public int getVitesse(){
+    public int getVitesse() {
         return this.vitesse;
     }
 
@@ -52,15 +53,15 @@ public class Unite extends Thread{
      * getTargX
      * @return la cible (x) de l'unité
      */
-    public int getTargX(){
+    public int getTargX() {
         return this.targX;
     }
 
     /**
-     *getTargY
+     * getTargY
      * @return la cible (y) de l'unité
      */
-    public int getTargY(){
+    public int getTargY() {
         return this.targY;
     }
 
@@ -71,87 +72,58 @@ public class Unite extends Thread{
      * @param y
      * @return un entier
      */
-    public int getSQDistFrom(int x, int y){
-        return (this.x - x)*(this.x - x) + (this.y - y)*(this.y-y);
+    public int getSQDistFrom(int x, int y) {
+        return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y);
     }
 
     /**
      * setDir
      * Défini automatiquement la direction à suivre en radian
      */
-    public void setDir(){
-        //TODO corriger les équations
-        if(y == targY) { //pour éviter un division par 0
-            if(targX - x > 0){
-                dir = 0;
-            }else{
-                dir = PI;
-            }
-        }else{
-            this.dir = atan(abs(targX - x)/ (double) abs(targY - y));
-        }
-    }
-
-    /**
-     * setCorrectDir
-     * tkt
-     */
-    public void setCorrectDir(){
-        //TODO
+    public void setDir() {
         int posX = targX - x;
         int posY = targY - y;
-        double dir;
-
+        this.dir = atan2(posX, posY) - PI/2.0;
     }
 
     /**
      * avance
      * fait avancer l'unité vers sa cible
      */
-    public void avance(){
-        this.x += cos(dir);
-        this.y += sin(dir);
+    public void avance() {
+        this.x  += cos(dir)*1.6;
+        this.y -= sin(dir)*1.6;
+        this.setDir();
     }
 
     /**
      * setMoving
-     * Met l'Unité en mouvement
+     * Désigne une cible pour l'unité
      * @param x l'abscisse de la cible
      * @param y l'ordonnée de la cible
      */
     public void setMoving(int x, int y) {
-        if (x != this.x || y != this.y) { // on s'embête pas à le déplacer si il est déjà là
-            this.targX = x;
-            this.targY = y;
-            this.setDir();
-        }
+        this.targX = x;
+        this.targY = y;
+        this.setDir();
     }
 
     @Override
     public void run() {
+        int posX;
+        int posY;
         while (true) {
-            int posX = targX - x;
-            int posY = targY - y;
-            if (posX * posX /*posY*posY*/ > 4) {
-            /*
-            avance();*/
-                if (posX > 0) {
-                    this.x++;
-                } else {
-                    this.x--;
-                }
-            } else if (posY * posY > 4) {
-                if (posY > 0) {
-                    this.y++;
-                } else {
-                    this.y--;
-                }
+            posX = targX - x;
+            posY = targY - y;
+            if(posX*posX + posY*posY > 125) {
+                this.avance();
             }
             try {
-                sleep(5);
+                sleep(7);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }
