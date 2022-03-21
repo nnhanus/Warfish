@@ -169,6 +169,7 @@ public class Nuisible extends Thread{
                 }
             }
         }
+        System.out.println("removed");
         GrilleMod.removeNuisible(this);
     }
 }

@@ -19,7 +19,7 @@ public class Grille extends JPanel {
     public Grille () {
         this.setPreferredSize(new Dimension(800,View.HEIGHT_WIN));
         this.setOpaque(false);
-        this.move = new Movable(new JardinierView(),new VueFleur());
+        this.move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Grille extends JPanel {
             System.out.println("Erreur image de fond: " +e.getMessage());
         }
 
-        /**Grille**/
+        /**Grille
         super.paintComponent(g);
 
 
@@ -51,7 +51,7 @@ public class Grille extends JPanel {
             g.drawLine(0, y, 800, y);
 
             y += 80;
-        }
+        }*/
 
 
         move.paint(g);

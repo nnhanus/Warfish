@@ -2,6 +2,7 @@ package View;
 
 import Modele.Fleur;
 import Modele.Jardinier;
+import Modele.Nuisible;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,14 +15,17 @@ public class Movable{
 
     public static JardinierView jardvue;
     public VueFleur vuefleur;
+    public VueNuisible vueNuisible;
     private BufferedImage meduse = null;
     private BufferedImage f1 = null;
     private BufferedImage B1 = null;
     private BufferedImage fan1 = null;
+    private BufferedImage nuis = null;
 
-    public Movable(JardinierView jardvue, VueFleur vuefleur) {
+    public Movable(JardinierView jardvue, VueFleur vuefleur,VueNuisible vueNuisible) {
         this.vuefleur = vuefleur;
         this.jardvue = jardvue;
+        this.vueNuisible = vueNuisible;
         try {
             meduse = ImageIO.read(new File("src/View/Image/jelly.png")); //image de méduse
         } catch (IOException ex) {
@@ -42,6 +46,12 @@ public class Movable{
         } catch (IOException ex) {
             System.out.println("Fichier manquant"); //absence de l'image
         }
+        try {
+            nuis = ImageIO.read(new File("src/View/Image/cursebriceCute.png")); //image de brice
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant"); //absence de l'image
+        }
+
     }
 
 
@@ -62,6 +72,10 @@ public class Movable{
         for (Jardinier jardinier : jardvue.listjardinier) {
             g.drawImage(meduse, jardinier.getX(), jardinier.getY(), 80, 80, null);
         }
+        for (Nuisible n : vueNuisible.nuisibles) {
+            g.drawImage(nuis, n.getX(), n.getY(), 50, 50, null);
+        }
+
 
     }
 }

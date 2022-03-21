@@ -105,36 +105,31 @@ public class Controller implements ActionListener, MouseListener {
         }
     }
 
-
-        @Override
-        public void mouseClicked (MouseEvent e) {
-            double mouseX = e.getPoint().getX();
-            double mouseY = e.getPoint().getY();
-            if (SwingUtilities.isLeftMouseButton(e)) {
-                for (Unite u : GrilleMod.getUnites()) {
-                    if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
-                        GrilleMod.setSelectedUnite(u);
-                    }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        double mouseX = e.getPoint().getX();
+        double mouseY = e.getPoint().getY();
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            for (Unite u : GrilleMod.getUnites()) {
+                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
+                    GrilleMod.setSelectedUnite(u);
                 }
-            } else {
-                GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
             }
+        } else {
+            GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
         }
-
-        @Override
-        public void mousePressed (MouseEvent e){
-        }
-
-        @Override
-        public void mouseReleased (MouseEvent e){
-        }
-
-        @Override
-        public void mouseEntered (MouseEvent e){
-        }
-
-        @Override
-        public void mouseExited (MouseEvent e){
-        }
-
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
+}
