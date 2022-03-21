@@ -97,18 +97,20 @@ public class Nuisible extends Thread{
      */
     public void acquireTarget(){
         for(Fleur f : GrilleMod.getFleurs()){
-            if(this.target == null){
-                this.target = f;
-            }else{
-                //les coordonnées relatives à la fleur f
-                int posX = f.getX() - this.x;
-                int posY = f.getY() - this.y;
-
-                //les coordonnées relatives à la cible
-                int targX = this.target.getX() - this.x;
-                int targY = this.target.getY() - this.y;
-                if(posX*posX + posY*posY < targX*targX + targY*targY){
+            if(f.isPickable()) {
+                if (this.target == null) {
                     this.target = f;
+                } else {
+                    //les coordonnées relatives à la fleur f
+                    int posX = f.getX() - this.x;
+                    int posY = f.getY() - this.y;
+
+                    //les coordonnées relatives à la cible
+                    int targX = this.target.getX() - this.x;
+                    int targY = this.target.getY() - this.y;
+                    if (posX * posX + posY * posY < targX * targX + targY * targY) {
+                        this.target = f;
+                    }
                 }
             }
         }
@@ -151,7 +153,7 @@ public class Nuisible extends Thread{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else { //sinon il avance
+                } else if(target.isPickable()){ //sinon si la cible est ready
                     this.avanceNuisible();
                     enfuite = isNotValidPosition(this.x, this.y); //renverra true si à proximité d'un bâtiment de défense
                     try {
@@ -159,6 +161,8 @@ public class Nuisible extends Thread{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                }else{ //on refresh la cible
+                    acquireTarget();
                 }
             }else{ //si il n'a pas de cible
                 acquireTarget();
@@ -169,6 +173,7 @@ public class Nuisible extends Thread{
                 }
             }
         }
+        System.out.println("done");
         GrilleMod.removeNuisible(this);
     }
 }

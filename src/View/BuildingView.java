@@ -1,20 +1,20 @@
 package View;
 import Modele.Building;
+import Modele.GrilleMod;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BuildingView extends JPanel{
-    private Building building;
-
-    /*public BuildingView (Building b){
-        this.building = b;
-    }*/
+    public BuildingView (){
+    }
 
     @Override
     public void paint(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.RED);
-        g.drawRect(0, 0, 50, 50);
+        for(Building b : GrilleMod.getBuildings()){
+            g.setColor(Color.RED);
+            g.drawRect(b.getX(), b.getY(), 50, 50);
+        }
     }
 }

@@ -10,7 +10,6 @@ public class Jardinier extends Unite{
         super(x, y);
         vitesse = 100;
         Arrays.fill(inventaire, 0);
-
     }
 
     /**
@@ -120,8 +119,9 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de défense de l'inventaire
      */
     public void construitBatDefense(){
-        this.inventaire[3] -= 5;
-        this.inventaire[4] -= 15;
+        /*this.inventaire[3] -= 5;
+        this.inventaire[4] -= 15;*/
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_DEFENSE);
         GrilleMod.addBatiment(new BatDefense(this.x, this.y));
     }
 
@@ -130,8 +130,9 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de production de l'inventaire
      */
     public void construitBatProduction(){
-        this.inventaire[3] -= 15;
-        this.inventaire[4] -= 5;
+        /*this.inventaire[3] -= 15;
+        this.inventaire[4] -= 5;*/
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_PRODUCTION);
         GrilleMod.addBatiment(new BatProduction(this.x, this.y));
     }
 
@@ -144,7 +145,7 @@ public class Jardinier extends Unite{
             int posX = n.getX() - this.x;
             int posY = n.getY() - this.y;
 
-            if(posX*posX + posY*posY <= 50){
+            if(posX*posX + posY*posY <= 1000000){
                 n.setenFuite();
             }
         }

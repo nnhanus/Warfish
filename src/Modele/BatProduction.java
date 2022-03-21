@@ -6,7 +6,7 @@ package Modele;
  */
 class BatProduction extends Building {
     public BatProduction(int x, int y) {
-        super(x, y, 7);
+        super(x, y, 1000);
         boostAllNear();
     }
 
