@@ -21,6 +21,7 @@ public class View extends JFrame {
      */
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 700;
+    public static final int WIDTH_CTRL = 400;
     public static int solde = 1000;
     public static int nbfleur1 = ((Jardinier) Modele.GrilleMod.getUnites().get(0)).getInventaire()[0];
     public static JPanel terrain ;
@@ -65,7 +66,7 @@ public class View extends JFrame {
         /**dimension des panels principaux*/
 
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
-        control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
+        control.setPreferredSize(new Dimension(WIDTH_CTRL,HEIGHT_WIN));
         //Grille grille = new Grille(new JardinierView());
         terrain.add(grille);
         //BuildingView bat1 = new BuildingView();
@@ -156,13 +157,11 @@ public class View extends JFrame {
         control.setLayout(null);
 
 
-        boutons.setBounds(50,400,300,100);
-        cubomeduse.setBounds(0,100,400,300);
-        boutique.setBounds(50,630,300,225);
-        argent.setBounds(50,550,300,50);
         inventaire.setBounds(50, 0, 300, 100);
-
-
+        cubomeduse.setBounds(100,100,200,150);
+        boutons.setBounds(50,250,300,100);
+        argent.setBounds(50,350,300,50);
+        boutique.setBounds(50,430,300,225);
 
         control.add(inventaire);
         control.add(cubomeduse);
