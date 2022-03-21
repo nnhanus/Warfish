@@ -67,8 +67,6 @@ public class View extends JFrame {
         terrain.setPreferredSize(new Dimension(800,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
         terrain.add(grille);
-        //BuildingView bat1 = new BuildingView();
-        //terrain.add(bat1);
       
 
         /**ajout image*/
@@ -86,35 +84,6 @@ public class View extends JFrame {
         terrain.setBackground(Color.decode("#0090FC"));
         control.setBackground(Color.PINK);
         boutons.setOpaque(false);
-
-
-        /**
-        terrain.setLayout(new GridLayout(10,10));
-        Border ligne = BorderFactory.createLineBorder(Color.BLACK,1);
-        for(int i = 0;i<100;i++){
-            JPanel cube = new JPanel();
-            listCube.add(cube);
-            cube.setPreferredSize(new Dimension(80,80));
-            cube.setBorder(ligne);
-            cube.setOpaque(false);
-            terrain.add(cube);
-        }
-
-        terrain.setBorder(ligne);*/
-
-        /**permet de mettre les 2 JPanel côte à côte et de leur attribuer un pourcentage de l'écran*/
-        /**GridBagConstraints c = new GridBagConstraints();
-         c.fill = GridBagConstraints.BOTH;
-         c.weightx = 0.75;
-         c.weighty = 1;
-         c.gridy = 0;
-         this.getContentPane().add(terrain,c);
-         c.weightx = 0.25;
-         c.weighty = 1;
-         this.getContentPane().add(control,c);*/
-
-
-        //inventaire.setPreferredSize(new Dimension(300, 100));
 
         this.add(terrain, BorderLayout.WEST);
         this.add(control);

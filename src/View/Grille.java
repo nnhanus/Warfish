@@ -1,6 +1,7 @@
 package View;
 
 
+import Modele.Building;
 import Modele.Case;
 import Modele.Jardinier;
 import javax.imageio.ImageIO;
@@ -15,11 +16,13 @@ import java.util.ArrayList;
 public class Grille extends JPanel {
 
     public Movable move;
+    public BuildingView BuildV;
 
     public Grille () {
         this.setPreferredSize(new Dimension(800,View.HEIGHT_WIN));
         this.setOpaque(false);
         this.move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible());
+        this.BuildV = new BuildingView();
     }
 
     @Override
@@ -33,26 +36,9 @@ public class Grille extends JPanel {
             System.out.println("Erreur image de fond: " +e.getMessage());
         }
 
-        /**Grille
-        super.paintComponent(g);
-
-
-        int x = 0;
-        int y = 0;
-
-        g.setColor(Color.BLACK);
-
-        while ( x < 800 ){
-            g.drawLine(x, 0, x, 800);
-            x += 80;
+        for(Building b : BuildV.buildings){
+            g.fillRect(b.getX(),b.getY(),100,100);
         }
-
-        while ( y < 800 ){
-            g.drawLine(0, y, 800, y);
-
-            y += 80;
-        }*/
-
 
         move.paint(g);
 

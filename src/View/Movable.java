@@ -15,7 +15,7 @@ public class Movable{
 
     public static JardinierView jardvue;
     public VueFleur vuefleur;
-    public VueNuisible vueNuisible;
+    public static VueNuisible vueNuisible;
     private BufferedImage meduse = null;
     private BufferedImage f1 = null;
     private BufferedImage B1 = null;
@@ -58,8 +58,6 @@ public class Movable{
     public void paint(Graphics g) {
         for (Fleur f : vuefleur.fleurs) {
             if (!(f.getIsPicked())) {
-                //g.setColor(Color.yellow);
-                //g.fillRect(f.getX(), f.getY(), 40, 40);
                 if (f.lifespan >= 450) {
                     g.drawImage(B1, f.getX(), f.getY(), 40, 40, null);
                 } else if (!(f.getIsDead())) {
@@ -69,13 +67,18 @@ public class Movable{
                 }
             }
         }
+
         for (Jardinier jardinier : jardvue.listjardinier) {
             g.drawImage(meduse, jardinier.getX(), jardinier.getY(), 80, 80, null);
         }
+
         for (Nuisible n : vueNuisible.nuisibles) {
             g.drawImage(nuis, n.getX(), n.getY(), 50, 50, null);
         }
 
 
+    }
+    public static void updateNuisibles(){
+        vueNuisible = new VueNuisible();
     }
 }

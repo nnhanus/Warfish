@@ -9,8 +9,6 @@ public class VueNuisible {
     public ArrayList<Nuisible> nuisibles = new ArrayList<>();
 
     public VueNuisible(){
-        for(Nuisible n: GrilleMod.getNuisibles()){
-            nuisibles.add(n);
-        }
+        nuisibles.addAll(GrilleMod.getNuisibles());
     }
 }

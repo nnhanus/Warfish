@@ -1,20 +1,14 @@
 package View;
 import Modele.Building;
+import Modele.GrilleMod;
+import java.util.ArrayList;
 
-import javax.swing.*;
-import java.awt.*;
+public class BuildingView {
+    public ArrayList<Building> buildings = new ArrayList<>();
 
-public class BuildingView extends JPanel{
-    private Building building;
-
-    /*public BuildingView (Building b){
-        this.building = b;
-    }*/
-
-    @Override
-    public void paint(Graphics g){
-        super.paintComponent(g);
-        g.setColor(Color.RED);
-        g.drawRect(0, 0, 50, 50);
+    public BuildingView(){
+        for(Building b: GrilleMod.getBuildings()){
+            buildings.add(b);
+        }
     }
 }

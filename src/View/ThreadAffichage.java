@@ -13,7 +13,7 @@ public class ThreadAffichage extends Thread{
     public void run(){
         while(true){
             view.revalidate();
-            view.repaint(0,0,800,800);
+            view.repaint(0,0,view.getWidth(),view.getHeight());
             try {
                 Thread.sleep(50);
             }catch (Exception e) {
