@@ -53,6 +53,13 @@ public class Jardinier extends Unite{
         return nearest;
     }
 
+    public void desherber(Ressource r){
+        GrilleMod.desherbeFleur((Fleur) r);
+        /*if(r.getClass() == Fleur.class){
+            GrilleMod.removeFleur((Fleur) r);
+        }*/
+    }
+
 
     /**
      * acheterGraine
