@@ -33,6 +33,10 @@ public class Jardinier extends Unite{
             this.inventaire[r.getid()] += r.getAmount();
     }
 
+    public void desherber(Fleur r) {
+        GrilleMod.removeFleur(r);
+    }
+
     /**
      * plusProcheRessource
      * Renvoie la ressource la plus proche du Jardiner
@@ -51,14 +55,6 @@ public class Jardinier extends Unite{
         }
         return nearest;
     }
-
-    public void desherber(Ressource r){
-        GrilleMod.desherbeFleur((Fleur) r);
-        /*if(r.getClass() == Fleur.class){
-            GrilleMod.removeFleur((Fleur) r);
-        }*/
-    }
-
 
     /**
      * acheterGraine
