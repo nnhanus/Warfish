@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
-    public static final int LARGEUR_GRILLE = 800; //la largeur en nombre de case de la grille
-    public static final int HAUTEUR_GRILLE = 800; //la hauteur en nombre de case de la grille
+    public static final int LARGEUR_GRILLE = 600; //la largeur en nombre de case de la grille
+    public static final int HAUTEUR_GRILLE = 600; //la hauteur en nombre de case de la grille
 
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
     private static ArrayList<Ressource> ressources = new ArrayList<>(); //plusieurs tableaux de ressources pour aller un poil plus vite I guess, c'est aussi pour pas avoir d'emmerde avec les types
@@ -101,7 +101,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      */
     public static void removeFleur(Fleur f){
         f.interrupt();
-        f.isPicked();
+        f.isPickedOrDies();
         ressources.remove(f);
         fleurs.remove(f);
         for(Nuisible n : nuisibles){

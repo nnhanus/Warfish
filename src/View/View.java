@@ -17,7 +17,7 @@ public class View extends JFrame {
      * dimensions de la fenêtre d'affichage
      */
     public static final int WIDTH_WIN = 1200;
-    public static final int HEIGHT_WIN = 840;
+    public static final int HEIGHT_WIN = 700;
     public static int solde = 1000;
     public static JPanel terrain ;
     public static JPanel control ;
@@ -28,7 +28,7 @@ public class View extends JFrame {
     public static JButton b1 = new JButton("Boutique");
     public static JButton b2 = new JButton("Ramasser");
     public static JButton b3 = new JButton("Effrayer");
-    public static JButton b4 = new JButton("4");
+    public static JButton b4 = new JButton("Planter");
     public static JButton b5 = new JButton("5");
     public static JButton b6 = new JButton("6");
 

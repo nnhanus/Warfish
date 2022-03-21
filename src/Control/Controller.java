@@ -52,10 +52,12 @@ public class Controller implements ActionListener, MouseListener {
             j.effrayer();
         }
 
-        /*if(e.getSource() == view.b4){
-            System.out.println("medused");
+        if(e.getSource() == view.b4){ //planter
+            if (!(GrilleMod.isNotValidPosition(j.getX(), j.getY())) && j.getInventaire()[1] > 0){
+                j.planteFleur();
+            }
         }
-        if(e.getSource() == view.b5){
+        /*if(e.getSource() == view.b5){
             System.out.println("what a move faker");
         }
         if(e.getSource() == view.b6){
