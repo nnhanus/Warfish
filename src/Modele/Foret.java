@@ -21,11 +21,7 @@ public class Foret extends Ressource{
      * getid
      * @return l'id du bois (ici 3)
      */
-    public int getid(){
-        return 3;
-    }
-
-    public static int getidStatic(){
+    public int getType(){
         return 3;
     }
 
