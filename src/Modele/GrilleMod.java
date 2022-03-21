@@ -1,5 +1,6 @@
 package Modele;
 import View.Grille;
+import View.Movable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -194,7 +195,9 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
 
         if(iter < 20) {
             nuisibles.add(new Nuisible(randx, randy));
+            Movable.updateNuisibles();
         }
+
     }
 
     public static void removeNuisible(Nuisible n){
