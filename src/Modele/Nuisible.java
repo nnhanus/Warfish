@@ -95,9 +95,9 @@ public class Nuisible extends Thread{
      * acquireTarget
      * donne la fleur la plus proche comme cible au lapin
      */
-    public void acquireTarget(){
+    public /*synchronized*/ void acquireTarget(){
         for(Fleur f : GrilleMod.getFleurs()){
-            if(f.isPickable()) {
+            if(f != null && f.isPickable()) {
                 if (this.target == null) {
                     this.target = f;
                 } else {
@@ -153,7 +153,7 @@ public class Nuisible extends Thread{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else if(target.isPickable()){ //sinon si la cible est ready
+                } else if(/*target != null &&*/ target.isPickable()){ //sinon si la cible est ready
                     this.avanceNuisible();
                     enfuite = isNotValidPosition(this.x, this.y); //renverra true si à proximité d'un bâtiment de défense
                     try {
@@ -161,9 +161,9 @@ public class Nuisible extends Thread{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }else{ //on refresh la cible
-                    acquireTarget();
-                }
+                }/*else{ //on refresh la cible
+                    acquireTarget();//upon désherbing, no such element exception due to an element being removed from getFleurs()
+                }*/
             }else{ //si il n'a pas de cible
                 acquireTarget();
                 try {
@@ -173,6 +173,5 @@ public class Nuisible extends Thread{
                 }
             }
         }
-        GrilleMod.removeNuisible(this);
     }
 }

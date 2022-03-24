@@ -1,7 +1,7 @@
 package Modele;
 public class Fleur extends Ressource { //à terme plusieurs types de fleurs, avec chacun différentes spécificités
 
-    public int lifespan = 1000;
+    public int lifespan = 449;
     boolean isPicked = false;
     boolean isDead = false;
     private boolean boosted = false;
@@ -9,9 +9,10 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
     private int y;
     //private int type;
 
-    public Fleur(int x, int y, int type) {
+    public Fleur(int x, int y) {
         super(x, y);
-        this.type = type;
+        this.type = 1 /*+ (int) (Math.random() * 3)*/;
+
         this.boosted = mustBeBoosted();
         this.start();
     }
@@ -59,6 +60,7 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
      */
     public void boost() {
         this.boosted = true;
+        System.out.println("Has been boosted");
     }
 
     /**
@@ -99,10 +101,10 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
 
     @Override
     public void run() {
-        while (!isDead && !isPicked && lifespan > 0) {
+        while (/*!isDead &&*/ !isPicked && lifespan > 0) {
             lifespan -= 50;
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
             }
         }

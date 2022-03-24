@@ -5,9 +5,9 @@ package Modele;
  * Augmente la production des fleurs voisines
  * Cette action est automatique et instantanée.
  */
-class BatProduction extends Building {
+public class BatProduction extends Building {
     public BatProduction(int x, int y) {
-        super(x, y, 1000);
+        super(x, y, 19000);
         boostAllNear();
     }
 
@@ -19,7 +19,7 @@ class BatProduction extends Building {
         for(Fleur f : GrilleMod.getFleurs()){
             int posX = f.getX() - this.x;
             int posY = f.getY() - this.y;
-            if(posX*posX + posY*posY <= this.range*this.range) {
+            if(posX*posX + posY*posY <= this.range && !f.getIsDead()) {
                 f.boost();
             }
         }
