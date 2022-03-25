@@ -1,6 +1,7 @@
 package Modele;
 
 import View.Grille;
+import View.VueNuisible;
 
 import static java.lang.Math.*;
 
@@ -19,6 +20,7 @@ public class Nuisible extends Thread{
         this.x = x;
         this.y = y;
         this.acquireTarget();
+        VueNuisible.updateNuisibles();
         this.start(); //??
     }
 
@@ -71,6 +73,8 @@ public class Nuisible extends Thread{
      */
     public void setenFuite(){
         this.enfuite = true;
+        GrilleMod.removeNuisible(this);
+        VueNuisible.updateNuisibles();
     }
 
     /**
@@ -83,7 +87,7 @@ public class Nuisible extends Thread{
             if(b.getClass() == BatDefense.class){
                 int posX = b.getX() - x;
                 int posY = b.getY() - y;
-                if(posX*posX + posY*posY <= b.getRange()*b.getRange()){
+                if(posX*posX + posY*posY <= b.getRange()){
                     return true;
                 }
             }
@@ -155,7 +159,9 @@ public class Nuisible extends Thread{
                     }
                 } else if(/*target != null &&*/ target.isPickable()){ //sinon si la cible est ready
                     this.avanceNuisible();
-                    enfuite = isNotValidPosition(this.x, this.y); //renverra true si à proximité d'un bâtiment de défense
+                        if(isNotValidPosition(this.x, this.y)){ ; //renverra true si à proximité d'un bâtiment de défense
+                            setenFuite();
+                        }
                     try {
                         sleep(15);
                     } catch (InterruptedException e) {

@@ -7,6 +7,7 @@ import java.util.Arrays;
  * Gère les ressources générales, et notamment l'argent/score
  */
 public class BatPrincipal extends Building {
+    public static final int PRINCIPAL_RANGE = 5000;
     private static int tirelire = 200;
     public static final int PRIX_PRODUCTION = 100;
     public static final int PRIX_DEFENSE = 100;
@@ -18,7 +19,7 @@ public class BatPrincipal extends Building {
     private int[] ressources = new int[5]; //pour l'instant
 
     public BatPrincipal(int x, int y) {
-        super(x, y, 5000);
+        super(x, y, PRINCIPAL_RANGE);
         Arrays.fill(ressources,0);
     }
 

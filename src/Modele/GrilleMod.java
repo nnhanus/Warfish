@@ -216,6 +216,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
 
     public static void removeNuisible(Nuisible n){
         nuisibles.remove(n);
+        //VueNuisible.updateNuisibles();
     }
 
     /**
@@ -332,7 +333,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         while(true){
             addNuisible();
             try {
-                sleep(18000);
+                sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

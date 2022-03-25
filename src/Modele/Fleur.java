@@ -1,4 +1,7 @@
 package Modele;
+
+import View.VueFleur;
+
 public class Fleur extends Ressource { //à terme plusieurs types de fleurs, avec chacun différentes spécificités
 
     public int lifespan = 449;
@@ -12,8 +15,8 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
     public Fleur(int x, int y) {
         super(x, y);
         this.type = 1 /*+ (int) (Math.random() * 3)*/;
-
         this.boosted = mustBeBoosted();
+        VueFleur.updateFleur();
         this.start();
     }
 

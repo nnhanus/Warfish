@@ -142,7 +142,7 @@ public class Jardinier extends Unite{
         BatProduction b = new BatProduction(this.x, this.y);
         GrilleMod.addBatiment(b);
         System.out.println("BatProduction Added");
-        BuildingView.updateBuildings(b);
+
     }
 
     /**
@@ -158,7 +158,6 @@ public class Jardinier extends Unite{
 
             if(posX*posX + posY*posY <= 19000){
                 n.setenFuite();
-                GrilleMod.getNuisibles().remove(n);
             }
         }
     }

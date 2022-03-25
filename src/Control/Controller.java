@@ -57,14 +57,14 @@ public class Controller implements ActionListener, MouseListener {
         }
         if (e.getSource() == view.b3) { //effrayer
             j.effrayer();
-            VueNuisible.updateNuisibles();
+            //VueNuisible.updateNuisibles();
         }
 
         if(e.getSource() == view.b4){ //planter
             if (!(GrilleMod.isNotValidPosition(j.getX(), j.getY())) && j.getInventaire()[0] > 0){
                 j.planteFleur();
                 View.updateInv();
-                VueFleur.updateFleur();
+                //VueFleur.updateFleur();
             }
         }
         if(e.getSource() == view.b5){ //désherber
