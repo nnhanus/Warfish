@@ -333,7 +333,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         while(true){
             addNuisible();
             try {
-                sleep(3000);
+                sleep(15000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

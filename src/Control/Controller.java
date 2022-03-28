@@ -64,14 +64,15 @@ public class Controller implements ActionListener, MouseListener {
             if (!(GrilleMod.isNotValidPosition(j.getX(), j.getY())) && j.getInventaire()[0] > 0){
                 j.planteFleur();
                 View.updateInv();
-                //VueFleur.updateFleur();
+                VueFleur.updateFleur();
             }
         }
+
         if(e.getSource() == view.b5){ //désherber
             Ressource r = j.plusProcheRessource();
             if(r.getClass() == Fleur.class) {
                 int dist = j.getSQDistFrom(r.getX(), r.getY());
-                if (dist < 1000 && ((Fleur) r).getIsDead()) {
+                if (dist < 30000 && ((Fleur) r).getIsDead()) {
                     j.desherber((Fleur) r);
                 }
             }

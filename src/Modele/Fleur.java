@@ -4,7 +4,7 @@ import View.VueFleur;
 
 public class Fleur extends Ressource { //à terme plusieurs types de fleurs, avec chacun différentes spécificités
 
-    public int lifespan = 449;
+    public int lifespan = 1000;
     boolean isPicked = false;
     boolean isDead = false;
     private boolean boosted = false;
@@ -107,7 +107,7 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
         while (/*!isDead &&*/ !isPicked && lifespan > 0) {
             lifespan -= 50;
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
         }
