@@ -7,7 +7,10 @@ import java.util.Arrays;
  * Gère les ressources générales, et notamment l'argent/score
  */
 public class BatPrincipal extends Building {
+    public static final int PRINCIPAL_RANGE = 5000;
     private static int tirelire = 200;
+    public static final int PRIX_PRODUCTION = 100;
+    public static final int PRIX_DEFENSE = 100;
     public static final int PRIX_JARD = 100;
     public static final int PRIX_GRAINE = 10;
     public static final int PRIX_BOIS = 1;
@@ -16,7 +19,7 @@ public class BatPrincipal extends Building {
     private int[] ressources = new int[5]; //pour l'instant
 
     public BatPrincipal(int x, int y) {
-        super(x, y, 5);
+        super(x, y, PRINCIPAL_RANGE);
         Arrays.fill(ressources,0);
     }
 
@@ -52,7 +55,7 @@ public class BatPrincipal extends Building {
      * Achete une graine contre de l'argent.
      * Instantanée.
      */
-    public void acheterGraine(int amount) {
+    public static void acheterGraine(int amount) {
         tirelire -= amount*PRIX_GRAINE;
     }
 
@@ -74,7 +77,6 @@ public class BatPrincipal extends Building {
     /**
      * Vend les bouquets composés par un jardinier
      * Automatique, instanté
-     *
      */
     public void vendRessource(int amount, int id) {
         switch (id) {

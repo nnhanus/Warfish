@@ -15,14 +15,14 @@ import java.util.ArrayList;
 /**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
 
-    public Movable move;
-    public BuildingView BuildV;
+    public static Movable move;
+    //public static BuildingView buildV;
 
     public Grille () {
-        this.setPreferredSize(new Dimension(800,View.HEIGHT_WIN));
+        this.setPreferredSize(new Dimension(View.TERRAIN_WIDTH,View.HEIGHT_WIN));
         this.setOpaque(false);
-        this.move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible());
-        this.BuildV = new BuildingView();
+        move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible(), new BuildingView());
+        //buildV = new BuildingView();
     }
 
     @Override
@@ -36,12 +36,12 @@ public class Grille extends JPanel {
             System.out.println("Erreur image de fond: " +e.getMessage());
         }
 
-        for(Building b : BuildV.buildings){
-            g.fillRect(b.getX(),b.getY(),100,100);
-        }
+        //buildV.drawBuildings(g);
 
         move.paint(g);
-
     }
 
+    /*public static void updateBuildView(){
+        buildV = new BuildingView();
+    }*/
 }

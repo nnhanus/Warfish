@@ -1,14 +1,16 @@
 package Modele;
 import View.Grille;
 import View.Movable;
+import View.View;
+import View.VueNuisible;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√©rations al√©atoires, et d√©placement automatique ou autre dans cette classe ???
-    public static final int LARGEUR_GRILLE = 600; //la largeur en nombre de case de la grille
-    public static final int HAUTEUR_GRILLE = 600; //la hauteur en nombre de case de la grille
+    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur en nombre de case de la grille
+    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur en nombre de case de la grille
 
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
     private static ArrayList<Ressource> ressources = new ArrayList<>(); //plusieurs tableaux de ressources pour aller un poil plus vite I guess, c'est aussi pour pas avoir d'emmerde avec les types
@@ -16,12 +18,16 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
     private static ArrayList<Unite> unites = new ArrayList<>();
 
+    public static final int ID_FLEUR = 1;
+
+    public static final int RANGE_PLACEABLE = 3000;
+
     private static final int nbForet = 4;
     private static final int nbRocher = 4;
     private static final int nbFleur = 8;
 
     //TODO, le b√¢timent principal est √† placer au hasard
-    private static BatPrincipal BAT_PRINCIPAL = new BatPrincipal(LARGEUR_GRILLE/2, HAUTEUR_GRILLE/2);
+    private static final BatPrincipal BAT_PRINCIPAL = new BatPrincipal((int) (Math.random() * LARGEUR_GRILLE), (int) (Math.random() * HAUTEUR_GRILLE));
     private static Unite selectedUnite = null;
 
     /**
@@ -83,6 +89,14 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
 
     public static BatPrincipal getBatPrincipal(){
         return BAT_PRINCIPAL;
+    }
+
+    public static int getBatX(){
+        return BAT_PRINCIPAL.getX();
+    }
+
+    public static int getBatY(){
+        return BAT_PRINCIPAL.getY();
     }
 
     /**
@@ -195,13 +209,14 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
 
         if(iter < 20) {
             nuisibles.add(new Nuisible(randx, randy));
-            Movable.updateNuisibles();
+            VueNuisible.updateNuisibles();
         }
 
     }
 
     public static void removeNuisible(Nuisible n){
         nuisibles.remove(n);
+        //VueNuisible.updateNuisibles();
     }
 
     /**
@@ -215,7 +230,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         for(Building b : buildings){
             int posX = b.x - x;
             int posY = b.y - y;
-            if(posX*posX + posY*posY < 10){
+            if(posX*posX + posY*posY < RANGE_PLACEABLE){
                 return true;
             }
         }
@@ -223,7 +238,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         for(Ressource r : ressources){
             int posX = r.x - x;
             int posY = r.y - y;
-            if(posX*posX + posY*posY < 10){
+            if(posX*posX + posY*posY < RANGE_PLACEABLE){
                 return true;
             }
         }
@@ -251,6 +266,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         for(int i = 0; i < nbFleur; i++) {
             int randx = (int) (Math.random() * HAUTEUR_GRILLE);
             int randy = (int) (Math.random() * LARGEUR_GRILLE);
+
             while (isNotValidPosition(randx, randy)){
                 randx = (int) (Math.random() * HAUTEUR_GRILLE);
                 randy = (int) (Math.random() * LARGEUR_GRILLE);
@@ -297,9 +313,10 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
      */
     public void initGrille(){
         addBatiment(BAT_PRINCIPAL);
+        System.out.println(BAT_PRINCIPAL.getX() + " " + BAT_PRINCIPAL.getY());
         initFleur();
-        initRocher();
-        initForet();
+        //initRocher();
+        //initForet();
 
         Jardinier J = new Jardinier(LARGEUR_GRILLE/2, HAUTEUR_GRILLE/2);
         addUnite(J);
@@ -316,7 +333,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
         while(true){
             addNuisible();
             try {
-                sleep(12000);
+                sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

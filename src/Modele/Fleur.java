@@ -1,17 +1,27 @@
 package Modele;
+
+import View.VueFleur;
+
 public class Fleur extends Ressource { //à terme plusieurs types de fleurs, avec chacun différentes spécificités
 
-    public int lifespan = 1000;
+    public int lifespan = 449;
     boolean isPicked = false;
     boolean isDead = false;
     private boolean boosted = false;
     private int x;
     private int y;
+    //private int type;
 
     public Fleur(int x, int y) {
         super(x, y);
+        this.type = 1 /*+ (int) (Math.random() * 3)*/;
         this.boosted = mustBeBoosted();
+        VueFleur.updateFleur();
         this.start();
+    }
+
+    public int getType(){
+        return type;
     }
 
     /**
@@ -53,6 +63,7 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
      */
     public void boost() {
         this.boosted = true;
+        System.out.println("Has been boosted");
     }
 
     /**
@@ -74,14 +85,6 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
         return false;
     }
 
-    public int getid() {
-        return 0;
-    }
-
-    public static int getidStatic() {
-        return 0;
-    }
-
     public void isPicked() {
         isPicked = true;
         //System.out.println("je suis ramassée");
@@ -101,26 +104,14 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
 
     @Override
     public void run() {
-        /*while (!isDead && !isPicked) {
+        while (/*!isDead &&*/ !isPicked && lifespan > 0) {
             lifespan -= 50;
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
             }
         }
-        dies();*/
-        while(!isPicked){
-            if (!isDead){
-                lifespan -= 50;
-            }
-            if (lifespan == 0){
-                dies();
-                lifespan = -1;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {}
-        }
+        dies();
     }
 }
 

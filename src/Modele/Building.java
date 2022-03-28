@@ -1,5 +1,7 @@
 package Modele;
 
+import View.BuildingView;
+
 import java.util.ArrayList;
 
 public class Building {
@@ -10,6 +12,7 @@ public class Building {
         this.x = x;
         this.y = y;
         this.range = range;
+
     }
 
     public int getX(){

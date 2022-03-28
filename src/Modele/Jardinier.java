@@ -1,16 +1,21 @@
 package Modele;
 
+import View.BuildingView;
+import View.Grille;
+import View.JardinierView;
+import View.Movable;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Jardinier extends Unite{
     private int[] inventaire = new int[5];
-    //fleur graine bouquet bois pierre, in this order I guess
+    //graine fleur bouquet bois pierre, in this order I guess
 
     public Jardinier(int x, int y){
         super(x, y);
         vitesse = 100;
         Arrays.fill(inventaire, 0);
-
     }
 
     /**
@@ -31,7 +36,11 @@ public class Jardinier extends Unite{
             if(r.getClass() == Fleur.class){
                 GrilleMod.removeFleur((Fleur) r);
             }
-            this.inventaire[r.getid()] += r.getAmount();
+            this.inventaire[r.getType()] += r.getAmount();
+    }
+
+    public void desherber(Fleur r) {
+        GrilleMod.removeFleur(r);
     }
 
     /**
@@ -53,21 +62,14 @@ public class Jardinier extends Unite{
         return nearest;
     }
 
-    public void desherber(Ressource r){
-        GrilleMod.desherbeFleur((Fleur) r);
-        /*if(r.getClass() == Fleur.class){
-            GrilleMod.removeFleur((Fleur) r);
-        }*/
-    }
-
-
     /**
      * acheterGraine
      * Achete une(des) graines
      * @param amount la quantité achetée
      */
     public void acheterGraine(int amount) {
-        this.inventaire[1] += amount;
+        this.inventaire[0] += amount;
+        System.out.println("bought");
     }
 
     /**
@@ -85,7 +87,7 @@ public class Jardinier extends Unite{
      * Confectionne un bouquet à partir de 3 fleurs et le range dans l'inventaire
      */
     public void confectionneBouquet(){
-        this.inventaire[0] -= 3;
+        this.inventaire[1] -= 3;
         this.inventaire[2] += 1;
     }
 
@@ -120,9 +122,13 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de défense de l'inventaire
      */
     public void construitBatDefense(){
-        this.inventaire[3] -= 5;
-        this.inventaire[4] -= 15;
-        GrilleMod.addBatiment(new BatDefense(this.x, this.y));
+        /*this.inventaire[3] -= 5;
+        this.inventaire[4] -= 15;*/
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_DEFENSE);
+        BatDefense b = new BatDefense(this.x, this.y);
+        GrilleMod.addBatiment(b);
+        System.out.println("BatDefense Added");
+        BuildingView.updateBuildings(b);
     }
 
     /**
@@ -130,9 +136,13 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de production de l'inventaire
      */
     public void construitBatProduction(){
-        this.inventaire[3] -= 15;
-        this.inventaire[4] -= 5;
-        GrilleMod.addBatiment(new BatProduction(this.x, this.y));
+        /*this.inventaire[3] -= 15;
+        this.inventaire[4] -= 5;*/
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_PRODUCTION);
+        BatProduction b = new BatProduction(this.x, this.y);
+        GrilleMod.addBatiment(b);
+        System.out.println("BatProduction Added");
+
     }
 
     /**
@@ -140,11 +150,13 @@ public class Jardinier extends Unite{
      * Effraie tous les nuisibles proches
      */
     public void effrayer(){
-        for(Nuisible n : GrilleMod.getNuisibles()){
+        ArrayList<Nuisible> nlist = new ArrayList<>();
+        nlist.addAll(GrilleMod.getNuisibles());
+        for(Nuisible n : nlist){
             int posX = n.getX() - this.x;
             int posY = n.getY() - this.y;
 
-            if(posX*posX + posY*posY <= 50){
+            if(posX*posX + posY*posY <= 19000){
                 n.setenFuite();
             }
         }

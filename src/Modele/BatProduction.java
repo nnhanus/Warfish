@@ -1,19 +1,19 @@
 package Modele;
 
+import View.BuildingView;
+
 /**
  * Bâtiment de Production
  * Augmente la production des fleurs voisines
+ * Cette action est automatique et instantanée.
  */
-class BatProduction extends Building {
+public class BatProduction extends Building {
+    public static final int PRODUCTION_RANGE = 19000;
     public BatProduction(int x, int y) {
-        super(x, y, 7);
+        super(x, y, PRODUCTION_RANGE);
         boostAllNear();
+        BuildingView.updateBuildings(this);
     }
-
-    //TODO
-    /*Augmenter la production des fleurs dans les cases voisines (bâtiment de production).
-    Cette action est automatique et instantanée.
-    Je pense que ça devrait être gérer dans les cases ou les fleurs peut-être?*/
 
     /**
      * boostAllNear
@@ -23,7 +23,7 @@ class BatProduction extends Building {
         for(Fleur f : GrilleMod.getFleurs()){
             int posX = f.getX() - this.x;
             int posY = f.getY() - this.y;
-            if(posX*posX + posY*posY <= this.range*this.range) {
+            if(posX*posX + posY*posY <= this.range && !f.getIsDead()) {
                 f.boost();
             }
         }
