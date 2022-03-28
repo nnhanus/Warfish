@@ -17,11 +17,9 @@ public class Rocher extends Ressource{
      * getid
      * @return l'id du cailloux (ici 4)
      */
-    public int getid(){
+    public int getType(){
         return 4;
     }
-
-    public static int getidStatic(){return 4;}
 
     public int getAmount(){
         return 2; //j'ai la flemme de faire un truc aléatoire, il est trop tard

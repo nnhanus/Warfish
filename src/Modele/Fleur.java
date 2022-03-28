@@ -7,11 +7,17 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
     private boolean boosted = false;
     private int x;
     private int y;
+    //private int type;
 
-    public Fleur(int x, int y) {
+    public Fleur(int x, int y, int type) {
         super(x, y);
+        this.type = type;
         this.boosted = mustBeBoosted();
         this.start();
+    }
+
+    public int getType(){
+        return type;
     }
 
     /**
@@ -74,14 +80,6 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
         return false;
     }
 
-    public int getid() {
-        return 0;
-    }
-
-    public static int getidStatic() {
-        return 0;
-    }
-
     public void isPicked() {
         isPicked = true;
         //System.out.println("je suis ramassée");
@@ -101,26 +99,14 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
 
     @Override
     public void run() {
-        /*while (!isDead && !isPicked) {
+        while (!isDead && !isPicked && lifespan > 0) {
             lifespan -= 50;
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
         }
-        dies();*/
-        while(!isPicked){
-            if (!isDead){
-                lifespan -= 50;
-            }
-            if (lifespan == 0){
-                dies();
-                lifespan = -1;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {}
-        }
+        dies();
     }
 }
 
