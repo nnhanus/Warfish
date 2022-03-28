@@ -1,21 +1,29 @@
 package Modele;
 
+import View.BuildingView;
+
+import java.util.ArrayList;
+
 /**
  * Batiment de défense
  * Effraie automatiquement les nuisibles
  */
-class BatDefense extends Building {
+public class BatDefense extends Building {
+    public static final int DEFENSE_RANGE = 19000;
     public BatDefense(int x, int y) {
-        super(x, y, 1000);
+        super(x, y, DEFENSE_RANGE);
         effrayer();
+        BuildingView.updateBuildings(this);
     }
 
     public void effrayer(){
-        for(Nuisible n : GrilleMod.getNuisibles()){
+        ArrayList<Nuisible> list = new ArrayList<>();
+        list.addAll(GrilleMod.getNuisibles());
+        for(Nuisible n : list){
             int posX = n.getX() - this.x;
             int posY = n.getY() - this.y;
 
-            if(posX*posX + posY*posY <= 49){
+            if(posX*posX + posY*posY <= this.range){
                 n.setenFuite();
             }
         }
