@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import static Modele.GrilleMod.getBatPrincipal;
+
 public class Controller implements ActionListener, MouseListener {
 
     public static View view;
@@ -72,35 +74,21 @@ public class Controller implements ActionListener, MouseListener {
 
         /**boutons de la boutique **/
         if (e.getSource() == view.bfleur1) {
-            if (view.solde >= 10) {
+            if (getBatPrincipal().getTirelire() >= 10) {
                 view.updateSolde(10);
+                view.updateGraines();
             }
         }
         if (e.getSource() == view.bfleur2) {
-            if (view.solde >= 100) {
+            if (getBatPrincipal().getTirelire() >= 100) {
                 view.updateSolde(100);
+                view.updateGraines();
             }
         }
         if (e.getSource() == view.bfleur3) {
-            if (view.solde >= 800) {
+            if (getBatPrincipal().getTirelire() >= 800) {
                 view.updateSolde(800);
-            }
-        }
-
-        /**boutons de la boutique **/
-        if (e.getSource() == view.bfleur1) {
-            if (view.solde >= 10) {
-                view.updateSolde(10);
-            }
-        }
-        if (e.getSource() == view.bfleur2) {
-            if (view.solde >= 100) {
-                view.updateSolde(100);
-            }
-        }
-        if (e.getSource() == view.bfleur3) {
-            if (view.solde >= 800) {
-                view.updateSolde(800);
+                view.updateGraines();
             }
         }
     }
