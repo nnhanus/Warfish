@@ -10,11 +10,19 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
     private boolean boosted = false;
     private int x;
     private int y;
-    //private int type;
+    private int type;
 
     public Fleur(int x, int y) {
         super(x, y);
-        this.type = 1 /*+ (int) (Math.random() * 3)*/;
+        this.type = 1 + (int) (Math.random() * 3);
+        this.boosted = mustBeBoosted();
+        VueFleur.updateFleur();
+        this.start();
+    }
+
+    public Fleur(int x, int y, int t){
+        super(x,y);
+        this.type = t;
         this.boosted = mustBeBoosted();
         VueFleur.updateFleur();
         this.start();

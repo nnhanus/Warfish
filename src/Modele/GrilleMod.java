@@ -26,7 +26,14 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     private static final int nbRocher = 4;
     private static final int nbFleur = 8;
 
-    //TODO, le bâtiment principal est à placer au hasard
+
+    public static final int indiceFleurR = 1;
+    public static final int indiceFleurV = 2;
+    public static final int indiceGraineR = 3;
+    public static final int indiceGraineJ = 4;
+    public static final int indiceGraineV = 5;
+    public static final int indiceBouquet = 6;
+
     private static final BatPrincipal BAT_PRINCIPAL = new BatPrincipal((int) (Math.random() * LARGEUR_GRILLE), (int) (Math.random() * HAUTEUR_GRILLE));
     private static Unite selectedUnite = null;
 

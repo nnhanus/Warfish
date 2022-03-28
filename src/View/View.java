@@ -2,6 +2,7 @@
 package View;
 
 import Modele.BatPrincipal;
+import Modele.GrilleMod;
 import Modele.Jardinier;
 
 import javax.imageio.ImageIO;
@@ -101,7 +102,7 @@ public class View extends JFrame {
 
         bfleur1.setPreferredSize(new Dimension(30,30));
         boutique.setLayout(new GridLayout(0,1,10,10));
-        boutique.add(cubomeduse);
+        //boutique.add(cubomeduse);
         boutique.add(bfleur1);
         boutique.add(bfleur2);
         boutique.add(bfleur3);
@@ -139,15 +140,15 @@ public class View extends JFrame {
         control.setLayout(null);
 
 
-        boutons.setBounds(50,400,300,100);
-        cubomeduse.setBounds(0,100,400,300);
+        boutons.setBounds(50,200,300,100);
+        //cubomeduse.setBounds(0,100,400,300);
         boutique.setBounds(50,630,300,225);
         argent.setBounds(50,550,300,50);
         inventaire.setBounds(50, 0, 300, 100);
 
 
         control.add(inventaire);
-        control.add(cubomeduse);
+        //control.add(cubomeduse);
         control.add(boutons);
         control.add(boutique);
         control.add(argent);
@@ -189,11 +190,11 @@ public class View extends JFrame {
     }
 
     public static void updateInv(){
-        invFleur1.setText("nb fleur : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[1]));
-        //invFleur2.setText("nb fleur : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[2]));
-        //invFleur3.setText("nb fleur : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[3]));
-        invGraine.setText("nb graine : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[0]));
-        invBouquet.setText("nb bouquet : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[2]));
+        invFleur1.setText("nb fleur rouges: " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurR]));
+        //invFleur2.setText("nb fleur jaunes: " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurJ]));
+        //invFleur3.setText("nb fleur vertes: " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurV]));
+        invGraine.setText("nb graine rouges: " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceGraineR]));
+        invBouquet.setText("nb bouquet : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceBouquet]));
     }
 }
 

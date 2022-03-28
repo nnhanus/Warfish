@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Jardinier extends Unite{
-    private int[] inventaire = new int[5];
+    private int[] inventaire = new int[7];
     //graine fleur bouquet bois pierre, in this order I guess
+    //0 = fleurs jaunes
+    //1
+    //dans grilleMod def l'indic de tt les trucs
+
 
     public Jardinier(int x, int y){
         super(x, y);
@@ -22,9 +26,9 @@ public class Jardinier extends Unite{
      * planteFleur
      * Le paysan plante une fleur sur la grille
      */
-    public void planteFleur() {
-        this.inventaire[0]--;
-        GrilleMod.addFleur(new Fleur(this.x, this.y));
+    public void planteFleur(int id) {
+        this.inventaire[id]--;
+        GrilleMod.addFleur(new Fleur(this.x, this.y, id));
     }
 
     /**
@@ -65,10 +69,9 @@ public class Jardinier extends Unite{
     /**
      * acheterGraine
      * Achete une(des) graines
-     * @param amount la quantité achetée
      */
-    public void acheterGraine(int amount) {
-        this.inventaire[0] += amount;
+    public void acheterGraine(int id) {
+        this.inventaire[id]++;
         System.out.println("bought");
     }
 
@@ -87,8 +90,8 @@ public class Jardinier extends Unite{
      * Confectionne un bouquet à partir de 3 fleurs et le range dans l'inventaire
      */
     public void confectionneBouquet(){
-        this.inventaire[1] -= 3;
-        this.inventaire[2] += 1;
+        this.inventaire[GrilleMod.indiceFleurR] -= 3;
+        this.inventaire[GrilleMod.indiceBouquet] += 1;
     }
 
     /**
@@ -96,8 +99,8 @@ public class Jardinier extends Unite{
      * Vend tous les bouquets du jardinier
      */
     public void vendBouquet(){
-        GrilleMod.getBatPrincipal().vendRessource(this.inventaire[2], 2);
-        this.inventaire[2] = 0;
+        GrilleMod.getBatPrincipal().vendRessource();
+        this.inventaire[GrilleMod.indiceBouquet] = 0;
     }
 
     /**

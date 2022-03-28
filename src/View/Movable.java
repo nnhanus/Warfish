@@ -31,12 +31,12 @@ public class Movable{
             System.out.println("Fichier manquant"); //absence de l'image
         }
         try {
-            f1 = ImageIO.read(new File("src/View/Image/fleur_rouge.png")); //image de méduse
+            f1 = ImageIO.read(new File("src/Image/Rouge_ouverte.png")); //image de méduse
         } catch (IOException ex) {
             System.out.println("Fichier manquant"); //absence de l'image
         }
         try {
-            B1 = ImageIO.read(new File("src/View/Image/bourgeon_rouge.png")); //image de méduse
+            B1 = ImageIO.read(new File("src/Image/Rougefermee.png")); //image de méduse
         } catch (IOException ex) {
             System.out.println("Fichier manquant"); //absence de l'image
         }

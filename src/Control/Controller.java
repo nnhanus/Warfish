@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import static Modele.GrilleMod.indiceGraineR;
+
 public class Controller implements ActionListener, MouseListener {
 
     public View view;
@@ -37,12 +39,13 @@ public class Controller implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
 
-        if (e.getSource() == view.b1) { //acheterGraine
+        if (e.getSource() == view.b1) { //acheterGraineRouge
             if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_GRAINE && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
-                j.acheterGraine(1);
-                BatPrincipal.acheterGraine(1);
+                j.acheterGraine(indiceGraineR);
+                BatPrincipal.acheterGraine(indiceGraineR);
                 View.updateSolde();
                 View.updateInv();
+                System.out.println(BatPrincipal.PRIX_GRAINE);
             }
         }
 
@@ -61,8 +64,8 @@ public class Controller implements ActionListener, MouseListener {
         }
 
         if(e.getSource() == view.b4){ //planter
-            if (!(GrilleMod.isNotValidPosition(j.getX(), j.getY())) && j.getInventaire()[0] > 0){
-                j.planteFleur();
+            if (!(GrilleMod.isNotValidPosition(j.getX(), j.getY())) && j.getInventaire()[indiceGraineR] > 0){
+                j.planteFleur(indiceGraineR);
                 View.updateInv();
                 VueFleur.updateFleur();
             }
@@ -94,14 +97,14 @@ public class Controller implements ActionListener, MouseListener {
         }
 
         if(e.getSource() == View.b8){
-            if(j.getInventaire()[1] >= 3){
+            if(j.getInventaire()[GrilleMod.indiceFleurR] >= 3){
                 j.confectionneBouquet();
                 View.updateInv();
             }
         }
 
         if(e.getSource() == View.b9){
-            if(j.getInventaire()[2] > 0 && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
+            if(j.getInventaire()[GrilleMod.indiceBouquet] > 0 && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
                 j.vendBouquet();
                 View.updateSolde();
                 View.updateInv();
@@ -120,7 +123,6 @@ public class Controller implements ActionListener, MouseListener {
                 View.updateSolde();
             }
         }
-
         /*if (e.getSource() == view.bfleur3) { //Graine
             if (view.solde >= 800) {
                 view.updateSolde(800);
