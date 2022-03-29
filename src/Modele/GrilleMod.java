@@ -27,7 +27,8 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les g√©n√
     private static final int nbFleur = 8;
 
 
-    public static final int indiceFleurR = 1;
+    public static final int indiceFleurR = 0;
+    public static final int IndiceFleurJ = 1;
     public static final int indiceFleurV = 2;
     public static final int indiceGraineR = 3;
     public static final int indiceGraineJ = 4;

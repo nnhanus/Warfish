@@ -41,7 +41,7 @@ public class Movable{
             System.out.println("Fichier manquant"); //absence de l'image
         }
         try {
-            fan1 = ImageIO.read(new File("src/View/Image/fleur_rouge_fan.png")); //image de méduse
+            fan1 = ImageIO.read(new File("src/Image/FleurRougeMorte.png")); //image de méduse
         } catch (IOException ex) {
             System.out.println("Fichier manquant"); //absence de l'image
         }

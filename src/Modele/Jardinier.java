@@ -10,11 +10,7 @@ import java.util.Arrays;
 
 public class Jardinier extends Unite{
     private int[] inventaire = new int[7];
-    //graine fleur bouquet bois pierre, in this order I guess
-    //0 = fleurs jaunes
-    //1
-    //dans grilleMod def l'indic de tt les trucs
-
+    //cf GrilleMod pour les indices
 
     public Jardinier(int x, int y){
         super(x, y);
@@ -28,7 +24,16 @@ public class Jardinier extends Unite{
      */
     public void planteFleur(int id) {
         this.inventaire[id]--;
-        GrilleMod.addFleur(new Fleur(this.x, this.y, id));
+        switch (id) {
+            case 3:
+                GrilleMod.addFleur(new Fleur(this.x, this.y, 0));
+                break;
+            case 4:
+                GrilleMod.addFleur(new Fleur(this.x, this.y, 1));
+                break;
+            case 5:
+                GrilleMod.addFleur(new Fleur(this.x, this.y, 2));
+        }
     }
 
     /**
@@ -37,10 +42,10 @@ public class Jardinier extends Unite{
      * @param r la ressource récolter
      */
     public void recolterRessource(Ressource r) {
-            if(r.getClass() == Fleur.class){
-                GrilleMod.removeFleur((Fleur) r);
-            }
+        if(r.getClass() == Fleur.class) {
+            GrilleMod.removeFleur((Fleur) r);
             this.inventaire[r.getType()] += r.getAmount();
+        }
     }
 
     public void desherber(Fleur r) {
