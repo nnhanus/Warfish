@@ -39,13 +39,11 @@ public class Jardinier extends Unite{
     /**
      * recolterRessources
      * recolte une certaine quantité d'une ressource
-     * @param r la ressource récolter
+     * @param f la ressource récolter
      */
-    public void recolterRessource(Ressource r) {
-        if(r.getClass() == Fleur.class) {
-            GrilleMod.removeFleur((Fleur) r);
-            this.inventaire[r.getType()] += r.getAmount();
-        }
+    public void recolterRessource(Fleur f) {
+        GrilleMod.removeFleur(f);
+        this.inventaire[f.getType()] += f.getAmount();
     }
 
     public void desherber(Fleur r) {
@@ -53,18 +51,18 @@ public class Jardinier extends Unite{
     }
 
     /**
-     * plusProcheRessource
-     * Renvoie la ressource la plus proche du Jardiner
-     * @return une ressource
+     * plusProcheFleur
+     * Renvoie la fleur la plus proche du Jardiner
+     * @return une fleur
      */
-    public Ressource plusProcheRessource(){
-        Ressource nearest = null;
-        for(Ressource r : GrilleMod.getRessources()){
+    public Fleur plusProcheFleur(){
+        Fleur nearest = null;
+        for(Fleur f : GrilleMod.getFleurs()){
             if(nearest == null){
-                nearest = r;
+                nearest = f;
             }else{
-                if(getSQDistFrom(r.getX(), r.getY()) < getSQDistFrom(nearest.getX(), nearest.getY())){
-                    nearest = r;
+                if(getSQDistFrom(f.getX(), f.getY()) < getSQDistFrom(nearest.getX(), nearest.getY())){
+                    nearest = f;
                 }
             }
         }

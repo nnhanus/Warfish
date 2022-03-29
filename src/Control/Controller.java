@@ -39,21 +39,22 @@ public class Controller implements ActionListener, MouseListener {
         Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
 
         if (e.getSource() == view.b1) { //acheterGraineRouge
-            if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_GRAINE && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
+           /* if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_GRAINE && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
                 j.acheterGraine(indiceGraineR);
                 BatPrincipal.acheterGraine(indiceGraineR);
                 View.updateSolde();
                 View.updateInv();
                 System.out.println(BatPrincipal.PRIX_GRAINE);
-            }
+            }*/
+            view.graines.setVisible(true);
         }
 
         if (e.getSource() == view.b2) { //récolter
-            Ressource r = j.plusProcheRessource();
-            int dist = j.getSQDistFrom(r.getX(), r.getY());
-            if (r.isPickable() && dist < 3000) {
+            Fleur f = j.plusProcheFleur();
+            int dist = j.getSQDistFrom(f.getX(), f.getY());
+            if (f.isPickable() && dist < 3000) {
                 //System.out.println("on récolte");
-                j.recolterRessource(r);
+                j.recolterRessource(f);
                 View.updateInv();
             }
         }
@@ -71,12 +72,9 @@ public class Controller implements ActionListener, MouseListener {
         }
 
         if(e.getSource() == view.b5){ //désherber
-            Ressource r = j.plusProcheRessource();
-            if(r.getClass() == Fleur.class) {
-                int dist = j.getSQDistFrom(r.getX(), r.getY());
-                if (dist < 30000 && ((Fleur) r).getIsDead()) {
-                    j.desherber((Fleur) r);
-                }
+            Fleur f = j.plusProcheFleur();int dist = j.getSQDistFrom(f.getX(), f.getY());
+            if (dist < 30000 && (f).getIsDead()) {
+                j.desherber(f);
             }
         }
 

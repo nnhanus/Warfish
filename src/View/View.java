@@ -28,8 +28,9 @@ public class View extends JFrame {
     public static JPanel control ;
     public static JPanel boutons ;
     public static JPanel argent ;
-    public static JPanel boutique;
+    public static JPanel graines;
     public static JPanel inventaire;
+    public static JPanel buildings;
     public static JLabel soldeL = new JLabel();
     public static JButton b1 = new JButton("Graine");
     public static JButton b2 = new JButton("Ramasser");
@@ -49,44 +50,86 @@ public class View extends JFrame {
     public Grille grille = new Grille();
 
     /**boutique de fleurs **/
-    public static Icon fleur1 = new ImageIcon("src/View/Image/boutons_achat_fleur.png");
+    /*public static Icon fleur1 = new ImageIcon("src/View/Image/boutons_achat_fleur.png");
     public static Icon fleur2 = new ImageIcon("src/View/Image/boutons_achat_meduse.png");
-    public static Icon fleur3 = new ImageIcon("src/View/Image/boutons_achat_bat.png");
-    public static JButton bfleur1 = new JButton(fleur1);
-    public static JButton bfleur2 = new JButton(fleur2);
-    public static JButton bfleur3 = new JButton(fleur3);
+    public static Icon fleur3 = new ImageIcon("src/View/Image/boutons_achat_bat.png");*/
+    public static Icon fRouge = new ImageIcon("src/Image/RougeZoom");
+    public static Icon fVerte = new ImageIcon("src/Image/VerteZoom");
+    public static Icon fJaune = new ImageIcon("src/View/Image/fleurs_jaune");
+    public static JButton bfleur1 = new JButton(fRouge);
+    public static JButton bfleur2 = new JButton(fJaune);
+    public static JButton bfleur3 = new JButton(fVerte);
 
+    protected static BufferedImage fleurRouge = null;
+    protected static BufferedImage fleurJaune = null;
+    protected static BufferedImage fleurVerte = null;
+    protected static BufferedImage graineRouge = null;
+    protected static BufferedImage graineJaune = null;
+    protected static BufferedImage graineVerte = null;
+
+    public void chargeImage(){
+        try {
+            fleurRouge = ImageIO.read(new File("src/Image/RougeZoom.png"));
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant");
+        }
+        try {
+            fleurJaune = ImageIO.read(new File("src/View/Image/fleurs_jaunes.png"));
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant");
+        }
+        try {
+            fleurVerte = ImageIO.read(new File("src/Image/VerteZoom.png"));
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant");
+        }
+        try {
+            graineRouge = ImageIO.read(new File("src/View/Image/graineRouge.png"));
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant");
+        }
+        try {
+            graineJaune = ImageIO.read(new File("src/View/Image/graineJaune.png"));
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant");
+        }
+        try {
+            graineVerte = ImageIO.read(new File("src/View/Image/graineVerte.png"));
+        } catch (IOException ex) {
+            System.out.println("Fichier manquant");
+        }
+    }
 
     public View() {
         this.setTitle("Project : Warfish");
         this.setPreferredSize(new Dimension(WIDTH_WIN, HEIGHT_WIN));
         this.setLayout(new BorderLayout());
+        chargeImage();
 
         /**création de la partie terrain et de la partie control*/
         terrain = new JPanel();
         control = new JPanel();
         boutons = new JPanel();
         argent = new JPanel();
-        boutique = new JPanel();
+        graines = new JPanel();
         inventaire = new JPanel();
+        buildings = new JPanel();
 
         /**dimension des panels principaux*/
 
         terrain.setPreferredSize(new Dimension(TERRAIN_WIDTH,HEIGHT_WIN));
         control.setPreferredSize(new Dimension(400,HEIGHT_WIN));
         terrain.add(grille);
-      
 
         /**ajout image*/
-        BufferedImage meduse = null;
+       /* BufferedImage meduse = null;
         try {
             meduse = ImageIO.read(new File("src/View/Image/jelly.png"));
         } catch (IOException e) {
             System.out.println("Fichier manquant");
         }
 
-        JLabel cubomeduse = new JLabel(new ImageIcon(meduse));
-
+        JLabel cubomeduse = new JLabel(new ImageIcon(meduse));*/
 
         /**changement de la couleur des différentes zones*/
         terrain.setBackground(Color.decode("#0090FC"));
@@ -101,13 +144,13 @@ public class View extends JFrame {
         /**boutique**/
 
         bfleur1.setPreferredSize(new Dimension(30,30));
-        boutique.setLayout(new GridLayout(0,1,10,10));
+        graines.setLayout(new GridLayout(0,1,10,10));
         //boutique.add(cubomeduse);
-        boutique.add(bfleur1);
-        boutique.add(bfleur2);
-        boutique.add(bfleur3);
-        boutique.setOpaque(false);
-        boutique.setVisible(false);
+        graines.add(bfleur1);
+        graines.add(bfleur2);
+        graines.add(bfleur3);
+        graines.setOpaque(false);
+        graines.setVisible(false);
 
         /**gestion de l'affichage de l'argent**/
 
@@ -142,7 +185,7 @@ public class View extends JFrame {
 
         boutons.setBounds(50,200,300,100);
         //cubomeduse.setBounds(0,100,400,300);
-        boutique.setBounds(50,630,300,225);
+        graines.setBounds(50,630,300,225);
         argent.setBounds(50,550,300,50);
         inventaire.setBounds(50, 0, 300, 100);
 
@@ -150,7 +193,7 @@ public class View extends JFrame {
         control.add(inventaire);
         //control.add(cubomeduse);
         control.add(boutons);
-        control.add(boutique);
+        control.add(graines);
         control.add(argent);
 
         /**Partie sur la création des boutons et leur ajout dans le JPanel

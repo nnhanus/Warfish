@@ -2,7 +2,7 @@ package Modele;
 
 import View.VueFleur;
 
-public class Fleur extends Ressource { //à terme plusieurs types de fleurs, avec chacun différentes spécificités
+public class Fleur extends Thread { //à terme plusieurs types de fleurs, avec chacun différentes spécificités
 
     public int lifespan = 1000;
     boolean isPicked = false;
@@ -13,7 +13,8 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
     private int type;
 
     public Fleur(int x, int y) {
-        super(x, y);
+        this.x = x;
+        this.y = y;
         this.type = (int) (Math.random() * 2);
         this.boosted = mustBeBoosted();
         VueFleur.updateFleur();
@@ -21,11 +22,20 @@ public class Fleur extends Ressource { //à terme plusieurs types de fleurs, ave
     }
 
     public Fleur(int x, int y, int t){
-        super(x,y);
+        this.x = x;
+        this.y = y;
         this.type = t;
         this.boosted = mustBeBoosted();
         VueFleur.updateFleur();
         this.start();
+    }
+
+    public int getX(){
+        return this.x;
+    }
+
+    public int getY(){
+        return this.y;
     }
 
     public int getType(){
