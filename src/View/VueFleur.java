@@ -2,7 +2,6 @@ package View;
 
 import Modele.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,15 +14,49 @@ public class VueFleur {
         fleurs.addAll(GrilleMod.getFleurs());
     }
 
+    /**
+     * Fonction d'affichage
+     */
     public static void drawFleur(Graphics g){
-        for (Fleur f : fleurs) {
-            if (!(f.getIsPicked())) {
-                if (f.lifespan >= 450) {
-                    g.drawImage(Movable.B1, f.getX() - TAILLE_FLEUR/2, f.getY() - TAILLE_FLEUR/2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+        for (Fleur f : fleurs) { //on itère sur le tableau des fleurs présentes sur le terrain
+            if (!(f.getIsPicked())) { //si la fleur est toujours sur le terrain
+                if (f.lifespan >= 450) { //si la fleur est fermée
+                    switch (f.getType()) { //on affiche la fleur en fonction de son type
+                        case GrilleMod.indiceFleurR:
+                            g.drawImage(Movable.RFer, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                        case GrilleMod.indiceFleurJ:
+                            g.drawImage(Movable.JFer, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                        case GrilleMod.indiceFleurV:
+                            g.drawImage(Movable.VFer, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                    }
                 } else if (!(f.getIsDead())) {
-                    g.drawImage(Movable.f1, f.getX() - TAILLE_FLEUR/2, f.getY()- TAILLE_FLEUR/2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                    switch (f.getType()) {
+                        case GrilleMod.indiceFleurR:
+                            g.drawImage(Movable.ROuv, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                        case GrilleMod.indiceFleurJ:
+                            g.drawImage(Movable.JOuv, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                        case GrilleMod.indiceFleurV:
+                            g.drawImage(Movable.VOuv, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                    }
                 } else {
-                    g.drawImage(Movable.fan1, f.getX()- TAILLE_FLEUR/2, f.getY() - TAILLE_FLEUR/2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                    switch (f.getType()) {
+                        case GrilleMod.indiceFleurR:
+                            g.drawImage(Movable.RMor, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                        case GrilleMod.indiceFleurJ:
+                            g.drawImage(Movable.JMor, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                        case GrilleMod.indiceFleurV:
+                            g.drawImage(Movable.VMor, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
+                            break;
+                    }
+
                 }
                 int sq = (int) Math.sqrt(GrilleMod.RANGE_PLACEABLE);
                 g.drawOval(f.getX() - sq, f.getY() - sq, sq*2, sq*2);
