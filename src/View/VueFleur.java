@@ -58,7 +58,19 @@ public class VueFleur {
                     }
 
                 }
+                //g.setColor(Color.BLACK);
                 int sq = (int) Math.sqrt(GrilleMod.RANGE_PLACEABLE);
+                switch (f.getType()){
+                    case GrilleMod.indiceFleurR:
+                        g.setColor(Color.RED);
+                        break;
+                    case GrilleMod.indiceFleurJ:
+                        g.setColor(Color.YELLOW);
+                        break;
+                    case GrilleMod.indiceFleurV:
+                        g.setColor(Color.GREEN);
+                        break;
+                }
                 g.drawOval(f.getX() - sq, f.getY() - sq, sq*2, sq*2);
             }
         }

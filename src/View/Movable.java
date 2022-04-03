@@ -28,6 +28,9 @@ public class Movable{
     protected static BufferedImage VFer = null; //fleur verte fermée
     protected static BufferedImage VMor = null; //fleur verte morte
     protected static BufferedImage nuis = null; //nuisibles
+    protected static BufferedImage batProd = null;
+    protected static BufferedImage batDef = null;
+    protected static BufferedImage batPrinc = null;
 
 
     /**
@@ -36,7 +39,7 @@ public class Movable{
     private void chargeImage(){
         //Chargement de l'image de méduse
         try {
-            meduse = ImageIO.read(new File("src/View/Image/jelly.png"));
+            meduse = ImageIO.read(new File("src/Image/meduseJardiniere.png"));
         } catch (IOException ex) {
             System.out.println("Fichier méduse manquant");
         }
@@ -90,9 +93,24 @@ public class Movable{
         }
         //Chargement des Nuisibles
         try {
-            nuis = ImageIO.read(new File("src/View/Image/cursebriceCute.png")); //image de brice
+            nuis = ImageIO.read(new File("src/Image/cursebriceCute.png")); //image de brice
         } catch (IOException ex) {
             System.out.println("Fichier nuisible manquant");
+        }
+        try {
+            batDef = ImageIO.read(new File("src/Image/maison1.png")); //image de brice
+        } catch (IOException ex) {
+            System.out.println("Fichier bat def manquant");
+        }
+        try {
+            batProd = ImageIO.read(new File("src/Image/maison3.png")); //image de brice
+        } catch (IOException ex) {
+            System.out.println("Fichier bat prod manquant");
+        }
+        try {
+            batPrinc = ImageIO.read(new File("src/Image/maison2.png")); //image de brice
+        } catch (IOException ex) {
+            System.out.println("Fichier bat princ manquant");
         }
     }
 
