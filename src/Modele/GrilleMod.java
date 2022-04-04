@@ -13,7 +13,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur en nombre de case de la grille
 
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
-    private static ArrayList<Ressource> ressources = new ArrayList<>(); //plusieurs tableaux de ressources pour aller un poil plus vite I guess, c'est aussi pour pas avoir d'emmerde avec les types
     private static ArrayList<Building> buildings = new ArrayList<>();
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
     private static ArrayList<Unite> unites = new ArrayList<>();
@@ -26,7 +25,15 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     private static final int nbRocher = 4;
     private static final int nbFleur = 8;
 
-    //TODO, le bâtiment principal est à placer au hasard
+
+    public static final int indiceFleurR = 0;
+    public static final int indiceFleurJ = 1;
+    public static final int indiceFleurV = 2;
+    public static final int indiceGraineR = 3;
+    public static final int indiceGraineJ = 4;
+    public static final int indiceGraineV = 5;
+    public static final int indiceBouquet = 6;
+
     private static final BatPrincipal BAT_PRINCIPAL = new BatPrincipal((int) (Math.random() * LARGEUR_GRILLE), (int) (Math.random() * HAUTEUR_GRILLE));
     private static Unite selectedUnite = null;
 
@@ -45,12 +52,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     public static ArrayList<Fleur> getFleurs(){
         return GrilleMod.fleurs;
     }
-
-    /**
-     * getRessources
-     * @return GrilleMod.ressources
-     */
-    public static ArrayList<Ressource> getRessources(){return GrilleMod.ressources;}
 
     /**
      * getBuildings
@@ -101,23 +102,21 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
 
     /**
      * addFleur
-     * Ajoute une fleur à la liste des fleurs et à la liste des ressources
+     * Ajoute une fleur à la liste des fleurs
      * @param f une Fleur
      */
     public static void addFleur(Fleur f){
         fleurs.add(f);
-        ressources.add(f);
     }
 
     /**
      * removeFleur
-     * Enlève une fleur de la liste des fleurs et des ressources, et met à jour la cible des nuisibles concernés
+     * Enlève une fleur de la liste des fleurs, et met à jour la cible des nuisibles concernés
      * C'est typiquement le cas où on aurait besoin d'une section critique je pense, mais je sais pas si c'est possible/comment ça marche ici
      */
     public static void removeFleur(Fleur f){
         f.interrupt();
         f.isPicked();
-        ressources.remove(f);
         fleurs.remove(f);
         for(Nuisible n : nuisibles){
             if(n.getTarget() == f){
@@ -129,7 +128,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     public static void desherbeFleur(Fleur f){
         f.isPicked();
         //if (f.getIsDead()) {
-            ressources.remove(f);
             fleurs.remove(f);
             for (Nuisible n : nuisibles) {
                 if (n.getTarget() == f) {
@@ -146,15 +144,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      */
     public static void addBatiment(Building b){
         buildings.add(b);
-    }
-
-    /**
-     * addRessource
-     * Place une ressource sur la grille
-     * @param r une ressource
-     */
-    public static void addRessource(Ressource r){
-        ressources.add(r);
     }
 
     /**
@@ -235,9 +224,9 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
             }
         }
 
-        for(Ressource r : ressources){
-            int posX = r.x - x;
-            int posY = r.y - y;
+        for(Fleur f : fleurs){
+            int posX = f.getX() - x;
+            int posY = f.getY() - y;
             if(posX*posX + posY*posY < RANGE_PLACEABLE){
                 return true;
             }
@@ -279,7 +268,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      * initRocher
      * Initialise aléatoirement des Rocher sur le terrain
      */
-    public void initRocher(){
+    /*public void initRocher(){
         for(int i = 0; i < nbRocher; i++) {
             int randx = (int) (Math.random() * HAUTEUR_GRILLE);
             int randy = (int) (Math.random() * LARGEUR_GRILLE);
@@ -289,13 +278,13 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
             }
             addRessource(new Rocher(randx, randy));
         }
-    }
+    }*/
 
     /**
      * initForet
      * Initialise aléatoirement des Foret sur le terrain
      */
-    public void initForet(){
+   /* public void initForet(){
         for(int i = 0; i < nbForet; i++) {
             int randx = (int) (Math.random() * HAUTEUR_GRILLE);
             int randy = (int) (Math.random() * LARGEUR_GRILLE);
@@ -305,7 +294,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
             }
             addRessource(new Foret(randx, randy));
         }
-    }
+    }*/
 
     /**
      * initGrille
@@ -333,7 +322,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
         while(true){
             addNuisible();
             try {
-                sleep(3000);
+                sleep(15000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

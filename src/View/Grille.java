@@ -1,16 +1,12 @@
 package View;
 
 
-import Modele.Building;
-import Modele.Case;
-import Modele.Jardinier;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
