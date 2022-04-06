@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Jardinier extends Unite{
-    private int[] inventaire = new int[5];
-    //graine fleur bouquet bois pierre, in this order I guess
+    private int[] inventaire = new int[7];
+    //cf GrilleMod pour les indices
 
     public Jardinier(int x, int y){
         super(x, y);
@@ -22,21 +22,28 @@ public class Jardinier extends Unite{
      * planteFleur
      * Le paysan plante une fleur sur la grille
      */
-    public void planteFleur() {
-        this.inventaire[0]--;
-        GrilleMod.addFleur(new Fleur(this.x, this.y));
+    public void planteFleur(int id) {
+        this.inventaire[id]--;
+        switch (id) {
+            case 3:
+                GrilleMod.addFleur(new Fleur(this.x, this.y, 0));
+                break;
+            case 4:
+                GrilleMod.addFleur(new Fleur(this.x, this.y, 1));
+                break;
+            case 5:
+                GrilleMod.addFleur(new Fleur(this.x, this.y, 2));
+        }
     }
 
     /**
      * recolterRessources
      * recolte une certaine quantité d'une ressource
-     * @param r la ressource récolter
+     * @param f la ressource récolter
      */
-    public void recolterRessource(Ressource r) {
-            if(r.getClass() == Fleur.class){
-                GrilleMod.removeFleur((Fleur) r);
-            }
-            this.inventaire[r.getType()] += r.getAmount();
+    public void recolterRessource(Fleur f) {
+        GrilleMod.removeFleur(f);
+        this.inventaire[f.getType()] += f.getAmount();
     }
 
     public void desherber(Fleur r) {
@@ -44,18 +51,18 @@ public class Jardinier extends Unite{
     }
 
     /**
-     * plusProcheRessource
-     * Renvoie la ressource la plus proche du Jardiner
-     * @return une ressource
+     * plusProcheFleur
+     * Renvoie la fleur la plus proche du Jardiner
+     * @return une fleur
      */
-    public Ressource plusProcheRessource(){
-        Ressource nearest = null;
-        for(Ressource r : GrilleMod.getRessources()){
+    public Fleur plusProcheFleur(){
+        Fleur nearest = null;
+        for(Fleur f : GrilleMod.getFleurs()){
             if(nearest == null){
-                nearest = r;
+                nearest = f;
             }else{
-                if(getSQDistFrom(r.getX(), r.getY()) < getSQDistFrom(nearest.getX(), nearest.getY())){
-                    nearest = r;
+                if(getSQDistFrom(f.getX(), f.getY()) < getSQDistFrom(nearest.getX(), nearest.getY())){
+                    nearest = f;
                 }
             }
         }
@@ -65,10 +72,9 @@ public class Jardinier extends Unite{
     /**
      * acheterGraine
      * Achete une(des) graines
-     * @param amount la quantité achetée
      */
-    public void acheterGraine(int amount) {
-        this.inventaire[0] += amount;
+    public void acheterGraine(int id) {
+        this.inventaire[id]++;
         System.out.println("bought");
     }
 
@@ -87,8 +93,8 @@ public class Jardinier extends Unite{
      * Confectionne un bouquet à partir de 3 fleurs et le range dans l'inventaire
      */
     public void confectionneBouquet(){
-        this.inventaire[1] -= 3;
-        this.inventaire[2] += 1;
+        this.inventaire[GrilleMod.indiceFleurR] -= 3;
+        this.inventaire[GrilleMod.indiceBouquet] += 1;
     }
 
     /**
@@ -96,8 +102,8 @@ public class Jardinier extends Unite{
      * Vend tous les bouquets du jardinier
      */
     public void vendBouquet(){
-        GrilleMod.getBatPrincipal().vendRessource(this.inventaire[2], 2);
-        this.inventaire[2] = 0;
+        GrilleMod.getBatPrincipal().vendRessource();
+        this.inventaire[GrilleMod.indiceBouquet] = 0;
     }
 
     /**

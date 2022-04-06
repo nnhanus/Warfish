@@ -55,8 +55,9 @@ public class BatPrincipal extends Building {
      * Achete une graine contre de l'argent.
      * Instantanée.
      */
-    public static void acheterGraine(int amount) {
-        tirelire -= amount*PRIX_GRAINE;
+    public static void acheterGraine(int id) {
+        tirelire -= PRIX_GRAINE;
+        System.out.println(PRIX_GRAINE);
     }
 
     /**
@@ -78,16 +79,8 @@ public class BatPrincipal extends Building {
      * Vend les bouquets composés par un jardinier
      * Automatique, instanté
      */
-    public void vendRessource(int amount, int id) {
-        switch (id) {
-            case 2 -> //bouquet
-                    tirelire += PRIX_BOUQUET * amount;
-            case 3 -> //bois
-                    tirelire += PRIX_BOIS * amount;
-            case 4 -> //pierre
-                    tirelire += PRIX_CAILLOUX * amount;
-            default -> System.out.println("???");
-        }
+    public void vendRessource() {
+        tirelire += PRIX_BOUQUET;
     }
 }
 
