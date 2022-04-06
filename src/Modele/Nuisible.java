@@ -173,7 +173,7 @@ public class Nuisible extends Thread{
             }else{ //si il n'a pas de cible
                 acquireTarget();
                 try {
-                    sleep(2000);
+                    sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

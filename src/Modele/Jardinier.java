@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class Jardinier extends Unite{
     private int[] inventaire = new int[5];
-    //graine fleur bouquet bois pierre, in this order I guess
+    //graine fleur bouquet //bois pierre, in this order I guess
 
     public Jardinier(int x, int y){
         super(x, y);
@@ -142,7 +142,6 @@ public class Jardinier extends Unite{
         BatProduction b = new BatProduction(this.x, this.y);
         GrilleMod.addBatiment(b);
         System.out.println("BatProduction Added");
-
     }
 
     /**

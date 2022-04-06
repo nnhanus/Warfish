@@ -83,7 +83,7 @@ public class Unite extends Thread {
     public void setDir() {
         int posX = targX - x;
         int posY = targY - y;
-        this.dir = atan2(posX, posY) - PI/2.0;
+        this.dir = atan2(posX, posY) - PI/2.0; //TODO
     }
 
     /**
