@@ -1,6 +1,5 @@
 package View;
 
-import java.beans.Expression;
 
 public class ThreadAffichage extends Thread{
 

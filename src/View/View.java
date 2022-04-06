@@ -5,12 +5,8 @@ import Modele.BatPrincipal;
 import Modele.GrilleMod;
 import Modele.Jardinier;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 
 public class View extends JFrame {
@@ -245,6 +241,9 @@ public class View extends JFrame {
         buildings.add(def);
     }
 
+    /**
+     * Initialisation de l'affichage du menu de plantage de fleur
+     */
     protected void Planter(){
         planter = new JPanel();
         planter.setBounds(50,400,300,200);
@@ -319,12 +318,12 @@ public class View extends JFrame {
     }
 
     public static void updateInv(){
-        invFleur1.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurR]));
-        invFleur2.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurJ]));
-        invFleur3.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurV]));
-        invGraine1.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceGraineR]));
-        invGraine2.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceGraineJ]));
-        invGraine3.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceGraineV]));
+        invFleur1.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedJard()).getInventaire()[GrilleMod.indiceFleurR]));
+        invFleur2.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedJard()).getInventaire()[GrilleMod.indiceFleurJ]));
+        invFleur3.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedJard()).getInventaire()[GrilleMod.indiceFleurV]));
+        invGraine1.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedJard()).getInventaire()[GrilleMod.indiceGraineR]));
+        invGraine2.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedJard()).getInventaire()[GrilleMod.indiceGraineJ]));
+        invGraine3.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedJard()).getInventaire()[GrilleMod.indiceGraineV]));
         //invBouquet.setText("nb bouquet : " + String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceBouquet]));
     }
 }

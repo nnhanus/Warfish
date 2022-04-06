@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**Cette classe permet de creer la grille de jeu**/
 public class Grille extends JPanel {
+    Image img = null;
 
     public static Movable move;
     //public static BuildingView buildV;
@@ -19,21 +20,19 @@ public class Grille extends JPanel {
         this.setOpaque(false);
         move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible(), new BuildingView());
         //buildV = new BuildingView();
+        try {
+            img = ImageIO.read(new File("src/Image/decor_plateau.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erreur image de fond: " +e.getMessage());
+        }
     }
 
     @Override
     public void paint(Graphics g) {
         /**arriere plan**/
-        try {
-            Image img = ImageIO.read(new File("src/View/Image/decor_plateau.png"));
-            g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Erreur image de fond: " +e.getMessage());
-        }
-
+        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
         //buildV.drawBuildings(g);
-
         move.paint(g);
     }
 

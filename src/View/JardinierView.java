@@ -3,9 +3,7 @@ package View;
 
 import Modele.GrilleMod;
 import Modele.Jardinier;
-import Modele.Unite;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -17,7 +15,7 @@ public class JardinierView {
 
 
     public JardinierView(){
-        for(Unite u:GrilleMod.getUnites()){
+        for(Jardinier u:GrilleMod.getJardiniers()){
             listjardinier.add((Jardinier) u);
         }
     }

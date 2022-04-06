@@ -2,8 +2,11 @@ package Modele;
 
 import View.VueFleur;
 
+/**
+ * Classe implémentant les fleurs
+ */
 public class Fleur extends Thread {
-    //les différntes attributs des fleurs
+    //les différents attributs des fleurs
     public int lifespan = 1000; //leur temps de vie
     boolean isPicked = false; //si la fleur a été ramassée ou non
     boolean isDead = false; //si la fleur est morte ou non
@@ -42,7 +45,7 @@ public class Fleur extends Thread {
         //position
         this.x = x;
         this.y = y;
-        //type donnée
+        //type donné
         this.type = t;
         this.boosted = mustBeBoosted();
         VueFleur.updateFleur();
@@ -73,7 +76,6 @@ public class Fleur extends Thread {
 
     /**
      * Teste si la fleur est en état d'être cueillie
-     *
      * @return vrai si la fleur peut être cueillie, faux sinon
      */
     public boolean isPickable() {
@@ -84,13 +86,12 @@ public class Fleur extends Thread {
     }
 
     /**
-     * Renvoie le prix de la fleur en fonction de son état
-     *
-     * @return le prix
+     * Renvoie la quantité de la fleur cueillie en fonction de son état
+     * @return la quantité de fleur
      */
     public int getAmount() {
         int amount;
-        if (lifespan <= 450 && lifespan > 150) { //si la fleur est cueillie prématurement
+        if (lifespan <= 450 && lifespan > 150) { //la fleur est cueillie prématurement
             amount = 1;
         } else if (lifespan <= 150) { //fleur ceuillie au meilleur moment, on en récolte plus
             amount = 3;
@@ -109,7 +110,6 @@ public class Fleur extends Thread {
      */
     public void boost() {
         this.boosted = true;
-        System.out.println("Has been boosted");
     }
 
     /**
@@ -137,7 +137,6 @@ public class Fleur extends Thread {
      */
     public void isPicked() {
         isPicked = true;
-        //System.out.println("je suis ramassée");
     }
 
     /**
@@ -163,7 +162,7 @@ public class Fleur extends Thread {
 
     @Override
     public void run() {
-        while (!isPicked && lifespan > 0) { //si la fleur est en vie et sur le terrain
+        while (!isPicked && lifespan > 0) { //la fleur est en vie et sur le terrain
             lifespan -= 50; //son lifespan diminue
             try {
                 Thread.sleep(1000);

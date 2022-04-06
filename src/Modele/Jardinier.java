@@ -1,38 +1,98 @@
 package Modele;
 
 import View.BuildingView;
-import View.Grille;
-import View.JardinierView;
-import View.Movable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Jardinier extends Unite{
-    private int[] inventaire = new int[7];
-    //cf GrilleMod pour les indices
+import static java.lang.Math.*;
 
+/**
+ * Classe implémentant les jardiniers (=méduses)
+ */
+public class Jardinier extends Thread{
+    private int[] inventaire = new int[7]; //inventaire, cf GrilleMod pour les indices
+    protected int x, y; //les coordonnées de l'unité
+    protected int vitesse; //la vitesse de l'unité, définir une valeur globale en fonction de l'unité en question
+    protected boolean immobile = true;
+    protected int targX; //Les coordonnées (x) ciblées par l'unité
+    protected int targY; //Les coordonnées (y) ciblées par l'unité
+    protected double dir; //La direction à suivre pour atteindre la cible
+
+
+    /**
+     * Constructeur
+     * @param x l'abscisse du jardinier
+     * @param y l'ordonnée du jardinier
+     */
     public Jardinier(int x, int y){
-        super(x, y);
-        vitesse = 100;
-        Arrays.fill(inventaire, 0);
+        //coordonnées du jardinier
+        this.x = x;
+        this.y = y;
+        //coordonnées visées par le jardinier
+        this.targX = x;
+        this.targY = y;
+        vitesse = 100; //vitesse
+        Arrays.fill(inventaire, 0); //remplissage de l'inventaire
+        this.start(); //lancement du thread
     }
+
+    /**
+     * getX
+     * @return l'abscisse x de l'unité
+     */
+    public int getX() {
+        return this.x;
+    }
+
+    /**
+     * getY
+     * @return l'ordonnée y de l'unité
+     */
+    public int getY() {
+        return this.y;
+    }
+
+    /**
+     * getVitesse
+     * @return la vitesse de l'unité
+     */
+    public int getVitesse() {
+        return this.vitesse;
+    }
+
+    /**
+     * getTargX
+     * @return la cible (x) de l'unité
+     */
+    public int getTargX() {
+        return this.targX;
+    }
+
+    /**
+     * getTargY
+     * @return la cible (y) de l'unité
+     */
+    public int getTargY() {
+        return this.targY;
+    }
+
 
     /**
      * planteFleur
      * Le paysan plante une fleur sur la grille
      */
     public void planteFleur(int id) {
-        this.inventaire[id]--;
-        switch (id) {
-            case 3:
-                GrilleMod.addFleur(new Fleur(this.x, this.y, 0));
+        this.inventaire[id]--; //perd la graine qu'il plante
+        switch (id) { //récupération du type de la fleur
+            case GrilleMod.indiceGraineR: //la graine est rouge
+                GrilleMod.addFleur(new Fleur(this.x, this.y, GrilleMod.indiceFleurR)); //plante une fleur rouge
                 break;
-            case 4:
-                GrilleMod.addFleur(new Fleur(this.x, this.y, 1));
+            case GrilleMod.indiceGraineJ: //la graine est jaune
+                GrilleMod.addFleur(new Fleur(this.x, this.y, GrilleMod.indiceFleurJ)); //plante une fleur jaune
                 break;
-            case 5:
-                GrilleMod.addFleur(new Fleur(this.x, this.y, 2));
+            case GrilleMod.indiceGraineV: //la graine est verte
+                GrilleMod.addFleur(new Fleur(this.x, this.y, GrilleMod.indiceFleurV)); //plante une fleur verte
         }
     }
 
@@ -42,12 +102,16 @@ public class Jardinier extends Unite{
      * @param f la ressource récolter
      */
     public void recolterRessource(Fleur f) {
-        GrilleMod.removeFleur(f);
-        this.inventaire[f.getType()] += f.getAmount();
+        GrilleMod.removeFleur(f); //fleur enlevée du terrain
+        this.inventaire[f.getType()] += f.getAmount(); //ajout à l'inventaire du jardinier
     }
 
+    /**
+     * Désherbe une fleur
+     * @param r la fleur à désherber
+     */
     public void desherber(Fleur r) {
-        GrilleMod.removeFleur(r);
+        GrilleMod.removeFleur(r); //fleur enlevée du terrain
     }
 
     /**
@@ -57,10 +121,12 @@ public class Jardinier extends Unite{
      */
     public Fleur plusProcheFleur(){
         Fleur nearest = null;
-        for(Fleur f : GrilleMod.getFleurs()){
-            if(nearest == null){
+        for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs du terrain
+            if(nearest == null){ //on récupère la première fleur dans le tableau
                 nearest = f;
             }else{
+                //comparaison de la nearest actuelle avec la fleur parcourue
+                //si la fleur parcourue est plus proche, elle devient la nearest
                 if(getSQDistFrom(f.getX(), f.getY()) < getSQDistFrom(nearest.getX(), nearest.getY())){
                     nearest = f;
                 }
@@ -74,8 +140,7 @@ public class Jardinier extends Unite{
      * Achete une(des) graines
      */
     public void acheterGraine(int id) {
-        this.inventaire[id]++;
-        System.out.println("bought");
+        this.inventaire[id]++; //ajout d'une graine à l'invantaire
     }
 
     /**
@@ -128,13 +193,9 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de défense de l'inventaire
      */
     public void construitBatDefense(){
-        /*this.inventaire[3] -= 5;
-        this.inventaire[4] -= 15;*/
-        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_DEFENSE);
-        BatDefense b = new BatDefense(this.x, this.y);
-        GrilleMod.addBatiment(b);
-        System.out.println("BatDefense Added");
-        BuildingView.updateBuildings(b);
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_DEFENSE); //perd le prix d'un bâtiment
+        BatDefense b = new BatDefense(this.x, this.y); //création d'un nouveau bâtiment aux coordonnées du jardinier
+        GrilleMod.addBatiment(b); //ajout du bâtiment au terrain
     }
 
     /**
@@ -142,13 +203,9 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de production de l'inventaire
      */
     public void construitBatProduction(){
-        /*this.inventaire[3] -= 15;
-        this.inventaire[4] -= 5;*/
-        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_PRODUCTION);
-        BatProduction b = new BatProduction(this.x, this.y);
-        GrilleMod.addBatiment(b);
-        System.out.println("BatProduction Added");
-
+        BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_PRODUCTION); //perd le prix d'un bâtiment
+        BatProduction b = new BatProduction(this.x, this.y); //création d'un nouveau bâtiment aux coordonnées du jardinier
+        GrilleMod.addBatiment(b); //ajout du bâtiment au terrain
     }
 
     /**
@@ -156,15 +213,80 @@ public class Jardinier extends Unite{
      * Effraie tous les nuisibles proches
      */
     public void effrayer(){
+        //récupération des nuisibles du terrain
         ArrayList<Nuisible> nlist = new ArrayList<>();
         nlist.addAll(GrilleMod.getNuisibles());
         for(Nuisible n : nlist){
+            //Récupération de la position
             int posX = n.getX() - this.x;
             int posY = n.getY() - this.y;
 
-            if(posX*posX + posY*posY <= 19000){
-                n.setenFuite();
+            if(posX*posX + posY*posY <= 19000){ //le nuisible est dans le rayon du jardinier
+                n.setenFuite(); //il est effrayé
             }
+        }
+    }
+
+
+    /**
+     * getSQDistFrom
+     * Retourne le carré de la distance entre l'unite et un point
+     * @param x
+     * @param y
+     * @return un entier
+     */
+    public int getSQDistFrom(int x, int y) {
+        return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y);
+    }
+
+    /**
+     * setDir
+     * Défini automatiquement la direction à suivre en radian
+     */
+    public void setDir() {
+        int posX = targX - x;
+        int posY = targY - y;
+        this.dir = atan2(posX, posY) - PI/2.0;
+    }
+
+    /**
+     * avance
+     * fait avancer l'unité vers sa cible
+     */
+    public void avance() {
+        this.x  += cos(dir)*1.6;
+        this.y -= sin(dir)*1.6;
+        this.setDir();
+    }
+
+    /**
+     * setMoving
+     * Désigne une cible pour l'unité
+     * @param x l'abscisse de la cible
+     * @param y l'ordonnée de la cible
+     */
+    public void setMoving(int x, int y) {
+        this.targX = x;
+        this.targY = y;
+        this.setDir();
+    }
+
+    @Override
+    public void run() {
+        int posX;
+        int posY;
+        while (true) {
+            posX = targX - x;
+            posY = targY - y;
+            if(posX*posX + posY*posY > 125) {
+                this.avance();
+            }
+            try {
+                sleep(7);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }

@@ -9,25 +9,28 @@ import java.util.ArrayList;
  * Effraie automatiquement les nuisibles
  */
 public class BatDefense extends Building {
-    public static final int DEFENSE_RANGE = 19000;
+    public static final int DEFENSE_RANGE = 19000; //la portée du bâtiment
+
     public BatDefense(int x, int y) {
-        super(x, y, DEFENSE_RANGE);
+        super(x, y, DEFENSE_RANGE); //création du bâtiment
         effrayer();
-        BuildingView.updateBuildings(this);
+        BuildingView.updateBuildings(this); //mise à jour de la vue
     }
 
-    public void effrayer(){
+    /**
+     * Effraie les nuisibles dans son rayon d'action
+     */
+    public void effrayer() {
+        //Récupération des nuisibles et de leurs positions
         ArrayList<Nuisible> list = new ArrayList<>();
         list.addAll(GrilleMod.getNuisibles());
-        for(Nuisible n : list){
+        for (Nuisible n : list) {
             int posX = n.getX() - this.x;
             int posY = n.getY() - this.y;
 
-            if(posX*posX + posY*posY <= this.range){
-                n.setenFuite();
+            if (posX * posX + posY * posY <= this.range) { //le nuisible est dans le rayon d'action
+                n.setenFuite(); //il est effrayé
             }
         }
     }
-} /*Effrayer les lapins dans les cases voisines (bâtiment de défense).
-    Cette action est automatique et instantanée.
-    comme pour production? genre si le lapin il avance et il aarive près du bâtiment, ils ont peur?*/
+}

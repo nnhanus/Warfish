@@ -1,6 +1,6 @@
 package Modele;
 
-import View.Grille;
+
 import View.VueNuisible;
 
 import static java.lang.Math.*;
@@ -10,21 +10,26 @@ import static java.lang.Math.*;
  * Classe gérant les actions, affectations, et le comportement des nuisibles
  */
 public class Nuisible extends Thread{
-    private int x, y;
-    private double dir; //la direction du lapin en degrés (?)
-    private boolean enfuite = false;
-    private Fleur target = null;
+    private int x, y; //position
+    private double dir; //la direction du lapin en degrés
+    private boolean enfuite = false; //si le lapin fuit ou non
+    private Fleur target = null; //la cible du lapin
 
-
+    /**
+     * Constructeur
+     * @param x abscisse à laquelle le lapin apparait
+     * @param y ordonnée à laquelle le lapin apparait
+     */
     public Nuisible(int x, int y) {
+        //coordonnées
         this.x = x;
         this.y = y;
-        this.acquireTarget();
-        VueNuisible.updateNuisibles();
-        this.start(); //??
+        this.acquireTarget(); //définition de la cible
+        VueNuisible.updateNuisibles(); //mise à jour de la vue
+        this.start(); //lancement du thread
     }
 
-    /*
+    /**
     Getters
      */
     public int getX(){
@@ -73,8 +78,8 @@ public class Nuisible extends Thread{
      */
     public void setenFuite(){
         this.enfuite = true;
-        GrilleMod.removeNuisible(this);
-        VueNuisible.updateNuisibles();
+        GrilleMod.removeNuisible(this); //nuisible enlevé de la grille
+        VueNuisible.updateNuisibles(); //mise à jour de la vue
     }
 
     /**
