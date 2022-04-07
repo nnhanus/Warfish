@@ -21,7 +21,7 @@ public class VueFleur {
     public static void drawFleur(Graphics g){
         for (Fleur f : fleurs) { //on itère sur le tableau des fleurs présentes sur le terrain
             if (!(f.getIsPicked())) { //si la fleur est toujours sur le terrain
-                if (f.lifespan >= 450) { //si la fleur est fermée
+                if (f.lifespan >= 9) { //si la fleur est fermée
                     switch (f.getType()) { //on affiche la fleur en fonction de son type
                         case GrilleMod.indiceFleurR:
                             g.drawImage(Movable.RFer, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);

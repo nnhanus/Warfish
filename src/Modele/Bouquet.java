@@ -70,10 +70,10 @@ public abstract class Bouquet {
     public static void cancelBouquet(){
         for(int n : bouquet){
             if(n > -1){
-                ((Jardinier) GrilleMod.getSelectedUnite()).getInventaire()[n]++;
+                (GrilleMod.getSelectedUnite()).getInventaire()[n]++; //rendre les ressources au jardinier
             }
         }
-        clearBouquet();
+        clearBouquet(); //réinitialiser le bouquet
     }
 
     /**
@@ -84,7 +84,7 @@ public abstract class Bouquet {
     public static boolean isReady(){
         for(int i = 0; i < 3; i++){
             if(bouquet[i] == -1){
-                return false;
+                return false; //le bouquet ne contient pas 3 fleurs
             }
         }
         return true;
@@ -98,7 +98,7 @@ public abstract class Bouquet {
     public static void addFlower(int f){
         for(int i = 0; i < 3; i++){
             if(bouquet[i] == -1){
-                bouquet[i] = f;
+                bouquet[i] = f; //ajoute la fleur à la première position vide
                 break;
             }
         }

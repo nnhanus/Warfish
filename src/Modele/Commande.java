@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 public class Commande{
     public final static int MAX_COMMANDE = 4; //nombre max de commande
-    private final static int LIFESPAN = 22; //Durée de vie
-    private final static int SPAWN_DELAY = 5; //délai d'apparition
+    private final static int LIFESPAN = 40; //Durée de vie
+    private final static int SPAWN_DELAY = 10; //délai d'apparition
     private final int[] value = {(int) (Math.random()*2),(int) (Math.random()*2),(int) (Math.random()*2)}; //commande générée aléatoirement
 
     /**
@@ -39,8 +39,8 @@ public class Commande{
      */
     static ActionListener genCommande = new ActionListener(){
         public void actionPerformed(ActionEvent evt) {
-            GrilleMod.addCommande();
-            VueCommandes.updateCommandes();
+            GrilleMod.addCommande(); //ajout à la grille
+            VueCommandes.updateCommandes(); //mise à jour de la vue
         }
     };
 
@@ -56,8 +56,8 @@ public class Commande{
      * Met fin à la commande
      */
     public void expired(){
-        GrilleMod.removeCommande(this);
-        VueCommandes.updateCommandes();
+        GrilleMod.removeCommande(this); //enlever de la grille
+        VueCommandes.updateCommandes(); //mise à jour de la vue
     }
 
     /**
@@ -67,6 +67,7 @@ public class Commande{
     public int[] getValue(){
         return this.value;
     }
+
     /**
      * hasValidBouquet
      * Vérifie que le jardinier possède bien le bouquet demandé
