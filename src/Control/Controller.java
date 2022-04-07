@@ -103,6 +103,7 @@ public class Controller implements ActionListener, MouseListener {
                jp.setVisible(false); //on ferme le sous-menu
            }
         }
+        VueConfection.updateVisibility(); //Fixe l'affichage de la barre de confection sur la visibilité du sous-menu de confection
     }
 
     @Override
@@ -141,18 +142,6 @@ public class Controller implements ActionListener, MouseListener {
         /**Ouverture de sous-menu de confection de bouquet*/
         if(e.getSource() == View.bouquetMenuButton){
             closeAllElse(View.confection);
-        }
-
-        /**Vendre un bouquet*/
-        if(e.getSource() == View.vendreButton){ //Bouquet
-            /*Conditions : le jardinier a un bouquet correspondant et le jardinier est dans le rayon du bâtiment principal*/
-            if(j.getInventaire()[GrilleMod.indiceBouquet] > 0
-                    && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
-                j.vendBouquet(); //vente du bouquet
-                //mise à jour de la vue
-                View.updateSolde();
-                View.updateInv();
-            }
         }
 
         /**Ouverture de la boutique de graines*/
@@ -194,6 +183,7 @@ public class Controller implements ActionListener, MouseListener {
                 Bouquet.addFlower(indiceFleurR); //ajout de la fleur au bouquet
                 j.useFlower(indiceFleurR); //retirer la fleur de l'inventaire
                 View.updateInv(); //mise à jour affichage
+                VueConfection.updateConfection(indiceFleurR);
             }
         }
 
@@ -203,6 +193,7 @@ public class Controller implements ActionListener, MouseListener {
                 Bouquet.addFlower(indiceFleurJ); //ajout de la fleur au bouquet
                 j.useFlower(indiceFleurJ); //retirer la fleur de l'inventaire
                 View.updateInv(); //mise à jour affichage
+                VueConfection.updateConfection(indiceFleurJ);
             }
         }
 
@@ -212,6 +203,7 @@ public class Controller implements ActionListener, MouseListener {
                 Bouquet.addFlower(indiceFleurV); //ajout de la fleur au bouquet
                 j.useFlower(indiceFleurV); //retirer la fleur de l'inventaire
                 View.updateInv(); //mise à jour affichage
+                VueConfection.updateConfection(indiceFleurV);
             }
         }
 
@@ -219,12 +211,14 @@ public class Controller implements ActionListener, MouseListener {
             if(Bouquet.isReady()){ //le bouquet est complet
                 Bouquet.finishBouquet(); //création du bouquet
                 View.updateInv(); //mise à jour affichage
+                VueConfection.clearVueConfection();
             }
         }
 
         if(e.getSource() == View.annuler){
             Bouquet.cancelBouquet(); //réinitialisation du bouquet
             View.updateInv(); //mise à jour affichage
+            VueConfection.clearVueConfection();
         }
 
         /** Boutons de validation des commandes*/

@@ -290,6 +290,7 @@ public class View extends JFrame {
         control.add(buildings);
         control.add(confection);
         control.add(VueCommandes.getListeCommandes());
+        control.add(VueConfection.getPanel());
         //ajout de control a la fenêtre principale
         this.add(control);
     }

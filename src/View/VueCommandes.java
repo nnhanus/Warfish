@@ -62,7 +62,7 @@ public class VueCommandes {
         for(int i = 0; i < 4; i++){ //parcours des commandes
             try{
                 ((JButton) listeCommandes.getComponent(i)).setIcon(View.scaleImage(new ImageIcon(imageMap.get(Bouquet.getType(GrilleMod.getCommandes().get(i).getValue())))));
-            }catch(IndexOutOfBoundsException e){
+            }catch(IndexOutOfBoundsException e){ //cas limite nombre de commande < 4, dans ce cas pas d'image
                 ((JButton) listeCommandes.getComponent(i)).setIcon(null);
             }
         }

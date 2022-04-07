@@ -57,7 +57,7 @@ public class Nuisible extends Thread{
         //mise à jour direction
         int posX = target.getX() - this.x;
         int posY = target.getY() - this.y;
-        this.dir = atan2(posX, posY) - PI/2.0;
+        this.dir = atan2(posX, posY) - PI/2.0; //angle entre le lapin et sa cible
     }
 
     /**
@@ -121,7 +121,7 @@ public class Nuisible extends Thread{
             }
         }
         //pas de fleur respectant les conditions
-        //mouvement aléatoire
+        //définition d'une direction par défaut (centre de la grille)
         if(target != null) {
             int posX = target.getX() - x;
             int posY = target.getY() - y;
