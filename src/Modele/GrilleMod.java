@@ -1,28 +1,33 @@
 package Modele;
-import View.Grille;
-import View.Movable;
+
 import View.View;
 import View.VueNuisible;
+import View.VueCommandes;
+import View.VueFleur;
 
-import java.lang.reflect.Array;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
-    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur en nombre de case de la grille
-    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur en nombre de case de la grille
+    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur du terrain
+    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur du terrain
 
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
     private static ArrayList<Building> buildings = new ArrayList<>();
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
     private static ArrayList<Unite> unites = new ArrayList<>();
+    private static ArrayList<Commande> commandes = new ArrayList<>();
+    private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0};
 
-    public static final int ID_FLEUR = 1;
+    public static final Object key = 0;
+
+    private static final int BUNNY_SPAWN_DELAY = 15;
+    private static final int FLOWER_SPAWN_DELAY = 12;
 
     public static final int RANGE_PLACEABLE = 3000;
 
-    private static final int nbForet = 4;
-    private static final int nbRocher = 4;
     private static final int nbFleur = 8;
 
 
@@ -137,6 +142,28 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
         }
     }
 
+    public static ArrayList<Commande> getCommandes(){return commandes;}
+
+    public static void addCommande(){
+        if(commandes.size() < Commande.MAX_COMMANDE) {
+            commandes.add(new Commande());
+        }
+    }
+
+    public static void removeCommande(Commande c){
+        commandes.remove(c);
+    }
+
+    public static int[] getBouquets(){return bouquets;}
+
+    public static void addBouquet(int id){
+        bouquets[id]++;
+    }
+
+    public static void removeBouquet(int id){
+        bouquets[id]--;
+    }
+
     /**
      * ajouteBatiment
      * Ajoute un bâtiment à la liste des bâtiments buildings
@@ -159,7 +186,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      * addNuisible
      * Tente d'ajouter un nuisible sur le bord de l'écran (10 fois), puis n'importe où (10 fois)
      */
-    public void addNuisible(){
+    public static void addNuisible(){
 
         int randx = -1;
         int randy = -1;
@@ -265,36 +292,21 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     }
 
     /**
-     * initRocher
-     * Initialise aléatoirement des Rocher sur le terrain
+     * addRandomFlower
+     * Ajoute une fleur au hasard sur la grille
      */
-    /*public void initRocher(){
-        for(int i = 0; i < nbRocher; i++) {
-            int randx = (int) (Math.random() * HAUTEUR_GRILLE);
-            int randy = (int) (Math.random() * LARGEUR_GRILLE);
-            while (isNotValidPosition(randx, randy)){
-                randx = (int) (Math.random() * HAUTEUR_GRILLE);
-                randy = (int) (Math.random() * LARGEUR_GRILLE);
-            }
-            addRessource(new Rocher(randx, randy));
-        }
-    }*/
+    public static void addRandomFlower(){
+        int randx = (int) (Math.random() * HAUTEUR_GRILLE);
+        int randy = (int) (Math.random() * LARGEUR_GRILLE);
 
-    /**
-     * initForet
-     * Initialise aléatoirement des Foret sur le terrain
-     */
-   /* public void initForet(){
-        for(int i = 0; i < nbForet; i++) {
-            int randx = (int) (Math.random() * HAUTEUR_GRILLE);
-            int randy = (int) (Math.random() * LARGEUR_GRILLE);
-            while (isNotValidPosition(randx, randy)){
-                randx = (int) (Math.random() * HAUTEUR_GRILLE);
-                randy = (int) (Math.random() * LARGEUR_GRILLE);
-            }
-            addRessource(new Foret(randx, randy));
+        while (isNotValidPosition(randx, randy)){
+            randx = (int) (Math.random() * HAUTEUR_GRILLE);
+            randy = (int) (Math.random() * LARGEUR_GRILLE);
         }
-    }*/
+        addFleur(new Fleur(randx, randy));
+        VueFleur.updateFleur();
+
+    }
 
     /**
      * initGrille
@@ -302,10 +314,12 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      */
     public void initGrille(){
         addBatiment(BAT_PRINCIPAL);
-        System.out.println(BAT_PRINCIPAL.getX() + " " + BAT_PRINCIPAL.getY());
         initFleur();
-        //initRocher();
-        //initForet();
+
+
+        new Commande(0);
+        new VueCommandes();
+
 
         Jardinier J = new Jardinier(LARGEUR_GRILLE/2, HAUTEUR_GRILLE/2);
         addUnite(J);
@@ -313,20 +327,37 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
         start();
     }
 
+    static ActionListener genNuisible = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            addNuisible();
+        }
+    };
+
+    static ActionListener genFlower = new ActionListener() {
+        public void actionPerformed(ActionEvent actionEvent) {
+            addRandomFlower();
+        }
+    };
+
+    static{
+        new Timer(1000*BUNNY_SPAWN_DELAY, genNuisible).start();
+        new Timer(1000*FLOWER_SPAWN_DELAY, genFlower).start();
+    }
+
     /**
      * run
      * Thread générant un nuisible toutes les 12 secondes
      */
-    @Override
+    /*@Override
     public void run(){
         while(true){
             addNuisible();
             try {
-                sleep(15000);
+                sleep(SPAWN_DELAY*1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
 

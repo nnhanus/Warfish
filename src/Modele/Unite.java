@@ -1,16 +1,9 @@
 package Modele;
 
-import View.Grille;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static java.lang.Math.*;
-import static java.lang.Math.abs;
 
 public class Unite extends Thread {
     protected int x, y; //les coordonnées de l'unité
-    protected int vitesse; //la vitesse de l'unité, définir une valeur globale en fonction de l'unité en question
     protected boolean immobile = true;
     protected int targX; //Les coordonnées (x) ciblées par l'unité
     protected int targY; //Les coordonnées (y) ciblées par l'unité
@@ -39,14 +32,6 @@ public class Unite extends Thread {
      */
     public int getY() {
         return this.y;
-    }
-
-    /**
-     * getVitesse
-     * @return la vitesse de l'unité
-     */
-    public int getVitesse() {
-        return this.vitesse;
     }
 
     /**
@@ -83,7 +68,7 @@ public class Unite extends Thread {
     public void setDir() {
         int posX = targX - x;
         int posY = targY - y;
-        this.dir = atan2(posX, posY) - PI/2.0;
+        this.dir = atan2(posX, posY) - PI/2.0; //donne l'angle entre la droite tracée par 2 points, et le degré 0 dans le plan
     }
 
     /**
@@ -115,7 +100,7 @@ public class Unite extends Thread {
         while (true) {
             posX = targX - x;
             posY = targY - y;
-            if(posX*posX + posY*posY > 125) {
+            if(posX*posX + posY*posY > 125) { //environ 15 pixels
                 this.avance();
             }
             try {

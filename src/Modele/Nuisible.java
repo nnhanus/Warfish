@@ -1,8 +1,6 @@
 package Modele;
 
-import View.Grille;
 import View.VueNuisible;
-
 import static java.lang.Math.*;
 
 /**
@@ -21,7 +19,7 @@ public class Nuisible extends Thread{
         this.y = y;
         this.acquireTarget();
         VueNuisible.updateNuisibles();
-        this.start(); //??
+        this.start();
     }
 
     /*
@@ -150,7 +148,7 @@ public class Nuisible extends Thread{
         while(!enfuite){
             if(target != null) {
                 if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                    mangeFleur();
+                    synchronized (GrilleMod.key){mangeFleur();}
                     this.target = null;
                     try {
                         sleep(10000);
@@ -173,7 +171,7 @@ public class Nuisible extends Thread{
             }else{ //si il n'a pas de cible
                 acquireTarget();
                 try {
-                    sleep(2000);
+                    sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -4,12 +4,12 @@ import Modele.*;
 import View.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import static Modele.GrilleMod.*;
 
@@ -17,27 +17,39 @@ public class Controller implements ActionListener, MouseListener {
 
     public View view;
 
-    public Controller(View view) {
+    public
+    Controller(View view) {
         this.view = view;
         //Ajout des listener aux boutons
-        view.b1.addActionListener(this);
-        view.b2.addActionListener(this);
-        view.b3.addActionListener(this);
-        view.b4.addActionListener(this);
-        view.b5.addActionListener(this);
-        view.b6.addActionListener(this);
-        View.b7.addActionListener(this);
-        View.b8.addActionListener(this);
+        View.ramasserButton.addActionListener(this);
+        View.effrayerButton.addActionListener(this);
+        View.desherberButton.addActionListener(this);
+        View.planterMenuButton.addActionListener(this);
+        View.bouquetMenuButton.addActionListener(this);
+        View.vendreButton.addActionListener(this);
+        View.grainesBoutiqueButton.addActionListener(this);
+        View.batimentsBoutiqueButton.addActionListener(this);
         //View.b9.addActionListener(this);
-        view.terrain.addMouseListener(this);
-        view.bfr.addActionListener(this);
-        view.bfv.addActionListener(this);
-        view.bfj.addActionListener(this);
-        view.bpr.addActionListener(this);
-        view.bpv.addActionListener(this);
-        view.bpj.addActionListener(this);
-        view.prod.addActionListener(this);
-        view.def.addActionListener(this);
+        View.terrain.addMouseListener(this);
+        View.bfr.addActionListener(this);
+        View.bfv.addActionListener(this);
+        View.bfj.addActionListener(this);
+        View.bpr.addActionListener(this);
+        View.bpv.addActionListener(this);
+        View.bpj.addActionListener(this);
+        View.bpbr.addActionListener(this);
+        View.bpbj.addActionListener(this);
+        View.bpbv.addActionListener(this);
+        View.valider.addActionListener(this);
+        View.annuler.addActionListener(this);
+        View.prod.addActionListener(this);
+        View.def.addActionListener(this);
+
+        for(Component c : VueCommandes.getListeCommandes().getComponents()){
+            if(c.getClass() == JButton.class){
+                ((JButton) c).addActionListener(this);
+            }
+        }
     }
 
     /**
@@ -55,7 +67,6 @@ public class Controller implements ActionListener, MouseListener {
             //mise a jour de l'affichage
             View.updateSolde();
             View.updateInv();
-            System.out.println(BatPrincipal.PRIX_GRAINE);
         }
     }
 
@@ -72,46 +83,55 @@ public class Controller implements ActionListener, MouseListener {
         }
     }
 
+    public void closeAllElse(JPanel j){
+        ArrayList<JPanel> sous_menu = new ArrayList<>();
+        sous_menu.add(View.graines);
+        sous_menu.add(View.buildings);
+        sous_menu.add(View.planter);
+        sous_menu.add(View.confection);
+        for(JPanel jp : sous_menu){
+               if(jp.equals(j)){
+                   j.setVisible(!j.isVisible());
+               }else{
+                   jp.setVisible(false);
+               }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
 
-        if (e.getSource() == view.b1) { //recolter
+        if (e.getSource() == View.ramasserButton) { //recolter
             Fleur f = j.plusProcheFleur();
             int dist = j.getSQDistFrom(f.getX(), f.getY());
             if (f.isPickable() && dist < 3000) {
-                //System.out.println("on récolte");
                 j.recolterRessource(f);
                 View.updateInv();
             }
         }
 
-        if (e.getSource() == view.b2) { //Effrayer
+        if (e.getSource() == View.effrayerButton) { //Effrayer
             j.effrayer();
             //VueNuisible.updateNuisibles();
         }
-        if (e.getSource() == view.b3) { //desherber
-            Fleur f = j.plusProcheFleur();int dist = j.getSQDistFrom(f.getX(), f.getY());
+        if (e.getSource() == View.desherberButton) { //desherber
+            Fleur f = j.plusProcheFleur();
+            int dist = j.getSQDistFrom(f.getX(), f.getY());
             if (dist < 30000 && (f).getIsDead()) {
                 j.desherber(f);
             }
         }
 
-        if(e.getSource() == view.b4){ //planter
-            view.graines.setVisible(false);
-            view.buildings.setVisible(false);
-            view.planter.setVisible(!(view.planter.isVisible()));
+        if(e.getSource() == View.planterMenuButton){ //planter
+            closeAllElse(View.planter);
         }
 
-        if(e.getSource() == view.b5){ //bouquet
-            if(j.getInventaire()[GrilleMod.indiceFleurR] >= 3){
-                j.confectionneBouquet();
-                View.updateInv();
-            }
-
+        if(e.getSource() == View.bouquetMenuButton){ //bouquet
+            closeAllElse(View.confection);
         }
 
-        if(e.getSource() == view.b6){ //Bouquet
+        if(e.getSource() == View.vendreButton){ //Bouquet
             if(j.getInventaire()[GrilleMod.indiceBouquet] > 0 && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
                 j.vendBouquet();
                 View.updateSolde();
@@ -119,50 +139,97 @@ public class Controller implements ActionListener, MouseListener {
             }
         }
 
-        if(e.getSource() == View.b7){ //Graines
-
-            view.planter.setVisible(false);
-            view.buildings.setVisible(false);
-            view.graines.setVisible(!(view.graines.isVisible()));
+        if(e.getSource() == View.grainesBoutiqueButton){ //Graines
+            closeAllElse(View.graines);
         }
 
-        if(e.getSource() == View.b8){ // batiments
-            view.planter.setVisible(false);
-            view.graines.setVisible(false);
-            view.buildings.setVisible(!(view.buildings.isVisible()));
-            System.out.println(view.buildings.isVisible());
+        if(e.getSource() == View.batimentsBoutiqueButton){ // batiments
+            closeAllElse(View.buildings);
         }
 
         /**boutons de la boutique de graines**/
-        if (e.getSource() == view.bfr) {//Graine rouge
+        if (e.getSource() == View.bfr) {//Graine rouge
             acheteGrain(indiceGraineR, j);
         }
-        if (e.getSource() == view.bfj) { //Graine jaune
+        if (e.getSource() == View.bfj) { //Graine jaune
             acheteGrain(indiceGraineJ, j);
         }
-        if (e.getSource() == view.bfv) { //Graine verte
+        if (e.getSource() == View.bfv) { //Graine verte
             acheteGrain(indiceGraineV, j);
         }
 
         /**boutons de plantations**/
-        if (e.getSource() == view.bpr){ //Fleur rouge
+        if (e.getSource() == View.bpr){ //Fleur rouge
             planterGraine(indiceGraineR, j);
         }
-        if (e.getSource() == view.bpj){ //Fleur jaune
+        if (e.getSource() == View.bpj){ //Fleur jaune
             planterGraine(indiceGraineJ, j);
         }
-        if (e.getSource() == view.bpv){ //Fleur verte
+        if (e.getSource() == View.bpv){ //Fleur verte
             planterGraine(indiceGraineV, j);
         }
 
+        /**confection de bouquet*/
+        if(e.getSource() == View.bpbr){
+            if(!Bouquet.isReady() && ((Jardinier) getSelectedUnite()).getInventaire()[0] > 0){
+                Bouquet.addFlower(indiceFleurR);
+                ((Jardinier) getSelectedUnite()).useFlower(indiceFleurR);
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.bpbj){
+            if(!Bouquet.isReady() && ((Jardinier) getSelectedUnite()).getInventaire()[1] > 0){
+                Bouquet.addFlower(indiceFleurJ);
+                ((Jardinier) getSelectedUnite()).useFlower(indiceFleurJ);
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.bpbv){
+            if(!Bouquet.isReady() && ((Jardinier) getSelectedUnite()).getInventaire()[2] > 0) {
+                Bouquet.addFlower(indiceFleurV);
+                ((Jardinier) getSelectedUnite()).useFlower(indiceFleurV);
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.valider){
+            if(Bouquet.isReady()){
+                Bouquet.finishBouquet();
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.annuler){
+            Bouquet.cancelBouquet();
+            View.updateInv();
+        }
+
+        /** Boutons de validation des commandes*/
+        for(int i = 0; i < VueCommandes.getListeCommandes().getComponentCount(); i++){
+            if(e.getSource() == VueCommandes.getListeCommandes().getComponent(i)){
+                try {
+                    if (GrilleMod.getCommandes().get(i).hasValidBouquet() && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()) {
+                        GrilleMod.removeBouquet(Bouquet.getType(GrilleMod.getCommandes().get(i).getValue()));
+                        GrilleMod.removeCommande(GrilleMod.getCommandes().get(i));
+                        BatPrincipal.setTirelire(BatPrincipal.getTirelire() + BatPrincipal.PRIX_BOUQUET);
+                        View.updateInv();
+                        VueCommandes.updateCommandes();
+                        View.updateSolde();
+                    }
+                }catch(IndexOutOfBoundsException e2){}
+            }
+        }
+
         /**boutons de la boutique de batiments**/
-        if (e.getSource() == view.prod){ //Bat de production
+        if (e.getSource() == View.prod){ //Bat de production
             if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_PRODUCTION && !GrilleMod.isNotValidPosition(j.getX(), j.getY())){
                 j.construitBatProduction();
                 View.updateSolde();
             }
         }
-        if (e.getSource() == view.def){ //Bat de defense
+        if (e.getSource() == View.def){ //Bat de defense
             if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_DEFENSE && !GrilleMod.isNotValidPosition(j.getX(), j.getY())){
                 j.construitBatDefense();
                 View.updateSolde();
@@ -182,7 +249,6 @@ public class Controller implements ActionListener, MouseListener {
             }
         } else {
             GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
-            System.out.println(mouseX + " " + mouseY);
         }
     }
 

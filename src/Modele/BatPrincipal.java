@@ -13,8 +13,6 @@ public class BatPrincipal extends Building {
     public static final int PRIX_DEFENSE = 100;
     public static final int PRIX_JARD = 100;
     public static final int PRIX_GRAINE = 10;
-    public static final int PRIX_BOIS = 1;
-    public static final int PRIX_CAILLOUX = 1;
     public static final int PRIX_BOUQUET = 45;
     private int[] ressources = new int[5]; //pour l'instant
 
@@ -46,7 +44,7 @@ public class BatPrincipal extends Building {
     public void creeJard() {
         tirelire -= PRIX_JARD;
         GrilleMod.addUnite(new Jardinier(GrilleMod.getBatPrincipal().getX(), GrilleMod.getBatPrincipal().getY()));
-        //TODO un timer gérer par GrilleMod pour temporiser
+        //TODO un timer pour temporiser
         //cree un jardinnier
         //et attendre un temps
     }
@@ -57,7 +55,6 @@ public class BatPrincipal extends Building {
      */
     public static void acheterGraine(int id) {
         tirelire -= PRIX_GRAINE;
-        System.out.println(PRIX_GRAINE);
     }
 
     /**
