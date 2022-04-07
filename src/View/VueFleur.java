@@ -6,21 +6,22 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class VueFleur {
-    public static ArrayList<Fleur> fleurs = new ArrayList<Fleur>();
+    public static ArrayList<Fleur> fleurs = new ArrayList<Fleur>(); //fleurs sur le terrain
 
-    public static int TAILLE_FLEUR = 40;
+    public static int TAILLE_FLEUR = 40; //taille des fleurs
   
     public VueFleur(){
-        fleurs.addAll(GrilleMod.getFleurs());
+        fleurs.addAll(GrilleMod.getFleurs()); //ajout des fleurs
     }
 
     /**
-     * Fonction d'affichage
+     * drawFleur
+     * Affiche les fleurs selon leur état et type
      */
     public static void drawFleur(Graphics g){
         for (Fleur f : fleurs) { //on itère sur le tableau des fleurs présentes sur le terrain
             if (!(f.getIsPicked())) { //si la fleur est toujours sur le terrain
-                if (f.lifespan >= 450) { //si la fleur est fermée
+                if (f.lifespan >= 9) { //si la fleur est fermée
                     switch (f.getType()) { //on affiche la fleur en fonction de son type
                         case GrilleMod.indiceFleurR:
                             g.drawImage(Movable.RFer, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
@@ -32,8 +33,8 @@ public class VueFleur {
                             g.drawImage(Movable.VFer, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
                             break;
                     }
-                } else if (!(f.getIsDead())) {
-                    switch (f.getType()) {
+                } else if (!(f.getIsDead())) { //si la fleur est fleurie
+                    switch (f.getType()) { //on affiche la fleur en fonction de son type
                         case GrilleMod.indiceFleurR:
                             g.drawImage(Movable.ROuv, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
                             break;
@@ -44,8 +45,8 @@ public class VueFleur {
                             g.drawImage(Movable.VOuv, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
                             break;
                     }
-                } else {
-                    switch (f.getType()) {
+                } else { //si la fleur est morte
+                    switch (f.getType()) { //on affiche la fleur en fonction de son type
                         case GrilleMod.indiceFleurR:
                             g.drawImage(Movable.RMor, f.getX() - TAILLE_FLEUR / 2, f.getY() - TAILLE_FLEUR / 2, TAILLE_FLEUR, TAILLE_FLEUR, null);
                             break;
@@ -58,9 +59,9 @@ public class VueFleur {
                     }
 
                 }
-                //g.setColor(Color.BLACK);
+                //rayon d'action des fleurs
                 int sq = (int) Math.sqrt(GrilleMod.RANGE_PLACEABLE);
-                switch (f.getType()){
+                switch (f.getType()){ //sélection des couleurs en fonction des fleurs
                     case GrilleMod.indiceFleurR:
                         g.setColor(Color.RED);
                         break;
@@ -77,7 +78,7 @@ public class VueFleur {
     }
 
     public static void updateFleur(){
-        fleurs.clear();
-        fleurs.addAll(GrilleMod.getFleurs());
+        fleurs.clear(); //enlever toutes les fleurs
+        fleurs.addAll(GrilleMod.getFleurs()); //ajouter toutes les fleurs
     }
 }

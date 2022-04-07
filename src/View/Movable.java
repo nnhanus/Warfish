@@ -136,6 +136,7 @@ public class Movable{
      * @param g
      */
     public void paint(Graphics g) {
+        //appel des différentes fonctions de dessin
         vueBuilding.drawBuildings(g);
         VueFleur.drawFleur(g);
         VueNuisible.drawNuisibles(g);
