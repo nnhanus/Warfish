@@ -20,6 +20,11 @@ public class JardinierView {
         }
     }
 
+    /**
+     * drawJardinier
+     * Affiche le jardinier ainsi que son rayon d'action
+     * @param g
+     */
     public static void drawJardinier(Graphics g){
         for (Jardinier jardinier : listjardinier) {
             g.drawImage(Movable.meduse, jardinier.getX() - JardinierView.TAILLE_JARDINIER/2, jardinier.getY() - JardinierView.TAILLE_JARDINIER/2, JardinierView.TAILLE_JARDINIER, JardinierView.TAILLE_JARDINIER, null);

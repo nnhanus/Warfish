@@ -9,27 +9,26 @@ import java.util.ArrayList;
  * Effraie automatiquement les nuisibles
  */
 public class BatDefense extends Building {
-    public static final int DEFENSE_RANGE = 19000; //la portée du bâtiment
-
+    public static final int DEFENSE_RANGE = 19000;
     public BatDefense(int x, int y) {
-        super(x, y, DEFENSE_RANGE); //création du bâtiment
+        super(x, y, DEFENSE_RANGE);
         effrayer();
-        BuildingView.updateBuildings(this); //mise à jour de la vue
+        BuildingView.updateBuildings(this);
     }
 
     /**
-     * Effraie les nuisibles dans son rayon d'action
+     * effrayer
+     * Set le statut enfuite des nuisibles proche à true
      */
-    public void effrayer() {
-        //Récupération des nuisibles et de leurs positions
+    public void effrayer(){
         ArrayList<Nuisible> list = new ArrayList<>();
         list.addAll(GrilleMod.getNuisibles());
-        for (Nuisible n : list) {
+        for(Nuisible n : list){
             int posX = n.getX() - this.x;
             int posY = n.getY() - this.y;
 
-            if (posX * posX + posY * posY <= this.range) { //le nuisible est dans le rayon d'action
-                n.setenFuite(); //il est effrayé
+            if(posX*posX + posY*posY <= this.range){
+                n.setenFuite();
             }
         }
     }

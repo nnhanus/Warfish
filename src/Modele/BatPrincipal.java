@@ -1,20 +1,24 @@
 package Modele;
 
+import java.util.Arrays;
+
 /**
  * Bâtiment Principal
  * Gère les ressources générales, et notamment l'argent/score
  */
 public class BatPrincipal extends Building {
-    public static final int PRINCIPAL_RANGE = 5000; //rayon d'action
-    private static int tirelire = 200; //l'argent du joueur
-    public static final int PRIX_PRODUCTION = 100; //prix d'un bâtiment de production
-    public static final int PRIX_DEFENSE = 100; //prix d'un bâtiment de défense
-    public static final int PRIX_JARD = 100; //prix d'un jardinier
-    public static final int PRIX_GRAINE = 10; //prix d'une graine
-    public static final int PRIX_BOUQUET = 45; //prix d'un bouquet
+    public static final int PRINCIPAL_RANGE = 5000;
+    private static int tirelire = 200;
+    public static final int PRIX_PRODUCTION = 100;
+    public static final int PRIX_DEFENSE = 100;
+    public static final int PRIX_JARD = 100;
+    public static final int PRIX_GRAINE = 10;
+    public static final int PRIX_BOUQUET = 45;
+    private int[] ressources = new int[5]; //pour l'instant
 
     public BatPrincipal(int x, int y) {
         super(x, y, PRINCIPAL_RANGE);
+        Arrays.fill(ressources,0);
     }
 
     /**
@@ -40,7 +44,7 @@ public class BatPrincipal extends Building {
     public void creeJard() {
         tirelire -= PRIX_JARD;
         GrilleMod.addUnite(new Jardinier(GrilleMod.getBatPrincipal().getX(), GrilleMod.getBatPrincipal().getY()));
-        //TODO un timer gérer par GrilleMod pour temporiser
+        //TODO un timer pour temporiser
         //cree un jardinnier
         //et attendre un temps
     }
@@ -59,14 +63,14 @@ public class BatPrincipal extends Building {
      *
      * @param p un paysan
      */
-    /**public void collecteRessource(Jardinier p) {
+    public void collecteRessource(Jardinier p) {
         //copie toutes les ressources du paysan dans le bâtiment
         for (int i = 0; i < 5; i++) {
             ressources[i] += p.getInventaire()[i];
         }
         //vide l'inventaire du paysan
         p.videInventaire();
-    }**/
+    }
 
     /**
      * Vend les bouquets composés par un jardinier

@@ -22,6 +22,11 @@ public class BuildingView {
         }
     }
 
+    /**
+     * drawBuildings
+     * Dessine les bâtiments ainsi que cercle indiquant leur rayon d'activité
+     * @param g
+     */
     public void drawBuildings(Graphics g){
         g.setColor(Color.BLUE);
         for(BatProduction b : BuildingView.batProductions){
@@ -41,6 +46,11 @@ public class BuildingView {
         g.drawOval(GrilleMod.getBatX() - sq, GrilleMod.getBatY() - sq, sq*2, sq*2);
     }
 
+    /**
+     * updateBuildings
+     * Met à jour l'affichage des bâtiments
+     * @param b
+     */
     public static void updateBuildings(Building b){
         if(b.getClass() == Modele.BatDefense.class){
             batDefense.add((Modele.BatDefense) b);

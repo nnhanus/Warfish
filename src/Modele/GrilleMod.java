@@ -1,26 +1,36 @@
 package Modele;
+
 import View.View;
 import View.VueNuisible;
+import View.VueCommandes;
+import View.VueFleur;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-/**
- * Classe s'occupant du terrain de jeu
- */
-public class GrilleMod extends Thread{
-    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur de la grille
-    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur de la grille
+public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
+    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur du terrain
+    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur du terrain
 
-    private static ArrayList<Fleur> fleurs = new ArrayList<>(); //les fleurs présentes sur la grille
-    private static ArrayList<Building> buildings = new ArrayList<>(); //les batiments présents sur la grille
-    private static ArrayList<Nuisible> nuisibles = new ArrayList<>(); //les nuisibles présentes sur la grille
-    private static ArrayList<Jardinier> jardiniers = new ArrayList<>(); //les jardiniers présents sur la grille
+    private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
+    private static ArrayList<Building> buildings = new ArrayList<>();
+    private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
+    private static ArrayList<Unite> unites = new ArrayList<>();
+    private static ArrayList<Commande> commandes = new ArrayList<>();
+    private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0};
 
-    public static final int RANGE_PLACEABLE = 3000; //rayon dans lequel on peut planter une fleur
+    public static final Object key = 0;
 
-    private static final int nbFleur = 8; //nombre de fleurs sur le terrain au lancement
+    private static final int BUNNY_SPAWN_DELAY = 15;
+    private static final int FLOWER_SPAWN_DELAY = 12;
 
-    //Indices des différentes ressources
+    public static final int RANGE_PLACEABLE = 3000;
+
+    private static final int nbFleur = 8;
+
+
     public static final int indiceFleurR = 0;
     public static final int indiceFleurJ = 1;
     public static final int indiceFleurV = 2;
@@ -29,42 +39,40 @@ public class GrilleMod extends Thread{
     public static final int indiceGraineV = 5;
     public static final int indiceBouquet = 6;
 
-    //Initialisation du bâtiment principal
     private static final BatPrincipal BAT_PRINCIPAL = new BatPrincipal((int) (Math.random() * LARGEUR_GRILLE), (int) (Math.random() * HAUTEUR_GRILLE));
-   //Unité sélectionnée
-    private static Jardinier selectedJard = null;
+    private static Unite selectedUnite = null;
 
     /**
      * Constructeur de Grille
+     * J'ai rien à mettre dedans il me semble ?
      */
     public GrilleMod() {
         initGrille();
     }
 
     /**
-     * Renvoie la liste des fleurs sur le terrain
+     * getFleurs
+     * @return GrilleMod.fleurs
      */
     public static ArrayList<Fleur> getFleurs(){
         return GrilleMod.fleurs;
     }
 
     /**
-     * Renvoie la liste des nuisibles sur le terrain
+     * getBuildings
+     * @return GrilleMod.buildings
      */
     public static ArrayList<Building> getBuildings(){return GrilleMod.buildings;}
 
     /**
-     * Renvoie la liste des nuisibles sur le terrain
+     * getNuisibles
      */
     public static ArrayList<Nuisible> getNuisibles(){
         return GrilleMod.nuisibles;
     }
 
-    /**
-     * Renvoie la liste des jardniers sur le terrain
-     */
-    public static ArrayList<Jardinier> getJardiniers(){
-        return GrilleMod.jardiniers;
+    public static ArrayList<Unite> getUnites(){
+        return GrilleMod.unites;
     }
 
     /**
@@ -72,8 +80,8 @@ public class GrilleMod extends Thread{
      * Renvoie l'unite selectionnée
      * @return la selectedUnite
      */
-    public static Jardinier getSelectedJard(){
-        return selectedJard;
+    public static Unite getSelectedUnite(){
+        return selectedUnite;
     }
 
     /**
@@ -81,27 +89,18 @@ public class GrilleMod extends Thread{
      * Défini selectedUnite
      * @param u une unité
      */
-    public static void setSelectedJard(Jardinier u){
-        selectedJard = u;
+    public static void setSelectedUnite(Unite u){
+        selectedUnite = u;
     }
 
-    /**
-     * Renvoie le bâtiment principal
-     */
     public static BatPrincipal getBatPrincipal(){
         return BAT_PRINCIPAL;
     }
 
-    /**
-     * Renvoie l'abscisse du bâtiment principal
-     */
     public static int getBatX(){
         return BAT_PRINCIPAL.getX();
     }
 
-    /**
-     * Renvoie l'ordonnée du bâtiment principal
-     */
     public static int getBatY(){
         return BAT_PRINCIPAL.getY();
     }
@@ -121,14 +120,48 @@ public class GrilleMod extends Thread{
      * C'est typiquement le cas où on aurait besoin d'une section critique je pense, mais je sais pas si c'est possible/comment ça marche ici
      */
     public static void removeFleur(Fleur f){
-        f.interrupt(); //interruption du thread de la fleur
-        f.isPicked(); //la fleur est ramassée
-        fleurs.remove(f); //la fleur est enlevée du terrain
-        for(Nuisible n : nuisibles){ //Parcours des nuisibles du terrain
-            if(n.getTarget() == f){ //la fleur est la cible du nuisible
-                n.acquireTarget(); //le nuisible reçoit une nouvelle cible
+        f.interrupt();
+        f.isPicked();
+        fleurs.remove(f);
+        for(Nuisible n : nuisibles){
+            if(n.getTarget() == f){
+                n.acquireTarget(); //ou mise à null, c'est équivalent
             }
         }
+    }
+
+    public static void desherbeFleur(Fleur f){
+        f.isPicked();
+        //if (f.getIsDead()) {
+            fleurs.remove(f);
+            for (Nuisible n : nuisibles) {
+                if (n.getTarget() == f) {
+                    n.acquireTarget(); //ou mise à null, c'est équivalent
+                }
+            //}
+        }
+    }
+
+    public static ArrayList<Commande> getCommandes(){return commandes;}
+
+    public static void addCommande(){
+        if(commandes.size() < Commande.MAX_COMMANDE) {
+            commandes.add(new Commande());
+        }
+    }
+
+    public static void removeCommande(Commande c){
+        commandes.remove(c);
+    }
+
+    public static int[] getBouquets(){return bouquets;}
+
+    public static void addBouquet(int id){
+        bouquets[id]++;
+    }
+
+    public static void removeBouquet(int id){
+        bouquets[id]--;
     }
 
     /**
@@ -143,66 +176,60 @@ public class GrilleMod extends Thread{
     /**
      * addUnite
      * Ajoute une unité à la grille
-     * @param j une unité
+     * @param u une unité
      */
-    public static void addUnite(Jardinier j){
-        jardiniers.add(j);
+    public static void addUnite(Unite u){
+        unites.add(u);
     }
 
     /**
      * addNuisible
      * Tente d'ajouter un nuisible sur le bord de l'écran (10 fois), puis n'importe où (10 fois)
      */
-    public void addNuisible(){
+    public static void addNuisible(){
+
         int randx = -1;
         int randy = -1;
-        int iter = 0; //nombre d'itérations, condition de la boucle
+        int iter = 0;
 
         do {
             int side = (int) (Math.random() * 3); //le côté du terrain sur lequel le nuisible sera généré
             iter++;
             switch (side) {
-                case 0 -> { //côté gauche
+                case 0 -> {
                     randx = 0;
-                    randy = (int) (Math.random() * GrilleMod.HAUTEUR_GRILLE); //ordonnée aléatoire
+                    randy = (int) (Math.random() * GrilleMod.HAUTEUR_GRILLE);
                 }
-                case 1 -> { //côté droit
+                case 1 -> {
                     randx = GrilleMod.LARGEUR_GRILLE;
-                    randy = (int) (Math.random() * GrilleMod.HAUTEUR_GRILLE); //ordonnée aléatoire
+                    randy = (int) (Math.random() * GrilleMod.HAUTEUR_GRILLE);
                 }
-                case 2 -> { //haut
-                    randx = (int) (Math.random() * GrilleMod.LARGEUR_GRILLE); //abscisse aléatoire
+                case 2 -> {
+                    randx = (int) (Math.random() * GrilleMod.LARGEUR_GRILLE);
                     randy = 0;
                 }
-                case 3 -> { //bas
-                    randx = (int) (Math.random() * GrilleMod.LARGEUR_GRILLE); //abscisse aléatoire
+                case 3 -> {
+                    randx = (int) (Math.random() * GrilleMod.LARGEUR_GRILLE);
                     randy = GrilleMod.HAUTEUR_GRILLE;
                 }
             }
-        } while(Nuisible.isNotValidPosition(randx, randy) && iter <= 10);
-        //Tant que la position n'est pas valide et que le nombre d'itérations est inférieur à 10
+        }while(Nuisible.isNotValidPosition(randx, randy) && iter <= 10);
 
-        if(iter > 10){ //placement aléatoire sur le terrain
+        if(iter > 10){
             do{
                 iter++;
-                //coordonnées aléatoires
                 randx = (int) (Math.random() * GrilleMod.LARGEUR_GRILLE);
                 randy = (int) (Math.random() * GrilleMod.HAUTEUR_GRILLE);
-            } while(Nuisible.isNotValidPosition(randx, randy) && iter <= 20);
-            //Tant que la position n'est pas valide et que le nombre d'itérations est inférieur à 20
+            }while(Nuisible.isNotValidPosition(randx, randy) && iter <= 20);
         }
 
-        if (iter < 20) { //une fois qu'on a atteint 20 intérations
-            nuisibles.add(new Nuisible(randx, randy)); //on crée le nuisible
-            VueNuisible.updateNuisibles(); //mise à jour de la vue
+        if(iter < 20) {
+            nuisibles.add(new Nuisible(randx, randy));
+            VueNuisible.updateNuisibles();
         }
 
     }
 
-    /**
-     * Supprime un nuisible du terrain
-     * @param n le nuisible à supprimer
-     */
     public static void removeNuisible(Nuisible n){
         nuisibles.remove(n);
         //VueNuisible.updateNuisibles();
@@ -216,22 +243,22 @@ public class GrilleMod extends Thread{
      * @return false si la position est valide, true sinon
      */
     public static boolean isNotValidPosition(int x, int y){
-        for(Building b : buildings){ //Parcours des bâtiments
+        for(Building b : buildings){
             int posX = b.x - x;
             int posY = b.y - y;
-            if(posX*posX + posY*posY < RANGE_PLACEABLE){ //un bâtiment est trop proche
-                return true; //la position n'est pas valide
+            if(posX*posX + posY*posY < RANGE_PLACEABLE){
+                return true;
             }
         }
 
-        for(Fleur f : fleurs){ //Parcours des fleurs
+        for(Fleur f : fleurs){
             int posX = f.getX() - x;
             int posY = f.getY() - y;
-            if(posX*posX + posY*posY < RANGE_PLACEABLE){ //une fleur est trop proche
-                return true; //la position n'est pas valide
+            if(posX*posX + posY*posY < RANGE_PLACEABLE){
+                return true;
             }
         }
-        return false; //la position est valide
+        return false;
     }
 
     /**
@@ -249,22 +276,36 @@ public class GrilleMod extends Thread{
 
     /**
      * initFleur
-     * Initialise aléatoirement des Fleurs sur le terrain
-     * Utilisé à la création de la grille
+     * Initialise aléatoirement des Fleur sur le terrain
      */
     public void initFleur(){
-        for(int i = 0; i < nbFleur; i++) { //on place le nombre indiqué de fleurs sur la grille
-            //coordonnées aléatoires
+        for(int i = 0; i < nbFleur; i++) {
             int randx = (int) (Math.random() * HAUTEUR_GRILLE);
             int randy = (int) (Math.random() * LARGEUR_GRILLE);
 
-            while (isNotValidPosition(randx, randy)){ //tant que la position n'est pas valide
-                //on regénère les coordonnées
+            while (isNotValidPosition(randx, randy)){
                 randx = (int) (Math.random() * HAUTEUR_GRILLE);
                 randy = (int) (Math.random() * LARGEUR_GRILLE);
             }
-            addFleur(new Fleur(randx, randy)); //une fois que les coordonnées sont bonnes, on ajoute la fleur
+            addFleur(new Fleur(randx, randy));
         }
+    }
+
+    /**
+     * addRandomFlower
+     * Ajoute une fleur au hasard sur la grille
+     */
+    public static void addRandomFlower(){
+        int randx = (int) (Math.random() * HAUTEUR_GRILLE);
+        int randy = (int) (Math.random() * LARGEUR_GRILLE);
+
+        while (isNotValidPosition(randx, randy)){
+            randx = (int) (Math.random() * HAUTEUR_GRILLE);
+            randy = (int) (Math.random() * LARGEUR_GRILLE);
+        }
+        addFleur(new Fleur(randx, randy));
+        VueFleur.updateFleur();
+
     }
 
     /**
@@ -272,29 +313,51 @@ public class GrilleMod extends Thread{
      * Initialise la grille en y plaçant des éléments
      */
     public void initGrille(){
-        addBatiment(BAT_PRINCIPAL); //ajout du bâtiment principal
-        initFleur(); //ajout des fleurs
-        //génération d'un jardinier aléatoire
+        addBatiment(BAT_PRINCIPAL);
+        initFleur();
+
+
+        new Commande(0);
+        new VueCommandes();
+
+
         Jardinier J = new Jardinier(LARGEUR_GRILLE/2, HAUTEUR_GRILLE/2);
         addUnite(J);
-        selectedJard = J; //on sélectionne le jardinier créé
-        start(); //lancement du thread
+        selectedUnite = J;
+        start();
+    }
+
+    static ActionListener genNuisible = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            addNuisible();
+        }
+    };
+
+    static ActionListener genFlower = new ActionListener() {
+        public void actionPerformed(ActionEvent actionEvent) {
+            addRandomFlower();
+        }
+    };
+
+    static{
+        new Timer(1000*BUNNY_SPAWN_DELAY, genNuisible).start();
+        new Timer(1000*FLOWER_SPAWN_DELAY, genFlower).start();
     }
 
     /**
      * run
      * Thread générant un nuisible toutes les 12 secondes
      */
-    @Override
+    /*@Override
     public void run(){
         while(true){
             addNuisible();
             try {
-                sleep(15000);
+                sleep(SPAWN_DELAY*1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
 

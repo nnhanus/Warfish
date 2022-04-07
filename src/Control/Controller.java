@@ -4,41 +4,52 @@ import Modele.*;
 import View.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import static Modele.GrilleMod.*;
 
-/**
- * Controller
- * Le controleur, lie les boutons de la vue aux actions du modèle
- */
 public class Controller implements ActionListener, MouseListener {
 
     public View view;
 
-    public Controller(View view) {
+    public
+    Controller(View view) {
         this.view = view;
         //Ajout des listener aux boutons
-        view.b1.addActionListener(this);
-        view.b2.addActionListener(this);
-        view.b3.addActionListener(this);
-        view.b4.addActionListener(this);
-        view.b5.addActionListener(this);
-        view.b6.addActionListener(this);
-        View.b7.addActionListener(this);
-        View.b8.addActionListener(this);
-        view.terrain.addMouseListener(this);
-        view.bfr.addActionListener(this);
-        view.bfv.addActionListener(this);
-        view.bfj.addActionListener(this);
-        view.bpr.addActionListener(this);
-        view.bpv.addActionListener(this);
-        view.bpj.addActionListener(this);
-        view.prod.addActionListener(this);
-        view.def.addActionListener(this);
+        View.ramasserButton.addActionListener(this);
+        View.effrayerButton.addActionListener(this);
+        View.desherberButton.addActionListener(this);
+        View.planterMenuButton.addActionListener(this);
+        View.bouquetMenuButton.addActionListener(this);
+        View.vendreButton.addActionListener(this);
+        View.grainesBoutiqueButton.addActionListener(this);
+        View.batimentsBoutiqueButton.addActionListener(this);
+        //View.b9.addActionListener(this);
+        View.terrain.addMouseListener(this);
+        View.bfr.addActionListener(this);
+        View.bfv.addActionListener(this);
+        View.bfj.addActionListener(this);
+        View.bpr.addActionListener(this);
+        View.bpv.addActionListener(this);
+        View.bpj.addActionListener(this);
+        View.bpbr.addActionListener(this);
+        View.bpbj.addActionListener(this);
+        View.bpbv.addActionListener(this);
+        View.valider.addActionListener(this);
+        View.annuler.addActionListener(this);
+        View.prod.addActionListener(this);
+        View.def.addActionListener(this);
+
+        for(Component c : VueCommandes.getListeCommandes().getComponents()){
+            if(c.getClass() == JButton.class){
+                ((JButton) c).addActionListener(this);
+            }
+        }
     }
 
     /**
@@ -47,10 +58,10 @@ public class Controller implements ActionListener, MouseListener {
      * @param j le jardinier qui achète la graine
      */
     protected void acheteGrain(int i, Jardinier j){
-        /**Conditions: avoir assez d'argent et être au bâtiment principal*/
+        /*Conditions: avoir assez d'argent et être au bâtiment principal*/
         if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_GRAINE
                 && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()) {
-            //Achat de la graine et ajout à l'inventaire
+            //Acaht de la graine et ajout à l'inventaire
             j.acheterGraine(i);
             BatPrincipal.acheterGraine(i);
             //mise a jour de l'affichage
@@ -65,76 +76,62 @@ public class Controller implements ActionListener, MouseListener {
      * @param j le jardinier qui plante une fleur
      */
     protected void planterGraine(int i, Jardinier j){
-        /**Conditions : il n'y a pas d'éléments à cet endroit sur le terrain
-         * et on a une graine de la bonne couleur*/
         if (!(GrilleMod.isNotValidPosition(j.getX(), j.getY())) && j.getInventaire()[i] > 0){
-            //plantation de la fleur
             j.planteFleur(i);
-            //mise à jour de l'affichage
             View.updateInv();
             VueFleur.updateFleur();
         }
     }
 
-    /**
-     * Liaison des actions aux boutons
-     * @param e l'action event performed
-     */
+    public void closeAllElse(JPanel j){
+        ArrayList<JPanel> sous_menu = new ArrayList<>();
+        sous_menu.add(View.graines);
+        sous_menu.add(View.buildings);
+        sous_menu.add(View.planter);
+        sous_menu.add(View.confection);
+        for(JPanel jp : sous_menu){
+               if(jp.equals(j)){
+                   j.setVisible(!j.isVisible());
+               }else{
+                   jp.setVisible(false);
+               }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        //le jardinier sélectionné
-        Jardinier j = (Jardinier) GrilleMod.getSelectedJard();
+        Jardinier j = (Jardinier) GrilleMod.getSelectedUnite();
 
-        /**Récolter une fleur*/
-        if (e.getSource() == view.b1) {
-            //récupération de la fleur la plus proche
+        if (e.getSource() == View.ramasserButton) { //recolter
             Fleur f = j.plusProcheFleur();
-            //récuparation de sa disttance au jardinier
             int dist = j.getSQDistFrom(f.getX(), f.getY());
-            /**Conditions: la fleur peut être ramassée et la distance est suffisamment petite*/
             if (f.isPickable() && dist < 3000) {
-                j.recolterRessource(f);//récolte de la fleur
-                View.updateInv(); //mise à jour de la vue
-            }
-        }
-
-        /**Effrayer un nuisible*/
-        if (e.getSource() == view.b2) {
-            j.effrayer();
-        }
-
-        /**Désherber une fleur morte*/
-        if (e.getSource() == view.b3) {
-            //récupération de la fleur la plus proche
-            Fleur f = j.plusProcheFleur();
-            //récuparation de sa distance au jardinier
-            int dist = j.getSQDistFrom(f.getX(), f.getY());
-            /**Conditions: la fleur est suffisamment proche et elle est morte*/
-            if (dist < 30000 && (f).getIsDead()) {
-                //Désherbage
-                j.desherber(f);
-            }
-        }
-
-        /**Affiche le menu de plantation*/
-        if(e.getSource() == view.b4){
-            //Ferme les deux autres menus qui peuvent se trouver au même endroit
-            view.graines.setVisible(false);
-            view.buildings.setVisible(false);
-            //Ouvre le menu demandé
-            view.planter.setVisible(!(view.planter.isVisible()));
-        }
-
-        /**Confectionne un bouquet*/
-        if(e.getSource() == view.b5){
-            if(j.getInventaire()[GrilleMod.indiceFleurR] >= 3){
-                j.confectionneBouquet();
+                j.recolterRessource(f);
                 View.updateInv();
             }
         }
 
-        /**Vend un bouquet*/
-        if(e.getSource() == view.b6){ //Bouquet
+        if (e.getSource() == View.effrayerButton) { //Effrayer
+            j.effrayer();
+            //VueNuisible.updateNuisibles();
+        }
+        if (e.getSource() == View.desherberButton) { //desherber
+            Fleur f = j.plusProcheFleur();
+            int dist = j.getSQDistFrom(f.getX(), f.getY());
+            if (dist < 30000 && (f).getIsDead()) {
+                j.desherber(f);
+            }
+        }
+
+        if(e.getSource() == View.planterMenuButton){ //planter
+            closeAllElse(View.planter);
+        }
+
+        if(e.getSource() == View.bouquetMenuButton){ //bouquet
+            closeAllElse(View.confection);
+        }
+
+        if(e.getSource() == View.vendreButton){ //Bouquet
             if(j.getInventaire()[GrilleMod.indiceBouquet] > 0 && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()){
                 j.vendBouquet();
                 View.updateSolde();
@@ -142,88 +139,116 @@ public class Controller implements ActionListener, MouseListener {
             }
         }
 
-        /**Ouvre la boutique de graines*/
-        if(e.getSource() == View.b7){
-            //Ferme les deux autres menus qui peuvent se trouver au même endroit
-            view.planter.setVisible(false);
-            view.buildings.setVisible(false);
-            //Ouvre le menu demandé
-            view.graines.setVisible(!(view.graines.isVisible()));
+        if(e.getSource() == View.grainesBoutiqueButton){ //Graines
+            closeAllElse(View.graines);
         }
 
-        /**Ouvre la boutique de bâtiments*/
-        if(e.getSource() == View.b8){
-            //Ferme les deux autres menus qui peuvent se trouver au même endroit
-            view.planter.setVisible(false);
-            view.graines.setVisible(false);
-            //Ouvre le menu demandé
-            view.buildings.setVisible(!(view.buildings.isVisible()));
+        if(e.getSource() == View.batimentsBoutiqueButton){ // batiments
+            closeAllElse(View.buildings);
         }
 
         /**boutons de la boutique de graines**/
-        if (e.getSource() == view.bfr) {//Achat d'une graine rouge
+        if (e.getSource() == View.bfr) {//Graine rouge
             acheteGrain(indiceGraineR, j);
         }
-        if (e.getSource() == view.bfj) { //Achat d'une graine jaune
+        if (e.getSource() == View.bfj) { //Graine jaune
             acheteGrain(indiceGraineJ, j);
         }
-        if (e.getSource() == view.bfv) { //Achat d'une graine verte
+        if (e.getSource() == View.bfv) { //Graine verte
             acheteGrain(indiceGraineV, j);
         }
 
         /**boutons de plantations**/
-        if (e.getSource() == view.bpr){ //Plantation d'une fleur rouge
+        if (e.getSource() == View.bpr){ //Fleur rouge
             planterGraine(indiceGraineR, j);
         }
-        if (e.getSource() == view.bpj){ //Plantation d'une fleur jaune
+        if (e.getSource() == View.bpj){ //Fleur jaune
             planterGraine(indiceGraineJ, j);
         }
-        if (e.getSource() == view.bpv){ //Plantation d'une fleur verte
+        if (e.getSource() == View.bpv){ //Fleur verte
             planterGraine(indiceGraineV, j);
         }
 
+        /**confection de bouquet*/
+        if(e.getSource() == View.bpbr){
+            if(!Bouquet.isReady() && ((Jardinier) getSelectedUnite()).getInventaire()[0] > 0){
+                Bouquet.addFlower(indiceFleurR);
+                ((Jardinier) getSelectedUnite()).useFlower(indiceFleurR);
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.bpbj){
+            if(!Bouquet.isReady() && ((Jardinier) getSelectedUnite()).getInventaire()[1] > 0){
+                Bouquet.addFlower(indiceFleurJ);
+                ((Jardinier) getSelectedUnite()).useFlower(indiceFleurJ);
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.bpbv){
+            if(!Bouquet.isReady() && ((Jardinier) getSelectedUnite()).getInventaire()[2] > 0) {
+                Bouquet.addFlower(indiceFleurV);
+                ((Jardinier) getSelectedUnite()).useFlower(indiceFleurV);
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.valider){
+            if(Bouquet.isReady()){
+                Bouquet.finishBouquet();
+                View.updateInv();
+            }
+        }
+
+        if(e.getSource() == View.annuler){
+            Bouquet.cancelBouquet();
+            View.updateInv();
+        }
+
+        /** Boutons de validation des commandes*/
+        for(int i = 0; i < VueCommandes.getListeCommandes().getComponentCount(); i++){
+            if(e.getSource() == VueCommandes.getListeCommandes().getComponent(i)){
+                try {
+                    if (GrilleMod.getCommandes().get(i).hasValidBouquet() && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()) {
+                        GrilleMod.removeBouquet(Bouquet.getType(GrilleMod.getCommandes().get(i).getValue()));
+                        GrilleMod.removeCommande(GrilleMod.getCommandes().get(i));
+                        BatPrincipal.setTirelire(BatPrincipal.getTirelire() + BatPrincipal.PRIX_BOUQUET);
+                        View.updateInv();
+                        VueCommandes.updateCommandes();
+                        View.updateSolde();
+                    }
+                }catch(IndexOutOfBoundsException e2){}
+            }
+        }
+
         /**boutons de la boutique de batiments**/
-        if (e.getSource() == view.prod){ //Achat d'un bat de production
-            /**Conditions: avoir assez d'argent et la position doit être libre*/
+        if (e.getSource() == View.prod){ //Bat de production
             if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_PRODUCTION && !GrilleMod.isNotValidPosition(j.getX(), j.getY())){
-                //Construction et achat
                 j.construitBatProduction();
-                //mise à jour de la vue
                 View.updateSolde();
             }
         }
-        if (e.getSource() == view.def){ //Achat d'un bat de defense
-            /**Conditions: avoir assez d'argent et la position doit être libre*/
+        if (e.getSource() == View.def){ //Bat de defense
             if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_DEFENSE && !GrilleMod.isNotValidPosition(j.getX(), j.getY())){
-                //Construction et achat
                 j.construitBatDefense();
-                //mise à jour de la vue
                 View.updateSolde();
             }
         }
     }
 
-    /**Gestion des clics
-     * Clic gauche = sélection d'un jardinier
-     * Clic droit = déplecement du jardinier sélectionné
-     */
     @Override
     public void mouseClicked(MouseEvent e) {
-        //Coordonnées du clic
         double mouseX = e.getPoint().getX();
         double mouseY = e.getPoint().getY();
-        //Vérification clique gauche
         if (SwingUtilities.isLeftMouseButton(e)) {
-            //on parcourt les jardiniers pour trouver le plus proche
-            for (Jardinier u : GrilleMod.getJardiniers()) {
-                //s'il est assez proche on le sélectionne
+            for (Unite u : GrilleMod.getUnites()) {
                 if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
-                    GrilleMod.setSelectedJard(u);
+                    GrilleMod.setSelectedUnite(u);
                 }
             }
         } else {
-            //Déplacement du jardinier sélectionné vers la position cliquée
-            GrilleMod.getSelectedJard().setMoving((int) mouseX, (int) mouseY);
+            GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
         }
     }
 

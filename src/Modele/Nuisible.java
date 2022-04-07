@@ -1,8 +1,6 @@
 package Modele;
 
-
 import View.VueNuisible;
-
 import static java.lang.Math.*;
 
 /**
@@ -10,26 +8,21 @@ import static java.lang.Math.*;
  * Classe gérant les actions, affectations, et le comportement des nuisibles
  */
 public class Nuisible extends Thread{
-    private int x, y; //position
-    private double dir; //la direction du lapin en degrés
-    private boolean enfuite = false; //si le lapin fuit ou non
-    private Fleur target = null; //la cible du lapin
+    private int x, y;
+    private double dir; //la direction du lapin en degrés (?)
+    private boolean enfuite = false;
+    private Fleur target = null;
 
-    /**
-     * Constructeur
-     * @param x abscisse à laquelle le lapin apparait
-     * @param y ordonnée à laquelle le lapin apparait
-     */
+
     public Nuisible(int x, int y) {
-        //coordonnées
         this.x = x;
         this.y = y;
-        this.acquireTarget(); //définition de la cible
-        VueNuisible.updateNuisibles(); //mise à jour de la vue
-        this.start(); //lancement du thread
+        this.acquireTarget();
+        VueNuisible.updateNuisibles();
+        this.start();
     }
 
-    /**
+    /*
     Getters
      */
     public int getX(){
@@ -78,8 +71,8 @@ public class Nuisible extends Thread{
      */
     public void setenFuite(){
         this.enfuite = true;
-        GrilleMod.removeNuisible(this); //nuisible enlevé de la grille
-        VueNuisible.updateNuisibles(); //mise à jour de la vue
+        GrilleMod.removeNuisible(this);
+        VueNuisible.updateNuisibles();
     }
 
     /**
@@ -155,7 +148,7 @@ public class Nuisible extends Thread{
         while(!enfuite){
             if(target != null) {
                 if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                    mangeFleur();
+                    synchronized (GrilleMod.key){mangeFleur();}
                     this.target = null;
                     try {
                         sleep(10000);
@@ -178,7 +171,7 @@ public class Nuisible extends Thread{
             }else{ //si il n'a pas de cible
                 acquireTarget();
                 try {
-                    sleep(2000);
+                    sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
