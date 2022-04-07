@@ -14,7 +14,7 @@ public class Jardinier extends Thread{
     protected int targX; //Les coordonnées (x) ciblées par l'unité
     protected int targY; //Les coordonnées (y) ciblées par l'unité
     protected double dir; //La direction à suivre pour atteindre la cible
-    private int[] inventaire = new int[] {5,5,5,0,0,0};
+    private int[] inventaire = new int[] {0,0,0,0,0,0};
     //cf GrilleMod pour les indices
 
     public Jardinier(int x, int y){
