@@ -3,8 +3,8 @@ package Modele;
 import View.VueFleur;
 
 public class Fleur extends Thread {
-    //les différntes attributs des fleurs
-    public int lifespan = 15; //leur temps de vie
+    //les différents attributs des fleurs
+    public int lifespan = 20; //leur temps de vie
     boolean isPicked = false; //si la fleur a été ramassée ou non
     boolean isDead = false; //si la fleur est morte ou non
     private boolean boosted = false; //si la fleur est boostée par un bâtiment
@@ -106,7 +106,6 @@ public class Fleur extends Thread {
      */
     public void boost() {
         this.boosted = true;
-        System.out.println("Has been boosted");
     }
 
     /**
@@ -134,7 +133,6 @@ public class Fleur extends Thread {
      */
     public void isPicked() {
         isPicked = true;
-        //System.out.println("je suis ramassée");
     }
 
     /**

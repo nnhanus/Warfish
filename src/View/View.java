@@ -23,13 +23,8 @@ public class View extends JFrame {
     public static final int LARGEUR_INVENTAIRE = 300;
     public static final int HAUTEUR_INVENTAIRE = 175;
 
-
-
-    //50,400,300,200
     /**des def pour les affichages*/
     public static int solde = BatPrincipal.getTirelire();
-   // public static int nbfleur1 = ((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[0];
-    //public static int nbgraine = ((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[1];
     /**les différentes zones de l'affichage*/
     public static JPanel terrain ;
     public static JPanel control ;
@@ -249,18 +244,18 @@ public class View extends JFrame {
      * Initialisation de l'affichage du terrain
      */
     protected void Terrain(){
-        terrain = new JPanel();
-        terrain.setPreferredSize(new Dimension(TERRAIN_WIDTH,HEIGHT_WIN));
-        terrain.add(grille);
-        terrain.setBackground(Color.decode("#0090FC"));
-        this.add(terrain, BorderLayout.WEST);
+        terrain = new JPanel(); //définition
+        terrain.setPreferredSize(new Dimension(TERRAIN_WIDTH,HEIGHT_WIN)); //taille
+        terrain.add(grille); //ajout de la grille
+        terrain.setBackground(Color.decode("#0090FC")); //couleur
+        this.add(terrain, BorderLayout.WEST); //ajout à la fenetre principale
     }
 
     /**
      * Initialisation de l'affichage de l'argent
      */
     protected void Argent(){
-        argent = new JPanel();
+        argent = new JPanel(); //définition
         /**gestion de l'affichage de l'argent**/
         soldeL.setFont(new Font("Serif", Font.PLAIN, 25));
         soldeL.setText("solde : " + String.valueOf(solde));
@@ -303,7 +298,7 @@ public class View extends JFrame {
      * Initialisation des boutons
      */
     protected void Boutons(){
-        boutons = new JPanel();
+        boutons = new JPanel(); //définition
         boutons.setOpaque(false);
         boutons.setBounds(50,250,300,100);
 
@@ -328,10 +323,11 @@ public class View extends JFrame {
      * Initialisation de l'affichage de la boutique de graines
      */
     protected void Graines(){
-        graines = new JPanel();
+        graines = new JPanel(); //définition
         graines.setBounds(50,400,LARGEUR_S_MENUS, HAUTEUR_S_MENUS);
-        graines.setVisible(false);
+        graines.setVisible(false); //non-visible car sous-menu à ouvrir
         graines.setOpaque(false);
+        //ajout des composants
         bfr = new JButton(scaleImage(graineRouge));
         bfj = new JButton(scaleImage(graineJaune));
         bfv = new JButton(scaleImage(graineVerte));
@@ -348,10 +344,11 @@ public class View extends JFrame {
     protected void Buildings(){
         buildings = new JPanel();
         buildings.setBounds(50,400,LARGEUR_S_MENUS, HAUTEUR_S_MENUS);
-        buildings.setVisible(false);
+        buildings.setVisible(false); //non-visible car sous-menu à ouvrir
         buildings.setOpaque(false);
         def.setPreferredSize(new Dimension(30,30));
         buildings.setLayout(new GridLayout(0,1,10,10));
+        //ajout des composants
         buildings.add(prod);
         buildings.add(def);
     }
@@ -359,8 +356,9 @@ public class View extends JFrame {
     protected void Planter(){
         planter = new JPanel();
         planter.setBounds(50,400,LARGEUR_S_MENUS, HAUTEUR_S_MENUS);
-        planter.setVisible(false);
+        planter.setVisible(false); //non-visible car sous-menu à ouvrir
         planter.setOpaque(false);
+        //ajout des composants
         bpr = new JButton(scaleImage(fleurRouge));
         bpj = new JButton(scaleImage(fleurJaune));
         bpv = new JButton(scaleImage(fleurVerte));
@@ -374,8 +372,9 @@ public class View extends JFrame {
     protected void Confectionner(){
         confection = new JPanel();
         confection.setBounds(50,400,LARGEUR_S_MENUS, HAUTEUR_S_MENUS);
-        confection.setVisible(false);
+        confection.setVisible(false); //non-visible car sous-menu à ouvrir
         confection.setOpaque(false);
+        //ajout des composants
         bpbr = new JButton(scaleImage(fleurRouge));
         bpbj = new JButton(scaleImage(fleurJaune));
         bpbv = new JButton(scaleImage(fleurVerte));
