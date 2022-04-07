@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 public class Commande{
     public final static int MAX_COMMANDE = 4; //nombre max de commande
-    private final static int LIFESPAN = 15; //Durée de vie
-    private final static int SPAWN_DELAY = 10; //délai d'apparition
+    private final static int LIFESPAN = 22; //Durée de vie
+    private final static int SPAWN_DELAY = 5; //délai d'apparition
     private final int[] value = {(int) (Math.random()*2),(int) (Math.random()*2),(int) (Math.random()*2)}; //commande générée aléatoirement
 
     /**

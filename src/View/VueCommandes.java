@@ -13,10 +13,10 @@ public class VueCommandes {
      * Initialise le JPanel
      */
     static{
-        listeCommandes.setLayout(new GridLayout(4, 1));
+        listeCommandes.setLayout(new GridLayout(4, 1, 0, 4));
         listeCommandes.setPreferredSize(new Dimension(View.LARGEUR_S_MENUS, View.HAUTEUR_S_MENUS));
         listeCommandes.setBounds(75 + View.LARGEUR_S_MENUS, 400, View.LARGEUR_S_MENUS, View.HAUTEUR_S_MENUS);
-        listeCommandes.setBackground(Color.MAGENTA);
+        listeCommandes.setBackground(Color.PINK);
         listeCommandes.setVisible(true);
     }
 

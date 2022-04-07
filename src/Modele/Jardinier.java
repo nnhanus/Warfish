@@ -37,12 +37,14 @@ public class Jardinier extends Unite{
      * @param f la ressource récolter
      */
     public void recolterRessource(Fleur f) {
-        GrilleMod.removeFleur(f);
+        synchronized (GrilleMod.key) {
+            GrilleMod.removeFleur(f);
+        }
         this.inventaire[f.getType()] += f.getAmount();
     }
 
     public void desherber(Fleur r) {
-        GrilleMod.removeFleur(r);
+        synchronized (GrilleMod.key){GrilleMod.removeFleur(r);}
     }
 
     /**
@@ -70,7 +72,6 @@ public class Jardinier extends Unite{
      */
     public void acheterGraine(int id) {
         this.inventaire[id]++;
-        System.out.println("bought");
     }
 
     public void useFlower(int id){

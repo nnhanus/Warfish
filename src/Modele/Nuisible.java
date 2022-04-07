@@ -148,7 +148,7 @@ public class Nuisible extends Thread{
         while(!enfuite){
             if(target != null) {
                 if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                    mangeFleur();
+                    synchronized (GrilleMod.key){mangeFleur();}
                     this.target = null;
                     try {
                         sleep(10000);

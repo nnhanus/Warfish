@@ -3,6 +3,11 @@ package Modele;
 import View.View;
 import View.VueNuisible;
 import View.VueCommandes;
+import View.VueFleur;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
@@ -15,6 +20,11 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     private static ArrayList<Unite> unites = new ArrayList<>();
     private static ArrayList<Commande> commandes = new ArrayList<>();
     private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0};
+
+    public static final Object key = 0;
+
+    private static final int BUNNY_SPAWN_DELAY = 15;
+    private static final int FLOWER_SPAWN_DELAY = 12;
 
     public static final int RANGE_PLACEABLE = 3000;
 
@@ -176,7 +186,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      * addNuisible
      * Tente d'ajouter un nuisible sur le bord de l'écran (10 fois), puis n'importe où (10 fois)
      */
-    public void addNuisible(){
+    public static void addNuisible(){
 
         int randx = -1;
         int randy = -1;
@@ -282,6 +292,23 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     }
 
     /**
+     * addRandomFlower
+     * Ajoute une fleur au hasard sur la grille
+     */
+    public static void addRandomFlower(){
+        int randx = (int) (Math.random() * HAUTEUR_GRILLE);
+        int randy = (int) (Math.random() * LARGEUR_GRILLE);
+
+        while (isNotValidPosition(randx, randy)){
+            randx = (int) (Math.random() * HAUTEUR_GRILLE);
+            randy = (int) (Math.random() * LARGEUR_GRILLE);
+        }
+        addFleur(new Fleur(randx, randy));
+        VueFleur.updateFleur();
+
+    }
+
+    /**
      * initGrille
      * Initialise la grille en y plaçant des éléments
      */
@@ -300,20 +327,37 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
         start();
     }
 
+    static ActionListener genNuisible = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            addNuisible();
+        }
+    };
+
+    static ActionListener genFlower = new ActionListener() {
+        public void actionPerformed(ActionEvent actionEvent) {
+            addRandomFlower();
+        }
+    };
+
+    static{
+        new Timer(1000*BUNNY_SPAWN_DELAY, genNuisible).start();
+        new Timer(1000*FLOWER_SPAWN_DELAY, genFlower).start();
+    }
+
     /**
      * run
      * Thread générant un nuisible toutes les 12 secondes
      */
-    @Override
+    /*@Override
     public void run(){
         while(true){
             addNuisible();
             try {
-                sleep(15000);
+                sleep(SPAWN_DELAY*1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
 

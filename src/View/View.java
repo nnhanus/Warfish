@@ -163,7 +163,7 @@ public class View extends JFrame {
         JPanel inventaire_bouquets = new JPanel();
         inventaire_bouquets.setBounds(50+LARGEUR_INVENTAIRE/2, 25, LARGEUR_INVENTAIRE/2, HAUTEUR_INVENTAIRE);
         inventaire_bouquets.setBackground(Color.PINK);
-        inventaire_bouquets.setLayout(new GridLayout(4, 5));
+        inventaire_bouquets.setLayout(new GridLayout(4, 5, 5, 0));
 
         /**Param du texte*/
         //Gestion de la taille de police des différents labels
