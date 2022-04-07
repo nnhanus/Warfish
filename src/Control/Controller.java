@@ -188,50 +188,55 @@ public class Controller implements ActionListener, MouseListener {
         }
 
         /**confection de bouquet*/
-        if(e.getSource() == View.bpbr){
-            if(!Bouquet.isReady() && j.getInventaire()[0] > 0){
-                Bouquet.addFlower(indiceFleurR);
-                j.useFlower(indiceFleurR);
-                View.updateInv();
+        if(e.getSource() == View.bpbr){ //fleur rouge sélectionnée
+            /*Conditions: bouquet pas complet et fleur rouge dans l'inventaire*/
+            if(!Bouquet.isReady() && j.getInventaire()[indiceFleurR] > 0){
+                Bouquet.addFlower(indiceFleurR); //ajout de la fleur au bouquet
+                j.useFlower(indiceFleurR); //retirer la fleur de l'inventaire
+                View.updateInv(); //mise à jour affichage
             }
         }
 
-        if(e.getSource() == View.bpbj){
-            if(!Bouquet.isReady() && j.getInventaire()[1] > 0){
-                Bouquet.addFlower(indiceFleurJ);
-                j.useFlower(indiceFleurJ);
-                View.updateInv();
+        if(e.getSource() == View.bpbj){ //fleur jaune sélectionnée
+            /*Conditions: bouquet pas complet et fleur jaune dans l'inventaire*/
+            if(!Bouquet.isReady() && j.getInventaire()[indiceFleurJ] > 0){
+                Bouquet.addFlower(indiceFleurJ); //ajout de la fleur au bouquet
+                j.useFlower(indiceFleurJ); //retirer la fleur de l'inventaire
+                View.updateInv(); //mise à jour affichage
             }
         }
 
-        if(e.getSource() == View.bpbv){
-            if(!Bouquet.isReady() && j.getInventaire()[2] > 0) {
-                Bouquet.addFlower(indiceFleurV);
-                j.useFlower(indiceFleurV);
-                View.updateInv();
+        if(e.getSource() == View.bpbv){ //fleur verte sélectionnée
+            /*Conditions: bouquet pas complet et fleur verte dans l'inventaire*/
+            if(!Bouquet.isReady() && j.getInventaire()[indiceFleurV] > 0) {
+                Bouquet.addFlower(indiceFleurV); //ajout de la fleur au bouquet
+                j.useFlower(indiceFleurV); //retirer la fleur de l'inventaire
+                View.updateInv(); //mise à jour affichage
             }
         }
 
         if(e.getSource() == View.valider){
-            if(Bouquet.isReady()){
-                Bouquet.finishBouquet();
-                View.updateInv();
+            if(Bouquet.isReady()){ //le bouquet est complet
+                Bouquet.finishBouquet(); //création du bouquet
+                View.updateInv(); //mise à jour affichage
             }
         }
 
         if(e.getSource() == View.annuler){
-            Bouquet.cancelBouquet();
-            View.updateInv();
+            Bouquet.cancelBouquet(); //réinitialisation du bouquet
+            View.updateInv(); //mise à jour affichage
         }
 
         /** Boutons de validation des commandes*/
-        for(int i = 0; i < VueCommandes.getListeCommandes().getComponentCount(); i++){
+        for(int i = 0; i < VueCommandes.getListeCommandes().getComponentCount(); i++){ //parcours des boutons de commandes
             if(e.getSource() == VueCommandes.getListeCommandes().getComponent(i)){
                 try {
+                    /*Conditions : bouquet valide correspondant et jardinier dans le rayon du bâtiment principal*/
                     if (GrilleMod.getCommandes().get(i).hasValidBouquet() && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()) {
-                        GrilleMod.removeBouquet(Bouquet.getType(GrilleMod.getCommandes().get(i).getValue()));
-                        GrilleMod.removeCommande(GrilleMod.getCommandes().get(i));
-                        BatPrincipal.setTirelire(BatPrincipal.getTirelire() + BatPrincipal.PRIX_BOUQUET);
+                        GrilleMod.removeBouquet(Bouquet.getType(GrilleMod.getCommandes().get(i).getValue())); //retirer le bouquet de l'inventaire
+                        GrilleMod.removeCommande(GrilleMod.getCommandes().get(i)); //retirer la commande du terrain
+                        BatPrincipal.setTirelire(BatPrincipal.getTirelire() + BatPrincipal.PRIX_BOUQUET); //ajout du prix
+                        //mise à jour affichage
                         View.updateInv();
                         VueCommandes.updateCommandes();
                         View.updateSolde();
@@ -257,18 +262,25 @@ public class Controller implements ActionListener, MouseListener {
         }
     }
 
+    /**
+     * Gérer les clics
+     * Clic gauche : sélection d'une unité
+     * Clic droit : déplacement du jardinier
+     * @param e mouseEvent
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
+        //coordonnées cliquées
         double mouseX = e.getPoint().getX();
         double mouseY = e.getPoint().getY();
-        if (SwingUtilities.isLeftMouseButton(e)) {
-            for (Jardinier u : GrilleMod.getJardiniers()) {
-                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) {
-                    GrilleMod.setSelectedUnite(u);
+        if (SwingUtilities.isLeftMouseButton(e)) { //clic gauche
+            for (Jardinier u : GrilleMod.getJardiniers()) { //parcours jardinier
+                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) { //si le jardinier est assez proche
+                    GrilleMod.setSelectedUnite(u); //le jardinier est sélectionné
                 }
             }
-        } else {
-            GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
+        } else { //clic droit
+            GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY); //le jardinier se déplace
         }
     }
 
