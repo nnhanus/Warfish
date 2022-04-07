@@ -29,6 +29,7 @@ public class Controller implements ActionListener, MouseListener {
         View.vendreButton.addActionListener(this);
         View.grainesBoutiqueButton.addActionListener(this);
         View.batimentsBoutiqueButton.addActionListener(this);
+        View.acheterJardinierButton.addActionListener(this);
         //View.b9.addActionListener(this);
         View.terrain.addMouseListener(this);
         View.bfr.addActionListener(this);
@@ -254,6 +255,15 @@ public class Controller implements ActionListener, MouseListener {
                 View.updateSolde(); //mise à jour de la vue
             }
         }
+
+        /** bouton de recrutement d'un jardinier*/
+        if(e.getSource() == View.acheterJardinierButton){
+            if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_JARDINIER){
+                GrilleMod.getBatPrincipal().recruterJardinier();
+                View.updateSolde();
+                JardinierView.updateJardinier();
+            }
+        }
     }
 
     /**
@@ -264,13 +274,15 @@ public class Controller implements ActionListener, MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+        int RANGE_SELECTION = 1200; //la distance de sélection d'un jardinier
         //coordonnées cliquées
         double mouseX = e.getPoint().getX();
         double mouseY = e.getPoint().getY();
         if (SwingUtilities.isLeftMouseButton(e)) { //clic gauche
             for (Jardinier u : GrilleMod.getJardiniers()) { //parcours jardinier
-                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < 20) { //si le jardinier est assez proche
+                if (GrilleMod.getSQDist((int) mouseX, (int) mouseY, u.getX(), u.getY()) < RANGE_SELECTION) { //si le jardinier est assez proche
                     GrilleMod.setSelectedUnite(u); //le jardinier est sélectionné
+                    View.updateInv();
                 }
             }
         } else { //clic droit
