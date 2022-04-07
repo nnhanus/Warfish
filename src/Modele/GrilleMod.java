@@ -3,26 +3,25 @@ import View.Grille;
 import View.Movable;
 import View.View;
 import View.VueNuisible;
+import View.VueCommandes;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
-    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur en nombre de case de la grille
-    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur en nombre de case de la grille
+    public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur du terrain
+    public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur du terrain
 
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //passer en static asap ?
     private static ArrayList<Building> buildings = new ArrayList<>();
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
     private static ArrayList<Unite> unites = new ArrayList<>();
-
-    public static final int ID_FLEUR = 1;
+    private static ArrayList<Commande> commandes = new ArrayList<>();
+    private static int[] bouquets = new int[]{3,3,3,3,3,3,3,3,3,3};
 
     public static final int RANGE_PLACEABLE = 3000;
 
-    private static final int nbForet = 4;
-    private static final int nbRocher = 4;
     private static final int nbFleur = 8;
 
 
@@ -135,6 +134,29 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
                 }
             //}
         }
+    }
+
+    public static ArrayList<Commande> getCommandes(){return commandes;}
+
+    public static void addCommande(){
+        if(commandes.size() < Commande.MAX_COMMANDE) {
+            commandes.add(new Commande());
+            System.out.println(commandes.size());
+        }
+    }
+
+    public static void removeCommande(Commande c){
+        commandes.remove(c);
+    }
+
+    public static int[] getBouquets(){return bouquets;}
+
+    public static void addBouquet(int id){
+        bouquets[id]++;
+    }
+
+    public static void removeBouquet(int id){
+        bouquets[id]--;
     }
 
     /**
@@ -265,38 +287,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     }
 
     /**
-     * initRocher
-     * Initialise aléatoirement des Rocher sur le terrain
-     */
-    /*public void initRocher(){
-        for(int i = 0; i < nbRocher; i++) {
-            int randx = (int) (Math.random() * HAUTEUR_GRILLE);
-            int randy = (int) (Math.random() * LARGEUR_GRILLE);
-            while (isNotValidPosition(randx, randy)){
-                randx = (int) (Math.random() * HAUTEUR_GRILLE);
-                randy = (int) (Math.random() * LARGEUR_GRILLE);
-            }
-            addRessource(new Rocher(randx, randy));
-        }
-    }*/
-
-    /**
-     * initForet
-     * Initialise aléatoirement des Foret sur le terrain
-     */
-   /* public void initForet(){
-        for(int i = 0; i < nbForet; i++) {
-            int randx = (int) (Math.random() * HAUTEUR_GRILLE);
-            int randy = (int) (Math.random() * LARGEUR_GRILLE);
-            while (isNotValidPosition(randx, randy)){
-                randx = (int) (Math.random() * HAUTEUR_GRILLE);
-                randy = (int) (Math.random() * LARGEUR_GRILLE);
-            }
-            addRessource(new Foret(randx, randy));
-        }
-    }*/
-
-    /**
      * initGrille
      * Initialise la grille en y plaçant des éléments
      */
@@ -304,8 +294,11 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
         addBatiment(BAT_PRINCIPAL);
         System.out.println(BAT_PRINCIPAL.getX() + " " + BAT_PRINCIPAL.getY());
         initFleur();
-        //initRocher();
-        //initForet();
+
+
+        new Commande(0);
+        new VueCommandes();
+
 
         Jardinier J = new Jardinier(LARGEUR_GRILLE/2, HAUTEUR_GRILLE/2);
         addUnite(J);

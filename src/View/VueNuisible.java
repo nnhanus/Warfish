@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class VueNuisible {
     public static ArrayList<Nuisible> nuisibles = new ArrayList<>();
+    public static int TAILLE_NUISIBLE = 50;
 
     public VueNuisible(){
         nuisibles.addAll(GrilleMod.getNuisibles());
@@ -15,7 +16,7 @@ public class VueNuisible {
 
     public static void drawNuisibles(Graphics g){
         for (Nuisible n : nuisibles) {
-            g.drawImage(Movable.nuis, n.getX(), n.getY(), 50, 50, null);
+            g.drawImage(Movable.nuis, n.getX() - TAILLE_NUISIBLE/2, n.getY()-TAILLE_NUISIBLE/2, TAILLE_NUISIBLE, TAILLE_NUISIBLE, null);
         }
     }
 

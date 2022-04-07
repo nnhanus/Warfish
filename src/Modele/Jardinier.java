@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Jardinier extends Unite{
-    private int[] inventaire = new int[7];
+    private int[] inventaire = new int[] {10,10,10,0,0,0,0};
     //cf GrilleMod pour les indices
 
     public Jardinier(int x, int y){
         super(x, y);
         vitesse = 100;
-        Arrays.fill(inventaire, 0);
+        //Arrays.fill(inventaire, 0);
     }
 
     /**
@@ -97,6 +97,10 @@ public class Jardinier extends Unite{
         this.inventaire[GrilleMod.indiceBouquet] += 1;
     }
 
+    public void useFlower(int id){
+        this.inventaire[id]--;
+    }
+
     /**
      * vendBouquet
      * Vend tous les bouquets du jardinier
@@ -104,6 +108,10 @@ public class Jardinier extends Unite{
     public void vendBouquet(){
         GrilleMod.getBatPrincipal().vendRessource();
         this.inventaire[GrilleMod.indiceBouquet] = 0;
+    }
+
+    public static void distribueCommande(int id){
+        GrilleMod.getBouquets()[id]--;
     }
 
     /**
