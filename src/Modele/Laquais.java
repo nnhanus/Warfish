@@ -62,9 +62,7 @@ public class Laquais extends Thread {
 
         System.out.println("Type: " + target.getType() + ", Amount : " + target.getAmount());
         this.inventaire[target.getType()] += target.getAmount(); //mise à jour de l'inventaire
-        synchronized (GrilleMod.key) {
-            GrilleMod.removeFleur(target); //retirer la fleur
-        }
+        GrilleMod.removeFleur(target); //retirer la fleur
         retour = true;
         this.removeTarget();
         setDir();
@@ -91,7 +89,7 @@ public class Laquais extends Thread {
      */
     public void acquireTarget(){
         for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs
-            if(f != null && f.isPickable()) { //on s'intéresse aux fleurs fleuries
+            if(f != null && f.isPickable() && !f.getIsDead()) { //on s'intéresse aux fleurs fleuries
                 if (this.target == null) {
                     this.target = f;
                 } else {
@@ -187,54 +185,57 @@ public class Laquais extends Thread {
 
     @Override
     public void run(){
+        boolean aramasse = false;
         while(true){
-            if(retour){
-                if(nearProprio()){ //à portée de son propriétaire
-                    videInventaire(); //donne son inventaire au propriétaire
-                    try {
-                        sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    retour = false; //passe en mode cueillette
-                    synchronized (GrilleMod.key){acquireTarget();}
-                    setDir(); //nouvelle direction
+            while(retour){
+                if(nearProprio()){
+                    videInventaire();
+                    retour = false;
                 }else{
-                    avanceLaquais(); //avance vers le proprio
-                    try {
-                        sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    avanceLaquais();
                 }
-            }else{
-                if(target != null && !target.isDead && !target.isPicked) {
-                    if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                        synchronized (GrilleMod.key){ramasseFleur();}
-                        this.removeTarget(); //cible devient vide
+                try {
+                    sleep(20);
+                } catch (InterruptedException e) {}
+            }
+
+            while(!retour){
+                if(target != null && !target.getIsDead()) {
+                    synchronized (GrilleMod.key){
+                        //acquireTarget();
+                        if (target != null && nearTarget() && target.isPickable()) {
+                            ramasseFleur();
+                            aramasse = true;
+                        }
+                    }
+
+                    if(aramasse){
+                        aramasse = false;
                         try {
                             sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    } else if(/*target != null &&*/ target.isPickable()){ //sinon si la cible est ready
-                        this.avanceLaquais();
+                    }
+                    if(target != null && !nearTarget() && !target.getIsDead()){
+                        avanceLaquais();
                         try {
                             sleep(20);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
-                }else{ //si il n'a pas de cible
-                    acquireTarget(); //assignation d'une cible
+                }else{
+                    synchronized (GrilleMod.key) {
+                        acquireTarget(); //assignation d'une cible
+                    }
                     try {
-                        sleep(50);
+                        sleep(5);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-
         }
     }
 }

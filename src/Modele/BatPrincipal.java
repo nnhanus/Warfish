@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class BatPrincipal extends Building {
     public static final int PRINCIPAL_RANGE = 5000; //rayon d'action
-    private static int tirelire = 1000; //argent
+    private static int tirelire = 200; //argent
     public static final int PRIX_PRODUCTION = 100; //prix bâtiment de production
     public static final int PRIX_DEFENSE = 100; //prix bâtiment de défense
     public static final int PRIX_GRAINE = 10; //prix graine

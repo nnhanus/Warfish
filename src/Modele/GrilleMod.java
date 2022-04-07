@@ -23,11 +23,11 @@ public class GrilleMod {
     private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0}; //inventaire des bouquets
     private static ArrayList<Laquais> laquais = new ArrayList<>();
 
-    public static final Object key = 0;
+    public static final Object key = new Object();
 
     //délais d'apparition des nuisibles et fleurs
-    private static final int BUNNY_SPAWN_DELAY = 3;
-    private static final int FLOWER_SPAWN_DELAY = 4;
+    private static final int BUNNY_SPAWN_DELAY = 15;
+    private static final int FLOWER_SPAWN_DELAY = 12;
 
     public static final int RANGE_PLACEABLE = 3000; //rayon de placement
 
@@ -127,13 +127,14 @@ public class GrilleMod {
         fleurs.remove(f); //fleur enlevée du terrain
         for(Nuisible n : nuisibles){ //pour les nuisibles ayant cette fleur comme cible
             if(n.getTarget() == f){
-                n.acquireTarget(); //nouvelle cible assignée
+                n.removeTarget();
+                //n.acquireTarget(); //nouvelle cible assignée
             }
         }
         for(Laquais l : laquais){
             if(l.getTarget() == f){
                 l.removeTarget();
-                l.acquireTarget();
+                //l.acquireTarget();
             }
         }
     }

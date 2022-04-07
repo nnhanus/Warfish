@@ -147,6 +147,10 @@ public class Nuisible extends Thread{
         return posX*posX + posY*posY <= 16;
     }
 
+    public void removeTarget(){
+        target = null;
+    }
+
     /**
      * run
      * thread décrivant le comportement du nuisible :
@@ -154,25 +158,29 @@ public class Nuisible extends Thread{
      */
     @Override
     public void run(){
+        boolean amangé = false;
         while(!enfuite){
-            if(target != null) {
-                if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                    if(target.isPickable()) {
-                        synchronized (GrilleMod.key) {
-                            mangeFleur();
-                        }
+            if(target != null && !target.getIsDead()) {
+                synchronized (GrilleMod.key) {
+                    if (target != null && nearTarget() && target.isPickable()) { //si le lapin est proche de sa cible il la mange
+                        mangeFleur();
+                        amangé = true;
                     }
-                    this.target = null; //cible devient vide
+                }
+                if(amangé){
                     try {
                         sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else if(/*target != null &&*/ target.isPickable()){ //sinon si la cible est ready
+                    amangé = false;
+                }
+                //acquireTarget();
+                if(target != null && target.isPickable()){ //sinon si la cible est ready
                     this.avanceNuisible();
-                        if(isNotValidPosition(this.x, this.y)){ ; //renverra true si à proximité d'un bâtiment de défense
-                            setenFuite(); //fuit
-                        }
+                    if(isNotValidPosition(this.x, this.y)){ //renverra true si à proximité d'un bâtiment de défense
+                        setenFuite(); //fuit
+                    }
                     try {
                         sleep(15);
                     } catch (InterruptedException e) {
@@ -180,9 +188,11 @@ public class Nuisible extends Thread{
                     }
                 }
             }else{ //si il n'a pas de cible
-                acquireTarget(); //assignation d'une cible
+                synchronized (GrilleMod.key) {
+                    acquireTarget(); //assignation d'une cible
+                }
                 try {
-                    sleep(50);
+                    sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
