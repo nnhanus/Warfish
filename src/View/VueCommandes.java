@@ -9,6 +9,9 @@ import java.util.HashMap;
 public class VueCommandes {
     private static JPanel listeCommandes = new JPanel();
 
+    /**
+     * Initialise le JPanel
+     */
     static{
         listeCommandes.setLayout(new GridLayout(4, 1));
         listeCommandes.setPreferredSize(new Dimension(View.LARGEUR_S_MENUS, View.HAUTEUR_S_MENUS));
@@ -17,6 +20,9 @@ public class VueCommandes {
         listeCommandes.setVisible(true);
     }
 
+    /**
+     * Hashmap liant un type de bouquet à son image
+     */
     private static final HashMap<Integer, String> imageMap =new HashMap<>() {{
         put(0, "src/Image/BouquetJJJ.png");//JJJ
         put(1, "src/Image/BouquetJJR.png");//JJR (mais à l'envers)
@@ -30,8 +36,16 @@ public class VueCommandes {
         put(9, "src/Image/BouquetVVV.png");//VVV
     }};
 
+    /**
+     * getListeCommandes
+     * getter
+     * @return listeCommandes
+     */
     public static JPanel getListeCommandes(){return listeCommandes;}
 
+    /**
+     * Constructeur
+     */
     public VueCommandes(){
         for(int i = 0; i < 4; i++) {
             JButton b = new JButton();
@@ -40,6 +54,10 @@ public class VueCommandes {
         }
     }
 
+    /**
+     * updateCommandes
+     * Met à jour l'affichage des boutons de validation des commandes
+     */
     public static void updateCommandes(){
         for(int i = 0; i < 4; i++){
             try{

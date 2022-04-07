@@ -4,7 +4,7 @@ import View.VueFleur;
 
 public class Fleur extends Thread {
     //les différntes attributs des fleurs
-    public int lifespan = 1000; //leur temps de vie
+    public int lifespan = 15; //leur temps de vie
     boolean isPicked = false; //si la fleur a été ramassée ou non
     boolean isDead = false; //si la fleur est morte ou non
     private boolean boosted = false; //si la fleur est boostée par un bâtiment
@@ -77,10 +77,7 @@ public class Fleur extends Thread {
      * @return vrai si la fleur peut être cueillie, faux sinon
      */
     public boolean isPickable() {
-        if (lifespan >= 450 || lifespan <= 0) {
-            return false;
-        }
-        return true;
+        return lifespan < 9 && lifespan > 0;
     }
 
     /**
@@ -90,9 +87,9 @@ public class Fleur extends Thread {
      */
     public int getAmount() {
         int amount;
-        if (lifespan <= 450 && lifespan > 150) { //si la fleur est cueillie prématurement
+        if (lifespan <= 9 && lifespan > 3) { //si la fleur est cueillie prématurement
             amount = 1;
-        } else if (lifespan <= 150) { //fleur ceuillie au meilleur moment, on en récolte plus
+        } else if (lifespan <= 3) { //fleur ceuillie au meilleur moment, on en récolte plus
             amount = 3;
         } else { //sinon elle est pas récoltable ou elle est pourrie du coup 0
             amount = 0;
@@ -164,7 +161,7 @@ public class Fleur extends Thread {
     @Override
     public void run() {
         while (!isPicked && lifespan > 0) { //si la fleur est en vie et sur le terrain
-            lifespan -= 50; //son lifespan diminue
+            lifespan -= 1; //son lifespan diminue
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

@@ -16,6 +16,10 @@ public class BatDefense extends Building {
         BuildingView.updateBuildings(this);
     }
 
+    /**
+     * effrayer
+     * Set le statut enfuite des nuisibles proche à true
+     */
     public void effrayer(){
         ArrayList<Nuisible> list = new ArrayList<>();
         list.addAll(GrilleMod.getNuisibles());
@@ -28,6 +32,4 @@ public class BatDefense extends Building {
             }
         }
     }
-} /*Effrayer les lapins dans les cases voisines (bâtiment de défense).
-    Cette action est automatique et instantanée.
-    comme pour production? genre si le lapin il avance et il aarive près du bâtiment, ils ont peur?*/
+}

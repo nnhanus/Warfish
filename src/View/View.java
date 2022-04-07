@@ -46,7 +46,7 @@ public class View extends JFrame {
     /**boutons*/
     public static JButton ramasserButton = new JButton("Ramasser");
     public static JButton effrayerButton = new JButton("Effrayer");
-    public static JButton désherberButton = new JButton("Désherber");
+    public static JButton desherberButton = new JButton("Désherber");
     public static JButton planterMenuButton = new JButton("Planter");
     public static JButton bouquetMenuButton = new JButton("Bouquet");
     public static JButton vendreButton = new JButton("Vendre");
@@ -60,6 +60,7 @@ public class View extends JFrame {
     public static JLabel invGraine2 = new JLabel();
     public static JLabel invGraine3 = new JLabel();
 
+    /**Affichage des différents bouquets de l'inventaire*/
     public static JLabel invBouquetJJJ = new JLabel();
     public static JLabel invBouquetJJR = new JLabel();
     public static JLabel invBouquetJRR = new JLabel();
@@ -95,7 +96,7 @@ public class View extends JFrame {
     public static JButton def = new JButton("Défense");
 
     /**c'est pour l'affichage de l'inventaire*/
-    public static Font police_inventaire = new Font("Serif", Font.PLAIN, 15);
+    public static Font police_inventaire = new Font("Comic-Sans", Font.BOLD, 15);
     protected static ImageIcon fleurRouge = new ImageIcon("src/Image/RougeZoom.png");
     protected static ImageIcon fleurJaune = new ImageIcon("src/Image/JauneZoom.png");
     protected static ImageIcon fleurVerte = new ImageIcon("src/Image/VerteZoom.png");
@@ -314,13 +315,13 @@ public class View extends JFrame {
 
         /**ajout des boutons au panel des boutons*/
         boutons.add(ramasserButton);
-        boutons.add(effrayerButton);
-        boutons.add(désherberButton);
         boutons.add(planterMenuButton);
         boutons.add(bouquetMenuButton);
-        boutons.add(vendreButton);
+        boutons.add(desherberButton);
         boutons.add(grainesBoutiqueButton);
         boutons.add(batimentsBoutiqueButton);
+        boutons.add(effrayerButton);
+        //boutons.add(vendreButton);
     }
 
     /**
@@ -414,47 +415,24 @@ public class View extends JFrame {
         Confectionner();
         Controle();
 
-        /**boutique**/
-        /*bfleur1.setPreferredSize(new Dimension(30,30));
-        graines.setLayout(new GridLayout(0,1,10,10));
-        //boutique.add(cubomeduse);
-        graines.add(bfleur1);
-        graines.add(bfleur2);
-        graines.add(bfleur3);
-        graines.setOpaque(false);
-        graines.setVisible(false);*/
-
-        /** permet de placer les jpanels dans celui de droite*/
-
-
-
-
-        //le titre de l'inventaire
-
-
-        /**Partie sur la création des boutons et leur ajout dans le JPanel
-         *
-         *
-         *  création des boutons*/
-
-
-
-        //boutons.add(b9);
-
-
         this.setResizable(false);
         this.pack();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
     }
 
-
+    /**
+     * updateSolde
+     * Met à jour l'affichage du solde
+     */
     public static void updateSolde() {
         soldeL.setText("solde : " + String.valueOf(BatPrincipal.getTirelire()));
     }
 
+    /**
+     * updateInv
+     * Met à jour l'affichage de l'inventaire
+     */
     public static void updateInv(){
         invFleur1.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurR]));
         invFleur2.setText(String.valueOf(((Jardinier) Modele.GrilleMod.getSelectedUnite()).getInventaire()[GrilleMod.indiceFleurJ]));

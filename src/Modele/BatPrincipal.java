@@ -13,8 +13,6 @@ public class BatPrincipal extends Building {
     public static final int PRIX_DEFENSE = 100;
     public static final int PRIX_JARD = 100;
     public static final int PRIX_GRAINE = 10;
-    public static final int PRIX_BOIS = 1;
-    public static final int PRIX_CAILLOUX = 1;
     public static final int PRIX_BOUQUET = 45;
     private int[] ressources = new int[5]; //pour l'instant
 

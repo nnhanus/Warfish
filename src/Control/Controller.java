@@ -23,7 +23,7 @@ public class Controller implements ActionListener, MouseListener {
         //Ajout des listener aux boutons
         View.ramasserButton.addActionListener(this);
         View.effrayerButton.addActionListener(this);
-        View.désherberButton.addActionListener(this);
+        View.desherberButton.addActionListener(this);
         View.planterMenuButton.addActionListener(this);
         View.bouquetMenuButton.addActionListener(this);
         View.vendreButton.addActionListener(this);
@@ -67,7 +67,6 @@ public class Controller implements ActionListener, MouseListener {
             //mise a jour de l'affichage
             View.updateSolde();
             View.updateInv();
-            System.out.println(BatPrincipal.PRIX_GRAINE);
         }
     }
 
@@ -107,7 +106,6 @@ public class Controller implements ActionListener, MouseListener {
             Fleur f = j.plusProcheFleur();
             int dist = j.getSQDistFrom(f.getX(), f.getY());
             if (f.isPickable() && dist < 3000) {
-                //System.out.println("on récolte");
                 j.recolterRessource(f);
                 View.updateInv();
             }
@@ -117,7 +115,7 @@ public class Controller implements ActionListener, MouseListener {
             j.effrayer();
             //VueNuisible.updateNuisibles();
         }
-        if (e.getSource() == View.désherberButton) { //desherber
+        if (e.getSource() == View.desherberButton) { //desherber
             Fleur f = j.plusProcheFleur();
             int dist = j.getSQDistFrom(f.getX(), f.getY());
             if (dist < 30000 && (f).getIsDead()) {
@@ -251,7 +249,6 @@ public class Controller implements ActionListener, MouseListener {
             }
         } else {
             GrilleMod.getSelectedUnite().setMoving((int) mouseX, (int) mouseY);
-            //System.out.println(mouseX + " " + mouseY);
         }
     }
 

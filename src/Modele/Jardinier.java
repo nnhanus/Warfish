@@ -1,21 +1,16 @@
 package Modele;
 
 import View.BuildingView;
-import View.Grille;
-import View.JardinierView;
-import View.Movable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Jardinier extends Unite{
-    private int[] inventaire = new int[] {10,10,10,0,0,0,0};
+    private int[] inventaire = new int[] {0,0,0,0,0,0};
     //cf GrilleMod pour les indices
 
     public Jardinier(int x, int y){
         super(x, y);
-        vitesse = 100;
-        //Arrays.fill(inventaire, 0);
     }
 
     /**
@@ -78,25 +73,6 @@ public class Jardinier extends Unite{
         System.out.println("bought");
     }
 
-    /**
-     * vendre
-     * Vend une certaine quantité d'une ressource
-     * @param id l'indice de la ressource à vendre
-     * @param amount la quantité à vendre
-     */
-    public void vendre(int amount, int id) {
-        this.inventaire[id] -= amount;
-    }
-
-    /**
-     * confectionneBouquet
-     * Confectionne un bouquet à partir de 3 fleurs et le range dans l'inventaire
-     */
-    public void confectionneBouquet(){
-        this.inventaire[GrilleMod.indiceFleurR] -= 3;
-        this.inventaire[GrilleMod.indiceBouquet] += 1;
-    }
-
     public void useFlower(int id){
         this.inventaire[id]--;
     }
@@ -108,10 +84,6 @@ public class Jardinier extends Unite{
     public void vendBouquet(){
         GrilleMod.getBatPrincipal().vendRessource();
         this.inventaire[GrilleMod.indiceBouquet] = 0;
-    }
-
-    public static void distribueCommande(int id){
-        GrilleMod.getBouquets()[id]--;
     }
 
     /**
@@ -136,12 +108,9 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de défense de l'inventaire
      */
     public void construitBatDefense(){
-        /*this.inventaire[3] -= 5;
-        this.inventaire[4] -= 15;*/
         BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_DEFENSE);
         BatDefense b = new BatDefense(this.x, this.y);
         GrilleMod.addBatiment(b);
-        System.out.println("BatDefense Added");
         BuildingView.updateBuildings(b);
     }
 
@@ -150,13 +119,9 @@ public class Jardinier extends Unite{
      * Enleve les ressources associées au coût d'un bâtiment de production de l'inventaire
      */
     public void construitBatProduction(){
-        /*this.inventaire[3] -= 15;
-        this.inventaire[4] -= 5;*/
         BatPrincipal.setTirelire(BatPrincipal.getTirelire() - BatPrincipal.PRIX_PRODUCTION);
         BatProduction b = new BatProduction(this.x, this.y);
         GrilleMod.addBatiment(b);
-        System.out.println("BatProduction Added");
-
     }
 
     /**

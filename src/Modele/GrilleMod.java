@@ -1,13 +1,9 @@
 package Modele;
-import View.Grille;
-import View.Movable;
+
 import View.View;
 import View.VueNuisible;
 import View.VueCommandes;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GrilleMod extends Thread{ //potentiellement mettre toutes les générations aléatoires, et déplacement automatique ou autre dans cette classe ???
     public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur du terrain
@@ -18,7 +14,7 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();
     private static ArrayList<Unite> unites = new ArrayList<>();
     private static ArrayList<Commande> commandes = new ArrayList<>();
-    private static int[] bouquets = new int[]{3,3,3,3,3,3,3,3,3,3};
+    private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0};
 
     public static final int RANGE_PLACEABLE = 3000;
 
@@ -141,7 +137,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
     public static void addCommande(){
         if(commandes.size() < Commande.MAX_COMMANDE) {
             commandes.add(new Commande());
-            System.out.println(commandes.size());
         }
     }
 
@@ -292,7 +287,6 @@ public class GrilleMod extends Thread{ //potentiellement mettre toutes les gén�
      */
     public void initGrille(){
         addBatiment(BAT_PRINCIPAL);
-        System.out.println(BAT_PRINCIPAL.getX() + " " + BAT_PRINCIPAL.getY());
         initFleur();
 
 

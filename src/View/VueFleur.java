@@ -15,7 +15,8 @@ public class VueFleur {
     }
 
     /**
-     * Fonction d'affichage
+     * drawFleur
+     * Affiche les fleurs selon leur état et type
      */
     public static void drawFleur(Graphics g){
         for (Fleur f : fleurs) { //on itère sur le tableau des fleurs présentes sur le terrain

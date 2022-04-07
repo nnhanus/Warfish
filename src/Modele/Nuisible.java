@@ -1,8 +1,6 @@
 package Modele;
 
-import View.Grille;
 import View.VueNuisible;
-
 import static java.lang.Math.*;
 
 /**
@@ -21,7 +19,7 @@ public class Nuisible extends Thread{
         this.y = y;
         this.acquireTarget();
         VueNuisible.updateNuisibles();
-        this.start(); //??
+        this.start();
     }
 
     /*
