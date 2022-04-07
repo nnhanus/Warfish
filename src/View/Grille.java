@@ -17,7 +17,7 @@ public class Grille extends JPanel {
     public Grille () {
         this.setPreferredSize(new Dimension(View.TERRAIN_WIDTH,View.HEIGHT_WIN)); //taille
         this.setOpaque(false);
-        move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible(), new BuildingView());
+        move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible(), new BuildingView(), new VueLaquais());
         //chargement de l'image de fond du terrain
         try {
             img = ImageIO.read(new File("src/Image/decor_plateau.png"));

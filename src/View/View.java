@@ -35,6 +35,7 @@ public class View extends JFrame {
     public static JPanel buildings;
     public static JPanel planter;
     public static JPanel confection;
+    public static JPanel recruter; //TODO
 
     /**soldel*/
     public static JLabel soldeL = new JLabel();
@@ -47,7 +48,7 @@ public class View extends JFrame {
     public static JButton vendreButton = new JButton("Vendre");
     public static JButton grainesBoutiqueButton = new JButton("Graines");
     public static JButton batimentsBoutiqueButton = new JButton("Bâtiments");
-    public static JButton acheterJardinierButton = new JButton("Recruter");
+    public static JButton recruterBoutiqueButton = new JButton("Recruter"); //TODO
 
     /**des labels again*/
     public static JLabel invFleur1 = new JLabel();
@@ -87,6 +88,10 @@ public class View extends JFrame {
     public static JButton bpbv;
     public static JButton valider;
     public static JButton annuler;
+
+    /**recrutement*/
+    public static JButton jardinierButton; //TODO
+    public static JButton laquaisButton; //TODO
 
     /**boutique de batiments*/
     public static JButton prod = new JButton("Production");
@@ -293,6 +298,7 @@ public class View extends JFrame {
         control.add(confection);
         control.add(VueCommandes.getListeCommandes());
         control.add(VueConfection.getPanel());
+        control.add(recruter);
         //ajout de control a la fenêtre principale
         this.add(control);
     }
@@ -319,7 +325,7 @@ public class View extends JFrame {
         boutons.add(grainesBoutiqueButton);
         boutons.add(batimentsBoutiqueButton);
         boutons.add(effrayerButton);
-        boutons.add(acheterJardinierButton);
+        boutons.add(recruterBoutiqueButton);
     }
 
     /**
@@ -400,6 +406,19 @@ public class View extends JFrame {
         confection.add(lastrow);
     }
 
+    protected void Recruter(){ //TODO
+        recruter = new JPanel();
+        recruter.setBounds(50,400,LARGEUR_S_MENUS, HAUTEUR_S_MENUS);
+        recruter.setVisible(false); //non-visible car sous-menu à ouvrir
+        recruter.setOpaque(false);
+        recruter.setLayout(new GridLayout(2, 1, 0, 10));
+        //ajout des composants
+        jardinierButton = new JButton("Jardinier");
+        laquaisButton = new JButton("Laquais"); //TODO
+        recruter.add(jardinierButton);
+        recruter.add(laquaisButton);
+    }
+
     public View() {
         /**Titre de la fenêtre; taille; layout */
         this.setTitle("Project : Warfish");
@@ -415,6 +434,7 @@ public class View extends JFrame {
         Buildings();
         Planter();
         Confectionner();
+        Recruter();
         Controle();
 
         this.setResizable(false);

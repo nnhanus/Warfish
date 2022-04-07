@@ -8,12 +8,13 @@ import java.util.Arrays;
  */
 public class BatPrincipal extends Building {
     public static final int PRINCIPAL_RANGE = 5000; //rayon d'action
-    private static int tirelire = 200; //score
+    private static int tirelire = 1000; //argent
     public static final int PRIX_PRODUCTION = 100; //prix bâtiment de production
     public static final int PRIX_DEFENSE = 100; //prix bâtiment de défense
     public static final int PRIX_GRAINE = 10; //prix graine
     public static final int PRIX_BOUQUET = 45; //prix bouquet
     public static final int PRIX_JARDINIER = 175; //prix d'un jardinier
+    public static final int PRIX_LAQUAIS = 130; //prix d'un laquais
 
     public BatPrincipal(int x, int y) {
         super(x, y, PRINCIPAL_RANGE);
@@ -51,9 +52,22 @@ public class BatPrincipal extends Building {
         tirelire += PRIX_BOUQUET;
     }
 
+    /**
+     * recruterJardinier
+     * Recrute un jardinier et le place sur le terrain
+     */
     public void recruterJardinier(){
         tirelire -= PRIX_JARDINIER;
         GrilleMod.addJardinier(new Jardinier(x, y));
+    }
+
+    /**
+     * recruterLaquais
+     * Recrute un laquais et le place sur le terrain
+     */
+    public static void recruterLaquais(){
+        tirelire -= PRIX_LAQUAIS;
+        GrilleMod.addLaquais(new Laquais(GrilleMod.getSelectedUnite()));
     }
 }
 

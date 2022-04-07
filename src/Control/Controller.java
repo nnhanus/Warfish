@@ -29,7 +29,7 @@ public class Controller implements ActionListener, MouseListener {
         View.vendreButton.addActionListener(this);
         View.grainesBoutiqueButton.addActionListener(this);
         View.batimentsBoutiqueButton.addActionListener(this);
-        View.acheterJardinierButton.addActionListener(this);
+        View.recruterBoutiqueButton.addActionListener(this);
         //View.b9.addActionListener(this);
         View.terrain.addMouseListener(this);
         View.bfr.addActionListener(this);
@@ -45,6 +45,8 @@ public class Controller implements ActionListener, MouseListener {
         View.annuler.addActionListener(this);
         View.prod.addActionListener(this);
         View.def.addActionListener(this);
+        View.jardinierButton.addActionListener(this);
+        View.laquaisButton.addActionListener(this);
 
         for(Component c : VueCommandes.getListeCommandes().getComponents()){
             if(c.getClass() == JButton.class){
@@ -97,6 +99,7 @@ public class Controller implements ActionListener, MouseListener {
         sous_menu.add(View.buildings);
         sous_menu.add(View.planter);
         sous_menu.add(View.confection);
+        sous_menu.add(View.recruter);
         for(JPanel jp : sous_menu){ //parcours
            if(jp.equals(j)){ //si le jpanel est le jpanel passé en paramètres
                j.setVisible(!j.isVisible()); //on inverse sa visibilté
@@ -153,6 +156,12 @@ public class Controller implements ActionListener, MouseListener {
         /**Ouverture de la boutique de bâtiments*/
         if(e.getSource() == View.batimentsBoutiqueButton){
             closeAllElse(View.buildings);
+        }
+
+        /** Ouverture de la boutique de recrutement*/
+        if(e.getSource() == View.recruterBoutiqueButton){
+            closeAllElse(View.recruter);
+            System.out.println("Recruter");
         }
 
         /**boutons de la boutique de graines**/
@@ -256,14 +265,24 @@ public class Controller implements ActionListener, MouseListener {
             }
         }
 
-        /** bouton de recrutement d'un jardinier*/
-        if(e.getSource() == View.acheterJardinierButton){
-            if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_JARDINIER){
+        /**boutons de la boutique de recrutement*/
+        if(e.getSource() == View.jardinierButton){
+            if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_JARDINIER) {
                 GrilleMod.getBatPrincipal().recruterJardinier();
-                View.updateSolde();
                 JardinierView.updateJardinier();
+                View.updateSolde();
             }
         }
+
+        if(e.getSource() == View.laquaisButton){
+            if(BatPrincipal.getTirelire() >= BatPrincipal.PRIX_JARDINIER && GrilleMod.getSQDist(j.getX(), j.getY(), GrilleMod.getBatX(), GrilleMod.getBatY()) <= GrilleMod.getBatPrincipal().getRange()) {
+                BatPrincipal.recruterLaquais();
+                View.updateSolde();
+                //VueLaquais.drawLaquais();
+                //TODO maj de l'affichage
+            }
+        }
+
     }
 
     /**

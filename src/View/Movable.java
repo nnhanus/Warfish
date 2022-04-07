@@ -16,8 +16,10 @@ public class Movable{
     public static VueFleur vueFleur;
     public static VueNuisible vueNuisible;
     public static BuildingView vueBuilding;
+    public static VueLaquais vueLaquais; //TODO
     //les constantes pour les images à afficher
     protected static BufferedImage meduse = null; // méduse
+    protected static BufferedImage laquais = null; //laquais
     protected static BufferedImage ROuv = null; //fleur rouge ouverte
     protected static BufferedImage RFer = null; //fleur rouge fermée
     protected static BufferedImage RMor = null; // fleur rouge morte
@@ -28,9 +30,9 @@ public class Movable{
     protected static BufferedImage VFer = null; //fleur verte fermée
     protected static BufferedImage VMor = null; //fleur verte morte
     protected static BufferedImage nuis = null; //nuisibles
-    protected static BufferedImage batProd = null;
-    protected static BufferedImage batDef = null;
-    protected static BufferedImage batPrinc = null;
+    protected static BufferedImage batProd = null; //bâtiment production
+    protected static BufferedImage batDef = null; //bâtiment défense
+    protected static BufferedImage batPrinc = null; //bâtiment principal
 
 
     /**
@@ -42,6 +44,12 @@ public class Movable{
             meduse = ImageIO.read(new File("src/Image/meduseJardiniere.png"));
         } catch (IOException ex) {
             System.out.println("Fichier méduse manquant");
+        }
+        //Chargement de l'image des laquais
+        try{
+            laquais = ImageIO.read(new File("src/Image/Laquais.png"));
+        }catch(IOException ex){
+            System.out.println("Fichier laquais manquant");
         }
         //Chargeemnt des fleurs rouges
         try {
@@ -121,12 +129,13 @@ public class Movable{
      * @param vueNuisible vue nuisibles pour afficher les nuisibles
      * @param vueBuilding vue bâtiments pour afficher les batiments
      */
-    public Movable(JardinierView jardvue, VueFleur vuefleur,VueNuisible vueNuisible, BuildingView vueBuilding) {
+    public Movable(JardinierView jardvue, VueFleur vuefleur,VueNuisible vueNuisible, BuildingView vueBuilding, VueLaquais vueLaquais) {
         //liaison des variables
         Movable.vueFleur = vuefleur;
         Movable.vueJard = jardvue;
         Movable.vueNuisible = vueNuisible;
         Movable.vueBuilding = vueBuilding;
+        Movable.vueLaquais = vueLaquais;
         //appelle de la fonction pour charger les images
         chargeImage();
     }
@@ -141,5 +150,6 @@ public class Movable{
         VueFleur.drawFleur(g);
         VueNuisible.drawNuisibles(g);
         JardinierView.drawJardinier(g);
+        VueLaquais.drawLaquais(g);
     }
 }

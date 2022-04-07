@@ -137,6 +137,13 @@ public class Jardinier extends Thread{
         this.inventaire[f.getType()] += f.getAmount(); //mise à jour de l'inventaire
     }
 
+    public void recupererCadeau(int[] tab){
+        for(int i = 0; i < tab.length; i++){
+            this.inventaire[i] += tab[i];
+        }
+        View.View.updateInv();
+    }
+
     /**
      * désherber une fleur
      * @param r la fleur à enlever

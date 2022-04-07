@@ -48,16 +48,18 @@ public class Nuisible extends Thread{
 
     /**
      * avanceNuisible
-     * Fait avancer le lapin de distance dans la direction dir
+     * Fait avancer le lapin dans la direction dir
      */
     public void avanceNuisible(){
         //avance en fonction de la direction
-        this.x += cos(dir)*1.6;
-        this.y -= sin(dir)*1.6;
-        //mise à jour direction
-        int posX = target.getX() - this.x;
-        int posY = target.getY() - this.y;
-        this.dir = atan2(posX, posY) - PI/2.0; //angle entre le lapin et sa cible
+        if(target != null) {
+            this.x += cos(dir) * 1.6;
+            this.y -= sin(dir) * 1.6;
+            //mise à jour direction
+            int posX = target.getX() - this.x;
+            int posY = target.getY() - this.y;
+            this.dir = atan2(posX, posY) - PI / 2.0; //angle entre le lapin et sa cible
+        }
     }
 
     /**
@@ -155,7 +157,11 @@ public class Nuisible extends Thread{
         while(!enfuite){
             if(target != null) {
                 if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                    synchronized (GrilleMod.key){mangeFleur();}
+                    if(target.isPickable()) {
+                        synchronized (GrilleMod.key) {
+                            mangeFleur();
+                        }
+                    }
                     this.target = null; //cible devient vide
                     try {
                         sleep(10000);
