@@ -38,7 +38,6 @@ public class GrilleMod {
     public static final int indiceGraineR = 3;
     public static final int indiceGraineJ = 4;
     public static final int indiceGraineV = 5;
-    public static final int indiceBouquet = 6;
 
     //initialisation du bâtiment aléatoire
     private static final BatPrincipal BAT_PRINCIPAL = new BatPrincipal((int) (Math.random() * LARGEUR_GRILLE), (int) (Math.random() * HAUTEUR_GRILLE));

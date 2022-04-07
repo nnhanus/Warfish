@@ -5,13 +5,12 @@ import View.VueCommandes;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class Commande{
     public final static int MAX_COMMANDE = 4; //nombre max de commande
     private final static int LIFESPAN = 40; //Durée de vie
     private final static int SPAWN_DELAY = 10; //délai d'apparition
-    private final int[] value = {(int) (Math.random()*2),(int) (Math.random()*2),(int) (Math.random()*2)}; //commande générée aléatoirement
+    private final int[] value = {(int) (Math.random()*3),(int) (Math.random()*3),(int) (Math.random()*3)}; //commande générée aléatoirement
 
     /**
      * Constructeur

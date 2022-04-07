@@ -13,6 +13,7 @@ public class BatPrincipal extends Building {
     public static final int PRIX_DEFENSE = 100; //prix bâtiment de défense
     public static final int PRIX_GRAINE = 10; //prix graine
     public static final int PRIX_BOUQUET = 45; //prix bouquet
+    public static final int PRIX_JARDINIER = 175; //prix d'un jardinier
 
     public BatPrincipal(int x, int y) {
         super(x, y, PRINCIPAL_RANGE);
@@ -48,6 +49,11 @@ public class BatPrincipal extends Building {
      */
     public void vendRessource() {
         tirelire += PRIX_BOUQUET;
+    }
+
+    public void recruterJardinier(){
+        tirelire -= PRIX_JARDINIER;
+        GrilleMod.addJardinier(new Jardinier(x, y));
     }
 }
 
