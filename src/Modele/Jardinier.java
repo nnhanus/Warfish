@@ -181,15 +181,6 @@ public class Jardinier extends Thread{
     }
 
     /**
-     * vendBouquet
-     * Vend tous les bouquets du jardinier
-     */
-    public void vendBouquet(){
-        GrilleMod.getBatPrincipal().vendRessource(); //vendre
-        this.inventaire[GrilleMod.indiceBouquet]--; //perdre la ressource
-    }
-
-    /**
      * getInventaire
      * renvoie l'inventaire du jardinier
      * @return l'inventaire du jardinier

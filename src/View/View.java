@@ -47,6 +47,8 @@ public class View extends JFrame {
     public static JButton vendreButton = new JButton("Vendre");
     public static JButton grainesBoutiqueButton = new JButton("Graines");
     public static JButton batimentsBoutiqueButton = new JButton("Bâtiments");
+    public static JButton acheterJardinierButton = new JButton("Recruter");
+
     /**des labels again*/
     public static JLabel invFleur1 = new JLabel();
     public static JLabel invFleur2 = new JLabel();
@@ -290,6 +292,7 @@ public class View extends JFrame {
         control.add(buildings);
         control.add(confection);
         control.add(VueCommandes.getListeCommandes());
+        control.add(VueConfection.getPanel());
         //ajout de control a la fenêtre principale
         this.add(control);
     }
@@ -316,7 +319,7 @@ public class View extends JFrame {
         boutons.add(grainesBoutiqueButton);
         boutons.add(batimentsBoutiqueButton);
         boutons.add(effrayerButton);
-        //boutons.add(vendreButton);
+        boutons.add(acheterJardinierButton);
     }
 
     /**

@@ -20,6 +20,10 @@ public class JardinierView {
         }
     }
 
+    public static void updateJardinier(){
+        listjardinier = GrilleMod.getJardiniers();
+    }
+
     /**
      * drawJardinier
      * Affiche le jardinier ainsi que son rayon d'action
