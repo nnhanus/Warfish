@@ -13,10 +13,10 @@ public class VueCommandes {
      * Initialise le JPanel
      */
     static{
-        listeCommandes.setLayout(new GridLayout(4, 1, 0, 4));
-        listeCommandes.setPreferredSize(new Dimension(View.LARGEUR_S_MENUS, View.HAUTEUR_S_MENUS));
+        listeCommandes.setLayout(new GridLayout(4, 1, 0, 4)); //layout
+        listeCommandes.setPreferredSize(new Dimension(View.LARGEUR_S_MENUS, View.HAUTEUR_S_MENUS)); //taille
         listeCommandes.setBounds(75 + View.LARGEUR_S_MENUS, 400, View.LARGEUR_S_MENUS, View.HAUTEUR_S_MENUS);
-        listeCommandes.setBackground(Color.PINK);
+        listeCommandes.setBackground(Color.PINK); //couleur
         listeCommandes.setVisible(true);
     }
 
@@ -47,10 +47,10 @@ public class VueCommandes {
      * Constructeur
      */
     public VueCommandes(){
-        for(int i = 0; i < 4; i++) {
-            JButton b = new JButton();
+        for(int i = 0; i < 4; i++) { //création des commandes
+            JButton b = new JButton(); //un bouton par commandes
             b.setVisible(true);
-            listeCommandes.add(b);
+            listeCommandes.add(b); //ajout des boutons
         }
     }
 
@@ -59,7 +59,7 @@ public class VueCommandes {
      * Met à jour l'affichage des boutons de validation des commandes
      */
     public static void updateCommandes(){
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 4; i++){ //parcours des commandes
             try{
                 ((JButton) listeCommandes.getComponent(i)).setIcon(View.scaleImage(new ImageIcon(imageMap.get(Bouquet.getType(GrilleMod.getCommandes().get(i).getValue())))));
             }catch(IndexOutOfBoundsException e){

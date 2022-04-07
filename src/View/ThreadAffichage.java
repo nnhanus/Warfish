@@ -1,6 +1,8 @@
 package View;
 
-
+/**
+ * Actualise l'affichage
+ */
 public class ThreadAffichage extends Thread{
 
     private View view;
@@ -11,8 +13,8 @@ public class ThreadAffichage extends Thread{
 
     public void run(){
         while(true){
-            view.revalidate();
-            view.repaint(0,0,view.getWidth(),view.getHeight());
+            view.revalidate(); //ré-évaluation
+            view.repaint(0,0,view.getWidth(),view.getHeight()); //repaint
             try {
                 Thread.sleep(50);
             }catch (Exception e) {

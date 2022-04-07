@@ -12,14 +12,13 @@ import java.io.IOException;
 public class Grille extends JPanel {
     Image img = null;
 
-    public static Movable move;
-    //public static BuildingView buildV;
+    public static Movable move; //gestion de l'affichage des éléments qui changent
 
     public Grille () {
-        this.setPreferredSize(new Dimension(View.TERRAIN_WIDTH,View.HEIGHT_WIN));
+        this.setPreferredSize(new Dimension(View.TERRAIN_WIDTH,View.HEIGHT_WIN)); //taille
         this.setOpaque(false);
         move = new Movable(new JardinierView(),new VueFleur(),new VueNuisible(), new BuildingView());
-        //buildV = new BuildingView();
+        //chargement de l'image de fond du terrain
         try {
             img = ImageIO.read(new File("src/Image/decor_plateau.png"));
         } catch (IOException e) {
@@ -32,11 +31,7 @@ public class Grille extends JPanel {
     public void paint(Graphics g) {
         /**arriere plan**/
         g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-        //buildV.drawBuildings(g);
+        /**éléments du terrain*/
         move.paint(g);
     }
-
-    /*public static void updateBuildView(){
-        buildV = new BuildingView();
-    }*/
 }
