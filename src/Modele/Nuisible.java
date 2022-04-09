@@ -11,6 +11,7 @@ public class Nuisible extends Thread{
     private int x, y; //position
     private double dir; //la direction du lapin en degrés
     private boolean enfuite = false;
+    private static final int VITESSE = 15;
     private Fleur target = null; //cible
 
 
@@ -104,6 +105,7 @@ public class Nuisible extends Thread{
      * donne la fleur la plus proche comme cible au lapin
      */
     public /*synchronized*/ void acquireTarget(){
+        removeTarget();
         for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs
             if(f != null && f.isPickable()) { //on s'intéresse aux fleurs fleuries
                 if (this.target == null) {
@@ -182,7 +184,7 @@ public class Nuisible extends Thread{
                         setenFuite(); //fuit
                     }
                     try {
-                        sleep(15);
+                        sleep(VITESSE);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

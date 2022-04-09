@@ -7,6 +7,7 @@ import static java.lang.Math.PI;
 
 public class Laquais extends Thread {
     private int[] inventaire = new int[]{0,0,0}; //inventaire de fleur
+    private static final int VITESSE = 30;
     private int x; //coordonnée en X
     private int y; //coordonée en y
     private Fleur target = null; //cible du laquais
@@ -88,6 +89,7 @@ public class Laquais extends Thread {
      * donne la fleur la plus proche comme cible au laquais
      */
     public void acquireTarget(){
+        removeTarget();
         for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs
             if(f != null && f.isPickable() && !f.getIsDead()) { //on s'intéresse aux fleurs fleuries
                 if (this.target == null) {
@@ -108,11 +110,13 @@ public class Laquais extends Thread {
         }
         //pas de fleur respectant les conditions
         //définition d'une direction par défaut (centre de la grille)
-        if(target != null) {
+        /*if(target != null) {
             int posX = target.getX() - x;
             int posY = target.getY() - y;
             this.dir = atan2(posX, posY) - PI/2.0;
-        }
+        }*/
+
+        setDir();
     }
      /** plusProcheFleur
      * Renvoie la fleur la plus proche du Jardiner
@@ -148,8 +152,8 @@ public class Laquais extends Thread {
             posX = target.getX() - x;
             posY = target.getY() - y;
         }else{
-            posX = GrilleMod.getBatX() - x;
-            posY = GrilleMod.getBatY() - y;
+            posX = proprio.getX() - x;
+            posY = proprio.getY() - y;
         }
         this.dir = atan2(posX, posY) - PI/2.0; //donne l'angle entre la droite tracée par 2 points,et le degré 0 dans le plan
     }
@@ -187,7 +191,12 @@ public class Laquais extends Thread {
     public void run(){
         boolean aramasse = false;
         while(true){
-            while(retour){
+            if(retour || target == null/* || target.getIsDead()*/){
+                synchronized (GrilleMod.key) {
+                    if (target == null /*|| target.getIsDead()*/) {
+                        acquireTarget();
+                    }
+                }
                 if(nearProprio()){
                     videInventaire();
                     retour = false;
@@ -195,11 +204,11 @@ public class Laquais extends Thread {
                     avanceLaquais();
                 }
                 try {
-                    sleep(20);
+                    sleep(VITESSE);
                 } catch (InterruptedException e) {}
             }
 
-            while(!retour){
+            if(!retour){
                 if(target != null && !target.getIsDead()) {
                     synchronized (GrilleMod.key){
                         //acquireTarget();
@@ -212,7 +221,7 @@ public class Laquais extends Thread {
                     if(aramasse){
                         aramasse = false;
                         try {
-                            sleep(1000);
+                            sleep(5000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -228,6 +237,9 @@ public class Laquais extends Thread {
                 }else{
                     synchronized (GrilleMod.key) {
                         acquireTarget(); //assignation d'une cible
+                        if(target != null && target.getIsDead()){
+                            removeTarget();
+                        }
                     }
                     try {
                         sleep(5);

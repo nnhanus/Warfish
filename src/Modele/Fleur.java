@@ -165,7 +165,6 @@ public class Fleur extends Thread {
             } catch (InterruptedException e) {
             }
         }
-        GrilleMod.removeFleur(this);
         dies(); //une fois le lifespan à 0, la fleur meurt
     }
 }
