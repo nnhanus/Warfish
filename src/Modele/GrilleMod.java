@@ -23,6 +23,8 @@ public class GrilleMod {
     private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0}; //inventaire des bouquets
     private static ArrayList<Laquais> laquais = new ArrayList<>();
 
+    private static int SCORE = 0;
+
     public static final Object key = new Object();
 
     //délais d'apparition des nuisibles et fleurs
@@ -50,6 +52,14 @@ public class GrilleMod {
      */
     public GrilleMod() {
         initGrille();
+    }
+
+    public static int getScore(){
+        return SCORE;
+    }
+
+    public static void increaseScore(){
+        SCORE++;
     }
 
     /**

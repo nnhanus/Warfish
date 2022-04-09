@@ -12,6 +12,11 @@ import java.awt.*;
 
 public class View extends JFrame {
 
+    public static Font police_inventaire = new Font("Comic-Sans", Font.BOLD, 15);
+    public static Font police_confection = new Font("Serif", Font.BOLD, 22);
+    public static Font police_prix = new Font("Comic-Sans", Font.BOLD, 22);
+    public static Font police_score = new Font("Comic-Sans", Font.BOLD, 25);
+
     /**dimensions de la fenêtre d'affichage*/
     public static final int WIDTH_WIN = 1200;
     public static final int HEIGHT_WIN = 700;
@@ -35,10 +40,23 @@ public class View extends JFrame {
     public static JPanel buildings;
     public static JPanel planter;
     public static JPanel confection;
-    public static JPanel recruter; //TODO
+    public static JPanel recruter;
 
     /**soldel*/
     public static JLabel soldeL = new JLabel();
+
+    /**Score*/
+    public static JLabel score = new JLabel();
+    public static JPanel scorePane = new JPanel();
+    static{
+        //scorePane.setBounds(75 + View.LARGEUR_S_MENUS, 720, View.LARGEUR_S_MENUS, 15);
+        score.setFont(police_score);
+        score.setText("Score : " + String.valueOf(GrilleMod.getScore()));
+        score.setBounds(75 + View.LARGEUR_S_MENUS, HEIGHT_WIN - 50, View.LARGEUR_S_MENUS, 25);
+        score.setVisible(true);
+        //scorePane.setBackground(Color.PINK);
+    }
+
     /**boutons*/
     public static JButton ramasserButton = new JButton("Ramasser");
     public static JButton effrayerButton = new JButton("Effrayer");
@@ -48,7 +66,7 @@ public class View extends JFrame {
     public static JButton vendreButton = new JButton("Vendre");
     public static JButton grainesBoutiqueButton = new JButton("Graines");
     public static JButton batimentsBoutiqueButton = new JButton("Bâtiments");
-    public static JButton recruterBoutiqueButton = new JButton("Recruter"); //TODO
+    public static JButton recruterBoutiqueButton = new JButton("Recruter");
 
     /**des labels again*/
     public static JLabel invFleur1 = new JLabel();
@@ -90,15 +108,14 @@ public class View extends JFrame {
     public static JButton annuler;
 
     /**recrutement*/
-    public static JButton jardinierButton; //TODO
-    public static JButton laquaisButton; //TODO
+    public static JButton jardinierButton;
+    public static JButton laquaisButton;
 
     /**boutique de batiments*/
-    public static JButton prod = new JButton("Production");
-    public static JButton def = new JButton("Défense");
+    public static JButton prod = new JButton();
+    public static JButton def = new JButton();
 
     /**c'est pour l'affichage de l'inventaire*/
-    public static Font police_inventaire = new Font("Comic-Sans", Font.BOLD, 15);
     protected static ImageIcon fleurRouge = new ImageIcon("src/Image/RougeZoom.png");
     protected static ImageIcon fleurJaune = new ImageIcon("src/Image/JauneZoom.png");
     protected static ImageIcon fleurVerte = new ImageIcon("src/Image/VerteZoom.png");
@@ -284,7 +301,7 @@ public class View extends JFrame {
         //inventaire
         JLabel titre = new JLabel();
         titre.setText("Inventaire");
-        titre.setFont(new Font("Serif", Font.PLAIN, 20));
+        titre.setFont(new Font("Comic_Sans", Font.PLAIN, 20));
         titre.setBounds(50, 0, 300, 25);
 
         //ajout des différents composants de control
@@ -299,6 +316,7 @@ public class View extends JFrame {
         control.add(VueCommandes.getListeCommandes());
         control.add(VueConfection.getPanel());
         control.add(recruter);
+        control.add(score);
         //ajout de control a la fenêtre principale
         this.add(control);
     }
@@ -338,9 +356,18 @@ public class View extends JFrame {
         graines.setOpaque(false);
         //ajout des composants
         bfr = new JButton(scaleImage(graineRouge));
+        bfr.setIconTextGap(10);
+        bfr.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
+        bfr.setFont(police_prix);
         bfj = new JButton(scaleImage(graineJaune));
+        bfj.setIconTextGap(10);
+        bfj.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
+        bfj.setFont(police_prix);
         bfv = new JButton(scaleImage(graineVerte));
-        bfr.setPreferredSize(new Dimension(30,30));
+        bfv.setIconTextGap(10);
+        bfv.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
+        bfv.setFont(police_prix);
+        graines.setPreferredSize(new Dimension(30,30));
         graines.setLayout(new GridLayout(3,1,10,10));
         graines.add(bfr);
         graines.add(bfj);
@@ -355,8 +382,18 @@ public class View extends JFrame {
         buildings.setBounds(50,400,LARGEUR_S_MENUS, HAUTEUR_S_MENUS);
         buildings.setVisible(false); //non-visible car sous-menu à ouvrir
         buildings.setOpaque(false);
-        def.setPreferredSize(new Dimension(30,30));
-        buildings.setLayout(new GridLayout(0,1,10,10));
+        buildings.setPreferredSize(new Dimension(30,30));
+        buildings.setLayout(new GridLayout(2,1,10,0));
+        prod.setIcon(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/maison3.png")));
+        prod.setText(String.valueOf(BatPrincipal.PRIX_PRODUCTION));
+        prod.setIconTextGap(10);
+        prod.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
+        prod.setFont(police_prix);
+        def.setIcon(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/maison1.png")));
+        def.setText(String.valueOf(BatPrincipal.PRIX_DEFENSE));
+        def.setIconTextGap(10);
+        def.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
+        def.setFont(police_prix);
         //ajout des composants
         buildings.add(prod);
         buildings.add(def);
@@ -387,7 +424,6 @@ public class View extends JFrame {
         bpbr = new JButton(scaleImage(fleurRouge));
         bpbj = new JButton(scaleImage(fleurJaune));
         bpbv = new JButton(scaleImage(fleurVerte));
-        Font police_confection = new Font("Serif", Font.BOLD, 22);
         valider = new JButton("✓");
         valider.setFont(police_confection);
         annuler = new JButton("X");
@@ -413,8 +449,14 @@ public class View extends JFrame {
         recruter.setOpaque(false);
         recruter.setLayout(new GridLayout(2, 1, 0, 10));
         //ajout des composants
-        jardinierButton = new JButton("Jardinier");
-        laquaisButton = new JButton("Laquais"); //TODO
+        jardinierButton = new JButton(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/meduseJardiniere.png")));
+        jardinierButton.setFont(police_prix);
+        jardinierButton.setText(String.valueOf(BatPrincipal.PRIX_JARDINIER));
+        jardinierButton.setIconTextGap(10);
+        laquaisButton = new JButton(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/Laquais.png"))); //TODO
+        laquaisButton.setFont(police_prix);
+        laquaisButton.setText(String.valueOf(BatPrincipal.PRIX_LAQUAIS));
+        laquaisButton.setIconTextGap(10);
         recruter.add(jardinierButton);
         recruter.add(laquaisButton);
     }
@@ -451,6 +493,9 @@ public class View extends JFrame {
         soldeL.setText("solde : " + String.valueOf(BatPrincipal.getTirelire()));
     }
 
+    public static void updateScore(){
+        score.setText("Score : " + String.valueOf(GrilleMod.getScore()));
+    }
     /**
      * updateInv
      * Met à jour l'affichage de l'inventaire

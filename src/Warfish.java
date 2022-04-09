@@ -19,7 +19,7 @@ public class Warfish {
             Music music = new Music();
             music.play();
         }catch(Exception e){
-
+            System.err.println(e.getMessage());
         }
     }
 }

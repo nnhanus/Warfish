@@ -60,8 +60,6 @@ public class Laquais extends Thread {
      * fait disparaître la fleur cible
      */
     public void ramasseFleur(){
-
-        System.out.println("Type: " + target.getType() + ", Amount : " + target.getAmount());
         this.inventaire[target.getType()] += target.getAmount(); //mise à jour de l'inventaire
         GrilleMod.removeFleur(target); //retirer la fleur
         retour = true;

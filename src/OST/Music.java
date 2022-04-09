@@ -10,8 +10,13 @@ public class Music {
     Clip clip;
 
     public Music () throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-        audio = AudioSystem.getAudioInputStream(new File("Program in C — The Memory Unsafety Anthem.mp3").getAbsoluteFile());
+        File f = new File("/home/brice/IdeaProjects/Warfish/src/OST/Program_in_C.au");
+        System.out.println(f.getAbsoluteFile());
+        AudioFileFormat.Type[] supportedList = AudioSystem.getAudioFileTypes();
         clip = AudioSystem.getClip();
+
+        audio = AudioSystem.getAudioInputStream(f.getAbsoluteFile());
+
 
         clip.open(audio);
 
