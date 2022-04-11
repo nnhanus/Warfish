@@ -388,12 +388,10 @@ public class View extends JFrame {
         prod.setIcon(scaleImage(new ImageIcon("src/Image/maison3.png")));
         prod.setText(String.valueOf(BatPrincipal.PRIX_PRODUCTION));
         prod.setIconTextGap(10);
-        prod.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
         prod.setFont(police_prix);
         def.setIcon(scaleImage(new ImageIcon("src/Image/maison1.png")));
         def.setText(String.valueOf(BatPrincipal.PRIX_DEFENSE));
         def.setIconTextGap(10);
-        def.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
         def.setFont(police_prix);
         //ajout des composants
         buildings.add(prod);

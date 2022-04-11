@@ -28,8 +28,8 @@ public class GrilleMod {
     public static final Object key = new Object();
 
     //délais d'apparition des nuisibles et fleurs
-    private static final int BUNNY_SPAWN_DELAY = 15;
-    private static final int FLOWER_SPAWN_DELAY = 12;
+    private static final int BUNNY_SPAWN_DELAY = 6;
+    private static final int FLOWER_SPAWN_DELAY = 4;
 
     public static final int RANGE_PLACEABLE = 3000; //rayon de placement
 
