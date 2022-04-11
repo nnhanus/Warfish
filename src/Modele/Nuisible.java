@@ -179,6 +179,9 @@ public class Nuisible extends Thread{
                     acquireTarget();
                     wait = 5;
                 }
+                if(isNotValidPosition(this.x, this.y)){
+                    enfuite = true;
+                }
             }
             try {
                 sleep(wait);
@@ -186,5 +189,7 @@ public class Nuisible extends Thread{
                 e.printStackTrace();
             }
         }
+        GrilleMod.removeNuisible(this);
+        VueNuisible.updateNuisibles();
     }
 }
