@@ -1,6 +1,5 @@
 import Control.Controller;
 import Modele.GrilleMod;
-import OST.Music;
 import View.View;
 import View.ThreadAffichage;
 
@@ -14,12 +13,5 @@ public class Warfish {
         View view = new View(); //Affichage du jeu
         Controller controller = new Controller(view); //Contrôle
         (new ThreadAffichage(view)).start(); //Mise à jour de l'affichage
-
-        try {
-            Music music = new Music();
-            music.play();
-        }catch(Exception e){
-            System.err.println(e.getMessage());
-        }
     }
 }
