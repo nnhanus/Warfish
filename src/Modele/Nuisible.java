@@ -165,50 +165,25 @@ public class Nuisible extends Thread{
      */
     @Override
     public void run(){
-        boolean amangé = false;
         while(!enfuite){
-            if(target != null && !target.getIsDead()) {
-                if (target != null && nearTarget() && target.isPickable()) { //si le lapin est proche de sa cible il la mange
-                    try {
-                        sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            int wait = VITESSE;
+            synchronized (GrilleMod.key) {
+                if(target != null && !target.getIsDead()) {
+                    if (nearTarget()) {
+                        mangeFleur();
+                        wait = 8000;
+                    } else {
+                        avanceNuisible();
                     }
-                    if(!enfuite) {
-                        synchronized (GrilleMod.key) {
-                            amangé = mangeFleur();
-                        }
-                    }
+                }else{
+                    acquireTarget();
+                    wait = 5;
                 }
-                if(amangé){
-                    try {
-                        sleep(7000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    amangé = false;
-                }
-                //acquireTarget();
-                if(target != null && target.isPickable()){ //sinon si la cible est ready
-                    this.avanceNuisible();
-                    if(isNotValidPosition(this.x, this.y)){ //renverra true si à proximité d'un bâtiment de défense
-                        setenFuite(); //fuit
-                    }
-                    try {
-                        sleep(VITESSE);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }else{ //si il n'a pas de cible
-                synchronized (GrilleMod.key) {
-                    acquireTarget(); //assignation d'une cible
-                }
-                try {
-                    sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            }
+            try {
+                sleep(wait);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

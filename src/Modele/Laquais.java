@@ -91,7 +91,7 @@ public class Laquais extends Thread {
     public void acquireTarget(){
         removeTarget();
         for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs
-            if(f != null && f.isPickable() && !f.getIsDead()) { //on s'intéresse aux fleurs fleuries
+            if(f != null && f.isPickable()/* && !f.getIsDead()*/) { //on s'intéresse aux fleurs fleuries
                 if (this.target == null) {
                     this.target = f;
                 } else {
@@ -190,56 +190,46 @@ public class Laquais extends Thread {
     @Override
     public void run(){
         while(true){
-            if(retour || target == null/* || target.getIsDead()*/){
-                synchronized (GrilleMod.key) {
-                    if (target == null /*|| target.getIsDead()*/) {
+            int wait = VITESSE;
+            synchronized (GrilleMod.key) {
+                if (retour || target == null) {
+                    if (target == null) {
                         acquireTarget();
                     }
+                    if (nearProprio()) {
+                        videInventaire();
+                        wait = 1000;
+                        retour = false;
+                    } else {
+                        avanceLaquais();
+                    }
                 }
-                if(nearProprio()){
-                    videInventaire();
-                    retour = false;
-                }else{
-                    avanceLaquais();
-                }
-                try {
-                    sleep(VITESSE);
-                } catch (InterruptedException e) {}
+            }
+            try {
+                sleep(wait);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
-            if(!retour){
+            wait = 0;
+
+            synchronized (GrilleMod.key) {
                 if(target != null && !target.getIsDead()) {
-                        if (target != null && nearTarget() && target.isPickable()) {
-                            try {
-                                sleep(3000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            synchronized (GrilleMod.key){
-                            ramasseFleur();
-                        }
-                    }
-                    if(target != null && !nearTarget() && !target.getIsDead()){
+                    if (nearTarget()) {
+                        ramasseFleur();
+                        wait = 4000;
+                    } else {
                         avanceLaquais();
-                        try {
-                            sleep(20);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }else{
-                    synchronized (GrilleMod.key) {
-                        acquireTarget(); //assignation d'une cible
-                        if(target != null && target.getIsDead()){
-                            removeTarget();
-                        }
-                    }
-                    try {
-                        sleep(5);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    acquireTarget();
+                    wait = 5;
                 }
+            }
+            try {
+                sleep(wait);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
