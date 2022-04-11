@@ -1,6 +1,5 @@
 import Control.Controller;
 import Modele.GrilleMod;
-import Modele.Jardinier;
 import View.View;
 import View.ThreadAffichage;
 

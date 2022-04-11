@@ -14,18 +14,22 @@ public class GrilleMod {
     public static final int LARGEUR_GRILLE = View.TERRAIN_WIDTH; //la largeur du terrain
     public static final int HAUTEUR_GRILLE = View.HEIGHT_WIN; //la hauteur du terrain
 
+    //liste des éléments importants du jeu
     private static ArrayList<Fleur> fleurs = new ArrayList<>(); //la liste des fleurs sur le terrain
     private static ArrayList<Building> buildings = new ArrayList<>();//la liste des bâtiments sur le terrain
     private static ArrayList<Nuisible> nuisibles = new ArrayList<>();//la liste des nuisibles sur le terrain
     private static ArrayList<Jardinier> jardiniers = new ArrayList<>();//la liste des jardiniers sur le terrain
     private static ArrayList<Commande> commandes = new ArrayList<>();//la liste des commandes
     private static int[] bouquets = new int[]{0,0,0,0,0,0,0,0,0,0}; //inventaire des bouquets
+    private static ArrayList<Laquais> laquais = new ArrayList<>();
 
-    public static final Object key = 0;
+    private static int SCORE = 0;
+
+    public static final Object key = new Object();
 
     //délais d'apparition des nuisibles et fleurs
-    private static final int BUNNY_SPAWN_DELAY = 15;
-    private static final int FLOWER_SPAWN_DELAY = 12;
+    private static final int BUNNY_SPAWN_DELAY = 6;
+    private static final int FLOWER_SPAWN_DELAY = 4;
 
     public static final int RANGE_PLACEABLE = 3000; //rayon de placement
 
@@ -48,6 +52,14 @@ public class GrilleMod {
      */
     public GrilleMod() {
         initGrille();
+    }
+
+    public static int getScore(){
+        return SCORE;
+    }
+
+    public static void increaseScore(){
+        SCORE++;
     }
 
     /**
@@ -125,7 +137,14 @@ public class GrilleMod {
         fleurs.remove(f); //fleur enlevée du terrain
         for(Nuisible n : nuisibles){ //pour les nuisibles ayant cette fleur comme cible
             if(n.getTarget() == f){
-                n.acquireTarget(); //nouvelle cible assignée
+                n.removeTarget();
+                //n.acquireTarget(); //nouvelle cible assignée
+            }
+        }
+        for(Laquais l : laquais){
+            if(l.getTarget() == f){
+                l.removeTarget();
+                //l.acquireTarget();
             }
         }
     }
@@ -191,6 +210,21 @@ public class GrilleMod {
         jardiniers.add(u);
     }
 
+    /**
+     * addLaquais
+     * Ajoute un laquais à la grille
+     * @param l un laquais
+     */
+    public static void addLaquais(Laquais l){laquais.add(l);}
+
+    /**
+     * getLaquais
+     * getter
+     * @return la liste de laquais
+     */
+    public static ArrayList<Laquais> getLaquais(){
+        return laquais;
+    }
     /**
      * addNuisible
      * Tente d'ajouter un nuisible sur le bord de l'écran (10 fois), puis n'importe où (10 fois)

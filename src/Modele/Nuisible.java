@@ -11,6 +11,7 @@ public class Nuisible extends Thread{
     private int x, y; //position
     private double dir; //la direction du lapin en degrés
     private boolean enfuite = false;
+    private static final int VITESSE = 15;
     private Fleur target = null; //cible
 
 
@@ -48,24 +49,31 @@ public class Nuisible extends Thread{
 
     /**
      * avanceNuisible
-     * Fait avancer le lapin de distance dans la direction dir
+     * Fait avancer le lapin dans la direction dir
      */
     public void avanceNuisible(){
         //avance en fonction de la direction
-        this.x += cos(dir)*1.6;
-        this.y -= sin(dir)*1.6;
-        //mise à jour direction
-        int posX = target.getX() - this.x;
-        int posY = target.getY() - this.y;
-        this.dir = atan2(posX, posY) - PI/2.0; //angle entre le lapin et sa cible
+        if(target != null) {
+            this.x += cos(dir) * 1.6;
+            this.y -= sin(dir) * 1.6;
+            //mise à jour direction
+            int posX = target.getX() - this.x;
+            int posY = target.getY() - this.y;
+            this.dir = atan2(posX, posY) - PI / 2.0; //angle entre le lapin et sa cible
+        }
     }
 
     /**
      * mangeFleur
      * fait disparaître la fleur cible
      */
-    public void mangeFleur(){
-        GrilleMod.removeFleur(this.target);
+    public boolean mangeFleur(){
+        if(target != null){
+            GrilleMod.removeFleur(this.target);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -101,7 +109,8 @@ public class Nuisible extends Thread{
      * acquireTarget
      * donne la fleur la plus proche comme cible au lapin
      */
-    public /*synchronized*/ void acquireTarget(){
+    public void acquireTarget(){
+        removeTarget();
         for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs
             if(f != null && f.isPickable()) { //on s'intéresse aux fleurs fleuries
                 if (this.target == null) {
@@ -145,6 +154,10 @@ public class Nuisible extends Thread{
         return posX*posX + posY*posY <= 16;
     }
 
+    public void removeTarget(){
+        target = null;
+    }
+
     /**
      * run
      * thread décrivant le comportement du nuisible :
@@ -152,31 +165,47 @@ public class Nuisible extends Thread{
      */
     @Override
     public void run(){
+        boolean amangé = false;
         while(!enfuite){
-            if(target != null) {
-                if (nearTarget()) { //si le lapin est proche de sa cible il la mange
-                    synchronized (GrilleMod.key){mangeFleur();}
-                    this.target = null; //cible devient vide
+            if(target != null && !target.getIsDead()) {
+                if (target != null && nearTarget() && target.isPickable()) { //si le lapin est proche de sa cible il la mange
                     try {
-                        sleep(10000);
+                        sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else if(/*target != null &&*/ target.isPickable()){ //sinon si la cible est ready
-                    this.avanceNuisible();
-                        if(isNotValidPosition(this.x, this.y)){ ; //renverra true si à proximité d'un bâtiment de défense
-                            setenFuite(); //fuit
+                    if(!enfuite) {
+                        synchronized (GrilleMod.key) {
+                            amangé = mangeFleur();
                         }
+                    }
+                }
+                if(amangé){
                     try {
-                        sleep(15);
+                        sleep(7000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    amangé = false;
+                }
+                //acquireTarget();
+                if(target != null && target.isPickable()){ //sinon si la cible est ready
+                    this.avanceNuisible();
+                    if(isNotValidPosition(this.x, this.y)){ //renverra true si à proximité d'un bâtiment de défense
+                        setenFuite(); //fuit
+                    }
+                    try {
+                        sleep(VITESSE);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }else{ //si il n'a pas de cible
-                acquireTarget(); //assignation d'une cible
+                synchronized (GrilleMod.key) {
+                    acquireTarget(); //assignation d'une cible
+                }
                 try {
-                    sleep(50);
+                    sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
