@@ -67,8 +67,13 @@ public class Nuisible extends Thread{
      * mangeFleur
      * fait disparaître la fleur cible
      */
-    public void mangeFleur(){
-        GrilleMod.removeFleur(this.target);
+    public boolean mangeFleur(){
+        if(target != null){
+            GrilleMod.removeFleur(this.target);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -104,7 +109,7 @@ public class Nuisible extends Thread{
      * acquireTarget
      * donne la fleur la plus proche comme cible au lapin
      */
-    public /*synchronized*/ void acquireTarget(){
+    public void acquireTarget(){
         removeTarget();
         for(Fleur f : GrilleMod.getFleurs()){ //parcours des fleurs
             if(f != null && f.isPickable()) { //on s'intéresse aux fleurs fleuries
@@ -163,15 +168,21 @@ public class Nuisible extends Thread{
         boolean amangé = false;
         while(!enfuite){
             if(target != null && !target.getIsDead()) {
-                synchronized (GrilleMod.key) {
-                    if (target != null && nearTarget() && target.isPickable()) { //si le lapin est proche de sa cible il la mange
-                        mangeFleur();
-                        amangé = true;
+                if (target != null && nearTarget() && target.isPickable()) { //si le lapin est proche de sa cible il la mange
+                    try {
+                        sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(!enfuite) {
+                        synchronized (GrilleMod.key) {
+                            amangé = mangeFleur();
+                        }
                     }
                 }
                 if(amangé){
                     try {
-                        sleep(10000);
+                        sleep(7000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

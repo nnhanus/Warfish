@@ -16,7 +16,7 @@ public class Movable{
     public static VueFleur vueFleur;
     public static VueNuisible vueNuisible;
     public static BuildingView vueBuilding;
-    public static VueLaquais vueLaquais; //TODO
+    public static VueLaquais vueLaquais;
     //les constantes pour les images à afficher
     protected static BufferedImage meduse = null; // méduse
     protected static BufferedImage laquais = null; //laquais

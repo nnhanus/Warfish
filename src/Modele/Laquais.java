@@ -60,11 +60,13 @@ public class Laquais extends Thread {
      * fait disparaître la fleur cible
      */
     public void ramasseFleur(){
-        this.inventaire[target.getType()] += target.getAmount(); //mise à jour de l'inventaire
-        GrilleMod.removeFleur(target); //retirer la fleur
-        retour = true;
-        this.removeTarget();
-        setDir();
+        if(target != null) {
+            this.inventaire[target.getType()] += target.getAmount(); //mise à jour de l'inventaire
+            GrilleMod.removeFleur(target); //retirer la fleur
+            retour = true;
+            this.removeTarget();
+            setDir();
+        }
     }
 
     public void removeTarget(){
@@ -187,7 +189,6 @@ public class Laquais extends Thread {
 
     @Override
     public void run(){
-        boolean aramasse = false;
         while(true){
             if(retour || target == null/* || target.getIsDead()*/){
                 synchronized (GrilleMod.key) {
@@ -208,20 +209,14 @@ public class Laquais extends Thread {
 
             if(!retour){
                 if(target != null && !target.getIsDead()) {
-                    synchronized (GrilleMod.key){
-                        //acquireTarget();
                         if (target != null && nearTarget() && target.isPickable()) {
+                            try {
+                                sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            synchronized (GrilleMod.key){
                             ramasseFleur();
-                            aramasse = true;
-                        }
-                    }
-
-                    if(aramasse){
-                        aramasse = false;
-                        try {
-                            sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
                         }
                     }
                     if(target != null && !nearTarget() && !target.getIsDead()){

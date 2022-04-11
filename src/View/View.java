@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class View extends JFrame {
 
-    public static Font police_inventaire = new Font("Comic-Sans", Font.BOLD, 15);
+    public static Font police_inventaire = new Font("Comic-Sans", Font.BOLD, 20);
     public static Font police_confection = new Font("Serif", Font.BOLD, 22);
     public static Font police_prix = new Font("Comic-Sans", Font.BOLD, 22);
     public static Font police_score = new Font("Comic-Sans", Font.BOLD, 25);
@@ -281,8 +281,8 @@ public class View extends JFrame {
     protected void Argent(){
         argent = new JPanel(); //définition
         /**gestion de l'affichage de l'argent**/
-        soldeL.setFont(new Font("Serif", Font.PLAIN, 25));
-        soldeL.setText("solde : " + String.valueOf(solde));
+        soldeL.setFont(police_score);
+        soldeL.setText("Solde : " + String.valueOf(solde));
         argent.add(soldeL);
         argent.setBackground(Color.PINK);
         argent.setBounds(50,200,300,50);
@@ -301,7 +301,8 @@ public class View extends JFrame {
         //inventaire
         JLabel titre = new JLabel();
         titre.setText("Inventaire");
-        titre.setFont(new Font("Comic_Sans", Font.PLAIN, 20));
+        //titre.setFont();
+        titre.setFont(police_score);
         titre.setBounds(50, 0, 300, 25);
 
         //ajout des différents composants de control
@@ -383,13 +384,13 @@ public class View extends JFrame {
         buildings.setVisible(false); //non-visible car sous-menu à ouvrir
         buildings.setOpaque(false);
         buildings.setPreferredSize(new Dimension(30,30));
-        buildings.setLayout(new GridLayout(2,1,10,0));
-        prod.setIcon(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/maison3.png")));
+        buildings.setLayout(new GridLayout(2,1,0,10));
+        prod.setIcon(scaleImage(new ImageIcon("src/Image/maison3.png")));
         prod.setText(String.valueOf(BatPrincipal.PRIX_PRODUCTION));
         prod.setIconTextGap(10);
         prod.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
         prod.setFont(police_prix);
-        def.setIcon(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/maison1.png")));
+        def.setIcon(scaleImage(new ImageIcon("src/Image/maison1.png")));
         def.setText(String.valueOf(BatPrincipal.PRIX_DEFENSE));
         def.setIconTextGap(10);
         def.setText(String.valueOf(BatPrincipal.PRIX_GRAINE));
@@ -449,11 +450,11 @@ public class View extends JFrame {
         recruter.setOpaque(false);
         recruter.setLayout(new GridLayout(2, 1, 0, 10));
         //ajout des composants
-        jardinierButton = new JButton(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/meduseJardiniere.png")));
+        jardinierButton = new JButton(scaleImage(new ImageIcon("src/Image/meduseJardiniere.png")));
         jardinierButton.setFont(police_prix);
         jardinierButton.setText(String.valueOf(BatPrincipal.PRIX_JARDINIER));
         jardinierButton.setIconTextGap(10);
-        laquaisButton = new JButton(scaleImage(new ImageIcon("/home/brice/IdeaProjects/Warfish/src/Image/Laquais.png"))); //TODO
+        laquaisButton = new JButton(scaleImage(new ImageIcon("src/Image/Laquais.png"))); //TODO
         laquaisButton.setFont(police_prix);
         laquaisButton.setText(String.valueOf(BatPrincipal.PRIX_LAQUAIS));
         laquaisButton.setIconTextGap(10);
@@ -490,7 +491,7 @@ public class View extends JFrame {
      * Met à jour l'affichage du solde
      */
     public static void updateSolde() {
-        soldeL.setText("solde : " + String.valueOf(BatPrincipal.getTirelire()));
+        soldeL.setText("Solde : " + String.valueOf(BatPrincipal.getTirelire()));
     }
 
     public static void updateScore(){
